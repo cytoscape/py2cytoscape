@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8/>
+    <style type="text/css">
+        body {
+            font: 14px helvetica neue, helvetica, arial, sans-serif;
+        }
+
+        #{{uuid}
+
+        }
+        {
+        height: {
+
+        {
+            widget_height
+        }
+        }
+        px
+
+        ;
+        width: {
+
+        {
+            widget_width
+        }
+        }
+        px
+
+        ;
+        position: absolute
+
+        ;
+        left:
+
+        4
+        px
+
+        ;
+        top:
+
+        5
+        px
+
+        ;
+        background-color: #fafafa
+
+        ;
+        }
+    </style>
+
+    <script>
+        (function () {
+            function render() {
+                $('#{{uuid}}').cytoscape({
+                    elements: {
+                        nodes: {
+                {
+                    nodes
+                }
+            }
+
+            ,
+            edges: {
+                {
+                    edges
+                }
+            }
+        },
+
+                layout
+        :
+        {
+            name: '{{layout}}'
+        }
+        ,
+
+        ready: function () {
+            window.cy = this;
+            cy.fit();
+            cy.style().fromJson({
+            {
+                style_json
+            }
+        }
+        ).update();
+        }
+        })
+        ;
+        }
+
+        var before_render = function () {
+            if (window['cytoscape'] === undefined) {
+                console.log("wait!");
+                window.addEventListener("load_cytoscape", before_render);
+            } else {
+                console.log("Ready to render graph...");
+                render();
+            }
+        }
+
+        before_render();
+
+        })
+        ();
+    </script>
+</head>
+
+<body>
+<div id="{{uuid}}"></div>
+<!-- When only #uuid div is placed on this page, the height of output-box on ipynb will be 0px. One line below will prevent that. -->
+<div id="dammy" style="width:{{widget_width}}px;height:{{widget_height}}px">
+</body>
+
+</html>
