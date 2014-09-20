@@ -11,48 +11,70 @@ https://networkx.github.io/
 
 import networkx as nx
 
+# Special Keys
+ID = 'id'
+NAME = 'name'
+DATA = 'data'
 
-def from_networkx(G):
-    new_graph = {}
-    elements = {}
-    nodes = []
-    edges = []
 
-    nodes_x = G.nodes()
-    edges_x = G.edges()
+def __map_table_data(columns, graph_obj):
+    data = {}
+    for col in columns:
+        data[col] = graph_obj[col]
 
-    # Network Attributes
-    net_attr_keys = G.graph.keys()
-    network_data = {}
-    for net_key in net_attr_keys:
-        network_data[net_key] = G.graph[net_key]
+    return data
 
-    new_graph['data'] = network_data
 
-    for node in nodes_x:
-        new_node = {}
-        data = {}
-        data['id'] = str(node)
-        data['name'] = str(node)
-        for key in G.node[node].keys():
-            data[key] = G.node[node][key]
-        new_node['data'] = data
-        nodes.append(new_node)
+def __create_node(node, node_id):
+    node_columns = node.keys()
+    data = __map_table_data(node_columns, node)
+    # Override special keys
+    data[ID] = str(node_id)
+    data[NAME] = str(node_id)
 
-    for edge in edges_x:
-        new_edge = {}
-        data = {}
-        data['source'] = str(edge[0])
-        data['target'] = str(edge[1])
+    return {
+        DATA: data
+    }
 
-        new_edge['data'] = data
-        edges.append(new_edge)
 
-    elements['nodes'] = nodes
-    elements['edges'] = edges
-    new_graph['elements'] = elements
+def __create_edge(edge_tuple, g):
+    edge =g[edge_tuple[0]][edge_tuple[1]]
+    # FIXME Handle multiple edges.
+    data = __map_table_data(edge.keys(), edge)[0]
+    data['source'] = str(edge_tuple[0])
+    data['target'] = str(edge_tuple[1])
 
-    return new_graph
+    return {
+        DATA: data
+    }
+
+
+def __build_empty_graph():
+    empty_graph = {
+        'data': {},
+        'elements': {
+            'nodes': [],
+            'edges': []
+        }
+    }
+    return empty_graph
+
+
+def from_networkx(g):
+    cygraph = __build_empty_graph()
+    nodes = g.nodes()
+    edges = g.edges()
+
+    # Map network table data
+    cygraph[DATA] = __map_table_data(g.graph.keys(), g.graph)
+
+    for node_id in nodes:
+        cygraph['elements']['nodes'].append(__create_node(g.node[node_id], node_id))
+
+    for edge in edges:
+        cygraph['elements']['edges'].append(__create_edge(edge, g))
+
+    return cygraph
 
 
 def to_networkx(cyjs, directed=True):
@@ -60,7 +82,6 @@ def to_networkx(cyjs, directed=True):
         g = nx.MultiDiGraph()
     else:
         g = nx.MultiGraph()
-
 
     print(cyjs)
     return g

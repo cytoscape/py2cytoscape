@@ -7,6 +7,7 @@ Conversion utilities for igraph
 
 DEF_SCALING = 1.0
 
+
 def from_igraph(igraph_network, layout, scale=DEF_SCALING):
     new_graph = {}
     elements = {}
