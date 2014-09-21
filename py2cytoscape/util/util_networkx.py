@@ -37,16 +37,17 @@ def __create_node(node, node_id):
     }
 
 
-def __create_edge(edge_tuple, g):
+def __create_edges(edge_tuple, g):
+    edges = []
     edge =g[edge_tuple[0]][edge_tuple[1]]
-    # FIXME Handle multiple edges.
-    data = __map_table_data(edge.keys(), edge)[0]
-    data['source'] = str(edge_tuple[0])
-    data['target'] = str(edge_tuple[1])
+    data_array = __map_table_data(edge.keys(), edge)
 
-    return {
-        DATA: data
-    }
+    for data in data_array.values():
+        data['source'] = str(edge_tuple[0])
+        data['target'] = str(edge_tuple[1])
+        edges.append({DATA:data})
+
+    return edges
 
 
 def __build_empty_graph():
@@ -72,7 +73,10 @@ def from_networkx(g):
         cygraph['elements']['nodes'].append(__create_node(g.node[node_id], node_id))
 
     for edge in edges:
-        cygraph['elements']['edges'].append(__create_edge(edge, g))
+
+        new_edges = __create_edges(edge, g)
+        for new_edge in new_edges:
+            cygraph['elements']['edges'].append(new_edge)
 
     return cygraph
 
@@ -83,5 +87,23 @@ def to_networkx(cyjs, directed=True):
     else:
         g = nx.MultiGraph()
 
-    print(cyjs)
+    network_data = cyjs['data']
+    if network_data is not None:
+        for key in network_data.keys():
+            g.graph[key] = network_data[key]
+
+
+    nodes = cyjs['elements']['nodes']
+    edges = cyjs['elements']['edges']
+
+    for node in nodes:
+        data = node['data']
+        g.add_node(data['id'], attr_dict=data)
+
+    for edge in edges:
+        data =edge['data']
+        source = data['source']
+        target = data['target']
+        g.add_edge(source, target, attr_dict=data)
+
     return g
