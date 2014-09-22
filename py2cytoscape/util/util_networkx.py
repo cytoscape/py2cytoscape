@@ -32,22 +32,20 @@ def __create_node(node, node_id):
     data[ID] = str(node_id)
     data[NAME] = str(node_id)
 
-    return {
-        DATA: data
-    }
+    return { DATA: data }
 
 
-def __create_edges(edge_tuple, g):
-    edges = []
-    edge =g[edge_tuple[0]][edge_tuple[1]]
+def __create_edge(edge_tuple, g):
+    edge = g[edge_tuple[0]][edge_tuple[1]]
     data_array = __map_table_data(edge.keys(), edge)
+    if len(data_array) == 0:
+        data = {}
+    else:
+        data = data_array[0]
 
-    for data in data_array.values():
-        data['source'] = str(edge_tuple[0])
-        data['target'] = str(edge_tuple[1])
-        edges.append({DATA:data})
-
-    return edges
+    data['source'] = str(edge_tuple[0])
+    data['target'] = str(edge_tuple[1])
+    return {DATA: data}
 
 
 def __build_empty_graph():
@@ -66,6 +64,9 @@ def from_networkx(g):
     nodes = g.nodes()
     edges = g.edges()
 
+    # print('NetworkX egdes = ' + str(g.number_of_edges()))
+    # print('egdes len = ' + str(len(edges)))
+
     # Map network table data
     cygraph[DATA] = __map_table_data(g.graph.keys(), g.graph)
 
@@ -73,10 +74,7 @@ def from_networkx(g):
         cygraph['elements']['nodes'].append(__create_node(g.node[node_id], node_id))
 
     for edge in edges:
-
-        new_edges = __create_edges(edge, g)
-        for new_edge in new_edges:
-            cygraph['elements']['edges'].append(new_edge)
+        cygraph['elements']['edges'].append(__create_edge(edge, g))
 
     return cygraph
 
@@ -92,7 +90,6 @@ def to_networkx(cyjs, directed=True):
         for key in network_data.keys():
             g.graph[key] = network_data[key]
 
-
     nodes = cyjs['elements']['nodes']
     edges = cyjs['elements']['edges']
 
@@ -101,7 +98,7 @@ def to_networkx(cyjs, directed=True):
         g.add_node(data['id'], attr_dict=data)
 
     for edge in edges:
-        data =edge['data']
+        data = edge['data']
         source = data['source']
         target = data['target']
         g.add_edge(source, target, attr_dict=data)

@@ -35,12 +35,35 @@ class NetworkConversionTests(unittest.TestCase):
         self.assertIsNotNone(net_data)
         self.assertEqual('gml_test', net_data['name'])
         self.assertEqual(331, len(cyjs_g['elements']['nodes']))
-        self.assertEqual(364, len(cyjs_g['elements']['edges']))
+        self.assertEqual(362, len(cyjs_g['elements']['edges']))
 
         nodes = cyjs_g['elements']['nodes']
         node0 = nodes[0]
         self.assertEqual(type("1"), type(node0['data']['id']))
 
+    def test_networkx_scale_free(self):
+        g = nx.scale_free_graph(100)
+        edge_count = g.number_of_edges()
+
+        g.graph['name'] = 'scale_free_test'
+
+        cyjs_g = util.from_networkx(g)
+
+        print('\n---------- Scale free network Test Start -----------\n')
+        print('Edge count = ' + str(edge_count))
+        # print(json.dumps(cyjs_g, indent=4))
+
+        self.assertIsNotNone(cyjs_g)
+
+        net_data = cyjs_g['data']
+        self.assertIsNotNone(net_data)
+        self.assertEqual('scale_free_test', net_data['name'])
+        self.assertEqual(100, len(cyjs_g['elements']['nodes']))
+        self.assertEqual(edge_count, len(cyjs_g['elements']['edges']))
+
+        nodes = cyjs_g['elements']['nodes']
+        node0 = nodes[0]
+        self.assertEqual(type("1"), type(node0['data']['id']))
 
     def test_networkx_parse_network(self):
         f = open('tests/data/galFiltered.json', 'r')
