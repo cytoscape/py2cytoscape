@@ -19,7 +19,7 @@ setup(
     author_email='kono@ucsd.edu',
     url='http://www.cytoscape.org/',
     license='MIT License',
-    keywords=['data visualization'],
+    keywords=['data visualization','cytoscape'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Programming Language :: Python :: 2.7',

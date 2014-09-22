@@ -1,12 +1,15 @@
+=================
 Python Utilities for Cytoscape and Cytoscape.js
---------------
+=================
 
-This utility is still in alpha status.
+What is py2cytoscape?
+=================
 
-## Introduction
+This package is a collection of utilities to use Cytoscape and Cytoscape.js via cy-rest REST API app.
+This is still experimental and in alpha status.
 
-## Install
+The following libraries will be supported:
 
-## Requirements
-
-
+* NetworkX
+* igraph
+* GraphLab
