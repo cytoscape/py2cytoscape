@@ -29,5 +29,6 @@ setup(
         'Intended Audience :: Developers',
     ],
     test_suite='tests',
-    packages=find_packages()
+    packages=find_packages(),
+    package_data={'py2cytoscape': ['cytoscapejs/*.js']}
 )
