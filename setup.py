@@ -13,7 +13,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='py2cytoscape',
-    version='0.1.0',
+    version='0.1.1',
     description='Utility package for using Cytoscape and Cytoscape.js from Python',
     author='Keiichiro Ono',
     author_email='kono@ucsd.edu',
@@ -30,5 +30,5 @@ setup(
     ],
     test_suite='tests',
     packages=find_packages(),
-    package_data={'py2cytoscape': ['cytoscapejs/*.js']}
+    package_data={'py2cytoscape': ['cytoscapejs/*.js', 'cytoscapejs/*.html']}
 )

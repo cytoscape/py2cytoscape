@@ -1,2 +1,1 @@
-recursive-include py2cytoscape *.html *.js
 prune examples
