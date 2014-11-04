@@ -3,5 +3,4 @@
 .idea
 dist
 .DS_Store
-
-
+build/*
