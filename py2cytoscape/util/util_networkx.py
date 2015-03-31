@@ -15,6 +15,13 @@ import networkx as nx
 ID = 'id'
 NAME = 'name'
 DATA = 'data'
+ELEMENTS = 'elements'
+
+NODES = 'nodes'
+EDGES = 'edges'
+
+SOURCE = 'source'
+TARGET = 'target'
 
 
 def __map_table_data(columns, graph_obj):
@@ -26,13 +33,19 @@ def __map_table_data(columns, graph_obj):
 
 
 def __create_node(node, node_id):
+    new_node = {}
     node_columns = node.keys()
     data = __map_table_data(node_columns, node)
     # Override special keys
     data[ID] = str(node_id)
     data[NAME] = str(node_id)
 
-    return { DATA: data }
+    if 'position' in node.keys():
+        position = node['position']
+        new_node['position'] = position
+
+    new_node[DATA] = data
+    return new_node
 
 
 def __create_edge(edge_tuple, g):
@@ -79,28 +92,35 @@ def from_networkx(g):
     return cygraph
 
 
+"""
+Convert Cytoscape.js-style JSON object into NetworkX object.
+
+By default, data will be handles as a directed graph.
+"""
 def to_networkx(cyjs, directed=True):
+
     if directed:
         g = nx.MultiDiGraph()
     else:
         g = nx.MultiGraph()
 
-    network_data = cyjs['data']
+    network_data = cyjs[DATA]
     if network_data is not None:
         for key in network_data.keys():
             g.graph[key] = network_data[key]
 
-    nodes = cyjs['elements']['nodes']
-    edges = cyjs['elements']['edges']
+    nodes = cyjs[ELEMENTS][NODES]
+    edges = cyjs[ELEMENTS][EDGES]
 
     for node in nodes:
-        data = node['data']
-        g.add_node(data['id'], attr_dict=data)
+        data = node[DATA]
+        g.add_node(data[ID], attr_dict=data)
 
     for edge in edges:
-        data = edge['data']
-        source = data['source']
-        target = data['target']
+        data = edge[DATA]
+        source = data[SOURCE]
+        target = data[TARGET]
+
         g.add_edge(source, target, attr_dict=data)
 
     return g

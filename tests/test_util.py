@@ -7,17 +7,49 @@ from py2cytoscape import util
 
 
 class NetworkConversionTests(unittest.TestCase):
+
     def test_networkx_emptynetwork(self):
         g = nx.Graph()
         cyjs_g = util.from_networkx(g)
 
         print('\n---------- Empty Test Start -----------\n')
-        # print(json.dumps(cyjs_g, indent=4))
+        print(json.dumps(cyjs_g, indent=4))
 
         self.assertIsNotNone(cyjs_g)
         self.assertIsNotNone(cyjs_g['data'])
         self.assertEqual(0, len(cyjs_g['elements']['nodes']))
         self.assertEqual(0, len(cyjs_g['elements']['edges']))
+
+
+    def test_networkx_ba(self):
+        g = nx.barabasi_albert_graph(100, 3)
+        g.graph['name'] = 'ba test'
+        cyjs_g = util.from_networkx(g)
+
+        print('\n---------- BA graph Test Start -----------\n')
+        #print(json.dumps(cyjs_g, indent=4))
+
+        self.assertIsNotNone(cyjs_g)
+        self.assertIsNotNone(cyjs_g['data'])
+        self.assertEqual('ba test', cyjs_g['data']['name'])
+        self.assertEqual(100, len(cyjs_g['elements']['nodes']))
+        self.assertNotEqual(0, len(cyjs_g['elements']['edges']))
+
+
+    def test_networkx_matrix(self):
+        g = nx.scale_free_graph(20)
+        matrix = nx.to_numpy_matrix(g)
+
+
+        cyjs_g = util.from_networkx(g)
+
+        print('\n---------- BA graph Test Start -----------\n')
+        #print(json.dumps(cyjs_g, indent=4))
+
+        self.assertIsNotNone(cyjs_g)
+        self.assertIsNotNone(cyjs_g['data'])
+        self.assertEqual(20, len(cyjs_g['elements']['nodes']))
+        self.assertNotEqual(0, len(cyjs_g['elements']['edges']))
 
 
     def test_networkx_gml(self):
@@ -83,3 +115,6 @@ class NetworkConversionTests(unittest.TestCase):
 
         self.assertEqual(331, len(nodes))
         self.assertEqual(362, len(edges))
+
+if __name__ == '__main__':
+    unittest.main()
