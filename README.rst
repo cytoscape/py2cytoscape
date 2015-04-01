@@ -13,3 +13,5 @@ The following libraries will be supported:
 * NetworkX
 * igraph
 * GraphLab
+
+Note that this library is still in alpha status.

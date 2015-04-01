@@ -1,9 +1,24 @@
 import unittest
 import json
+import os
 
 import networkx as nx
-
 from py2cytoscape import util
+
+import scipy as sp
+import tempfile
+
+
+# Utilities
+def compare_edge_sets(nx_edges, cy_edges):
+    edge_set = set()
+    for cyedge in cy_edges:
+        source = cyedge['data']['source']
+        target = cyedge['data']['target']
+        edge = (long(source), long(target))
+        edge_set.add(edge)
+
+    return edge_set.difference(nx_edges)
 
 
 class NetworkConversionTests(unittest.TestCase):
@@ -20,37 +35,56 @@ class NetworkConversionTests(unittest.TestCase):
         self.assertEqual(0, len(cyjs_g['elements']['nodes']))
         self.assertEqual(0, len(cyjs_g['elements']['edges']))
 
-
     def test_networkx_ba(self):
         g = nx.barabasi_albert_graph(100, 3)
+        nodes = g.nodes()
+        edges = g.edges()
+
         g.graph['name'] = 'ba test'
         cyjs_g = util.from_networkx(g)
 
         print('\n---------- BA graph Test Start -----------\n')
-        #print(json.dumps(cyjs_g, indent=4))
 
         self.assertIsNotNone(cyjs_g)
         self.assertIsNotNone(cyjs_g['data'])
         self.assertEqual('ba test', cyjs_g['data']['name'])
-        self.assertEqual(100, len(cyjs_g['elements']['nodes']))
-        self.assertNotEqual(0, len(cyjs_g['elements']['edges']))
+        self.assertEqual(len(nodes), len(cyjs_g['elements']['nodes']))
+        self.assertEqual(len(edges), len(cyjs_g['elements']['edges']))
 
+        diff = compare_edge_sets(set(edges), cyjs_g['elements']['edges'])
+        self.assertEqual(0, len(diff))
 
     def test_networkx_matrix(self):
-        g = nx.scale_free_graph(20)
-        matrix = nx.to_numpy_matrix(g)
+        print('\n---------- Matrix Test Start -----------\n')
 
+        g = nx.barabasi_albert_graph(30, 2)
+        nodes = g.nodes()
+        edges = g.edges()
+        print(edges)
 
-        cyjs_g = util.from_networkx(g)
+        mx1 = nx.adjacency_matrix(g)
+        fp = tempfile.NamedTemporaryFile()
+        file_name = fp.name
+        sp.savetxt(file_name, mx1.toarray(), fmt='%d')
 
-        print('\n---------- BA graph Test Start -----------\n')
+        # Load it back to matrix
+        mx2 = sp.loadtxt(file_name)
+        fp.close()
+
+        g2 = nx.from_numpy_matrix(mx2)
+        cyjs_g = util.from_networkx(g2)
+
         #print(json.dumps(cyjs_g, indent=4))
 
         self.assertIsNotNone(cyjs_g)
         self.assertIsNotNone(cyjs_g['data'])
-        self.assertEqual(20, len(cyjs_g['elements']['nodes']))
-        self.assertNotEqual(0, len(cyjs_g['elements']['edges']))
+        self.assertEqual(len(nodes), len(cyjs_g['elements']['nodes']))
+        self.assertEqual(len(edges), len(cyjs_g['elements']['edges']))
 
+        # Make sure all edges are reproduced
+        print(set(edges))
+        diff = compare_edge_sets(set(edges), cyjs_g['elements']['edges'])
+        self.assertEqual(0, len(diff))
 
     def test_networkx_gml(self):
         g = nx.read_gml('tests/data/galFiltered.gml')
@@ -60,7 +94,6 @@ class NetworkConversionTests(unittest.TestCase):
 
         print('\n---------- GML Test Start -----------\n')
         # print(json.dumps(cyjs_g, indent=4))
-
         self.assertIsNotNone(cyjs_g)
 
         net_data = cyjs_g['data']
@@ -100,21 +133,62 @@ class NetworkConversionTests(unittest.TestCase):
     def test_networkx_parse_network(self):
         f = open('tests/data/galFiltered.json', 'r')
         jsonData = json.load(f)
+
+        j_nodes = jsonData['elements']['nodes']
+        j_edges = jsonData['elements']['edges']
+
         print('\n---------- JSON Loading Test Start -----------\n')
         # print(json.dumps(jsonData, indent=4))
         g = util.to_networkx(jsonData)
         nodes = g.nodes()
         edges = g.edges()
 
-        # print(json.dumps(g.node[nodes[0]], indent=4))
-
-        # TODO add more test cases!
         self.assertEqual('Yeast Network Sample', g.graph['name'])
         self.assertEqual('Sample network created by JSON export.', g.graph['description'])
         self.assertEqual(4, len(g.graph['numberList']))
 
-        self.assertEqual(331, len(nodes))
-        self.assertEqual(362, len(edges))
+        self.assertEqual(len(j_nodes), len(nodes))
+        self.assertEqual(len(j_edges), len(edges))
+
+        edge_set = set(list(map(lambda x: (long(x[0]), long(x[1])), edges)))
+        self.assertEqual(0, len(compare_edge_sets(edge_set, j_edges)))
+
+    def test_networkx_roundtrip(self):
+        print('\n---------- NetworkX Data Roundtrip Test Start -----------\n')
+
+        g = nx.newman_watts_strogatz_graph(100, 3, 0.5)
+        nodes = g.nodes()
+        edges = g.edges()
+
+        # Add some attributes
+        g.graph['name'] = 'original'
+        g.graph['density'] = nx.density(g)
+
+        nx.set_node_attributes(g, 'betweenness', nx.betweenness_centrality(g))
+        nx.set_node_attributes(g, 'degree', nx.degree(g))
+        nx.set_node_attributes(g, 'closeness', nx.closeness_centrality(g))
+
+        nx.set_edge_attributes(g, 'eb', nx.edge_betweenness(g))
+
+        cyjs1 = util.from_networkx(g)
+        g2 = util.to_networkx(cyjs1)
+
+        self.assertEqual(len(g2.nodes()), len(nodes))
+        self.assertEqual(len(g2.edges()), len(edges))
+
+        edge_set = set(list(map(lambda x: (long(x[0]), long(x[1])), g2.edges())))
+        self.assertEqual(0, len(edge_set.difference(set(edges))))
+
+        node_original = g.node[1]
+        node_generated = g2.node['1']
+
+        print(node_original)
+        print(node_generated)
+
+        self.assertEqual(node_original['degree'], node_generated['degree'])
+        self.assertEqual(node_original['betweenness'], node_generated['betweenness'])
+        self.assertEqual(node_original['closeness'], node_generated['closeness'])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -50,11 +50,7 @@ def __create_node(node, node_id):
 
 def __create_edge(edge_tuple, g):
     edge = g[edge_tuple[0]][edge_tuple[1]]
-    data_array = __map_table_data(edge.keys(), edge)
-    if len(data_array) == 0:
-        data = {}
-    else:
-        data = data_array[0]
+    data = __map_table_data(edge.keys(), edge)
 
     data['source'] = str(edge_tuple[0])
     data['target'] = str(edge_tuple[1])
@@ -62,14 +58,13 @@ def __create_edge(edge_tuple, g):
 
 
 def __build_empty_graph():
-    empty_graph = {
-        'data': {},
-        'elements': {
-            'nodes': [],
-            'edges': []
+    return {
+        DATA: {},
+        ELEMENTS: {
+            NODES: [],
+            EDGES: []
         }
     }
-    return empty_graph
 
 
 def from_networkx(g):
@@ -92,12 +87,12 @@ def from_networkx(g):
     return cygraph
 
 
-"""
-Convert Cytoscape.js-style JSON object into NetworkX object.
-
-By default, data will be handles as a directed graph.
-"""
 def to_networkx(cyjs, directed=True):
+    """
+    Convert Cytoscape.js-style JSON object into NetworkX object.
+
+    By default, data will be handles as a directed graph.
+    """
 
     if directed:
         g = nx.MultiDiGraph()
