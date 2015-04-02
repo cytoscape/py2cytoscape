@@ -13,7 +13,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='py2cytoscape',
-    version='0.3.0',
+    version='0.3.1',
     description='Utility package for using Cytoscape and Cytoscape.js from Python',
     author='Keiichiro Ono',
     author_email='kono@ucsd.edu',

@@ -27,6 +27,9 @@ TARGET = 'target'
 def __map_table_data(columns, graph_obj):
     data = {}
     for col in columns:
+        if col == 0:
+            break
+
         data[col] = graph_obj[col]
 
     return data
@@ -49,11 +52,18 @@ def __create_node(node, node_id):
 
 
 def __create_edge(edge_tuple, g):
-    edge = g[edge_tuple[0]][edge_tuple[1]]
-    data = __map_table_data(edge.keys(), edge)
+    source = edge_tuple[0]
+    target = edge_tuple[1]
 
-    data['source'] = str(edge_tuple[0])
-    data['target'] = str(edge_tuple[1])
+    edge = g[source][target]
+
+    if len(edge.keys()) == 0 or edge.keys()[0] == 0:
+        data = {}
+    else:
+        data = __map_table_data(edge.keys(), edge)
+
+    data['source'] = str(source)
+    data['target'] = str(target)
     return {DATA: data}
 
 

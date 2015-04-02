@@ -37,6 +37,35 @@ class NetworkConversionTests(unittest.TestCase):
         self.assertEqual(0, len(cyjs_g['elements']['nodes']))
         self.assertEqual(0, len(cyjs_g['elements']['edges']))
 
+    def test_networkx_edge_attribute(self):
+        print('\n---------- Edge Att Test Start -----------\n')
+        g = nx.Graph()
+        g.add_edge(1, 2, interaction='itr1',  score=0.1)
+        original_edge = g[1][2]
+        print(original_edge.keys())
+        cyjs = util.from_networkx(g)
+
+        print(json.dumps(cyjs, indent=4))
+
+        # There is only one edge, so this should be OK...
+        edge = cyjs['elements']['edges'][0]
+        print(json.dumps(edge, indent=4))
+
+        self.assertEqual('itr1', cyjs['elements']['edges'][0]['data']['interaction'])
+
+    def test_networkx_empty_edge_attribute(self):
+        print('\n---------- Edge Att Test 2 Start -----------\n')
+        g = nx.scale_free_graph(5)
+        cyjs = util.from_networkx(g)
+
+        print(json.dumps(cyjs, indent=4))
+
+        # There is only one edge, so this should be OK...
+        edge = cyjs['elements']['edges'][0]
+        print(json.dumps(edge, indent=4))
+        self.assertEqual(2, len(edge['data']))
+
+
     def test_networkx_ba(self):
         g = nx.barabasi_albert_graph(100, 3)
         nodes = g.nodes()
