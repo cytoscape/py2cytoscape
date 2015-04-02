@@ -12,7 +12,7 @@ class Table(object):
         BASE_URL = "http://localhost:" + self.port + "/v1/"
         HEADERS = {'Content-Type': 'application/json'}
         jsontable = json.loads(self.df.to_json(orient="records"))
-        print json.dumps(jsontable, indent=4)
+        print(json.dumps(jsontable, indent=4))
 
     def set_port(self, port):
         self.port = str(port)

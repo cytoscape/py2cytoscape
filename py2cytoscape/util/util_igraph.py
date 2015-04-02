@@ -8,19 +8,24 @@ Conversion utilities for igraph
 DEF_SCALING = 1.0
 
 
-def from_igraph(igraph_network, layout, scale=DEF_SCALING):
+def from_igraph(igraph_network, layout=None, scale=DEF_SCALING):
     new_graph = {}
+    network_data = {}
     elements = {}
     nodes = []
     edges = []
 
-    el = igraph_network.get_edgelist()
+    # Convert network attributes
+    network_attr = igraph_network.attributes()
+    for key in network_attr:
+        network_data[key] = igraph_network[key]
+
+    # get network as a list of edges
+    edges_original = igraph_network.es
     nodes_original = igraph_network.vs
 
     node_attr = igraph_network.vs.attributes()
-
-    idx = 0
-    for node in nodes_original:
+    for idx, node in enumerate(nodes_original):
         new_node = {}
         data = {}
         data['id'] = str(node.index)
@@ -35,18 +40,22 @@ def from_igraph(igraph_network, layout, scale=DEF_SCALING):
             new_node['position'] = position
 
         nodes.append(new_node)
-        idx = idx + 1
 
-    for edge in el:
+    # Add edges to the elements
+    edge_attr = igraph_network.es.attributes()
+    for edge in edges_original:
         new_edge = {}
         data = {}
-        data['source'] = str(edge[0])
-        data['target'] = str(edge[1])
+        data['source'] = str(edge.source)
+        data['target'] = str(edge.target)
+        for key in edge_attr:
+            data[key] = edge[key]
         new_edge['data'] = data
         edges.append(new_edge)
 
     elements['nodes'] = nodes
     elements['edges'] = edges
     new_graph['elements'] = elements
+    new_graph['data'] = network_data
 
     return new_graph

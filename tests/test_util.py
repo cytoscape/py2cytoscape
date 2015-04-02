@@ -2,6 +2,8 @@ import unittest
 import json
 import os
 
+import igraph as ig
+
 import networkx as nx
 from py2cytoscape import util
 
@@ -188,6 +190,56 @@ class NetworkConversionTests(unittest.TestCase):
         self.assertEqual(node_original['degree'], node_generated['degree'])
         self.assertEqual(node_original['betweenness'], node_generated['betweenness'])
         self.assertEqual(node_original['closeness'], node_generated['closeness'])
+
+    def test_from_igraph(self):
+        print('---------- From igraph object to Cytoscape.js -----------\n')
+        empty = ig.Graph()
+        cyjs = util.from_igraph(empty)
+
+        print(json.dumps(cyjs, indent=4))
+
+        self.assertIsNotNone(cyjs)
+        self.assertIsNotNone(cyjs['data'])
+        self.assertEqual(0, len(cyjs['elements']['nodes']))
+        self.assertEqual(0, len(cyjs['elements']['edges']))
+
+    def test_from_igraph_random(self):
+        print('---------- From igraph random network object to Cytoscape.js -----------\n')
+        ba_graph = ig.Graph.Barabasi(100, 3)
+        ba_graph['name'] = 'Barabasi'
+        ba_graph['number_attr'] = 12345
+
+        ba_graph.vs['degree'] = ba_graph.degree()
+        ba_graph.vs['bw'] = ba_graph.betweenness()
+        ba_graph.es['ebw'] = ba_graph.edge_betweenness()
+
+        cyjs = util.from_igraph(ba_graph)
+
+        # print(json.dumps(cyjs, indent=4))
+
+        self.assertIsNotNone(cyjs)
+        self.assertIsNotNone(cyjs['data'])
+        self.assertEqual('Barabasi', cyjs['data']['name'])
+        self.assertEqual(12345, cyjs['data']['number_attr'])
+        cyjs_nodes = cyjs['elements']['nodes']
+        cyjs_edges = cyjs['elements']['edges']
+        self.assertEqual(len(ba_graph.vs), len(cyjs_nodes))
+        self.assertEqual(len(ba_graph.es), len(cyjs_edges))
+
+        self.assertEqual(ba_graph.vs[0]['degree'], cyjs_nodes[0]['data']['degree'])
+        self.assertEqual(ba_graph.vs[0]['bw'], cyjs_nodes[0]['data']['bw'])
+
+        # Test edge
+        target_edge = ba_graph.es[10]
+        edge0 = None
+        for e in cyjs_edges:
+            if e['data']['source'] == str(target_edge.source) \
+                    and e['data']['target'] == str(target_edge.target):
+                edge0 = e
+                break
+
+        self.assertIsNotNone(edge0)
+        self.assertEqual(target_edge['ebw'], edge0['data']['ebw'])
 
 
 if __name__ == '__main__':
