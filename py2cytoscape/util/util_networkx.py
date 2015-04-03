@@ -51,16 +51,22 @@ def __create_node(node, node_id):
     return new_node
 
 
-def __create_edge(edge_tuple, g):
+def __build_multi_edge(edge_tuple, g):
     source = edge_tuple[0]
     target = edge_tuple[1]
+    key = edge_tuple[2]
+    data = edge_tuple[3]
 
-    edge = g[source][target]
+    data['source'] = str(source)
+    data['target'] = str(target)
+    data['interaction'] = str(key)
+    return {DATA: data}
 
-    if len(edge.keys()) == 0 or edge.keys()[0] == 0:
-        data = {}
-    else:
-        data = __map_table_data(edge.keys(), edge)
+
+def __build_edge(edge_tuple, g):
+    source = edge_tuple[0]
+    target = edge_tuple[1]
+    data = edge_tuple[2]
 
     data['source'] = str(source)
     data['target'] = str(target)
@@ -78,12 +84,17 @@ def __build_empty_graph():
 
 
 def from_networkx(g):
+    # Dictionary Object to be converted to Cytoscape.js JSON
     cygraph = __build_empty_graph()
-    nodes = g.nodes()
-    edges = g.edges()
 
-    # print('NetworkX egdes = ' + str(g.number_of_edges()))
-    # print('egdes len = ' + str(len(edges)))
+    nodes = g.nodes()
+    edge_builder = None
+    if isinstance(g, nx.MultiDiGraph) or isinstance(g, nx.MultiGraph):
+        edges = g.edges(data=True, keys=True)
+        edge_builder = __build_multi_edge
+    else:
+        edges = g.edges(data=True)
+        edge_builder = __build_edge
 
     # Map network table data
     cygraph[DATA] = __map_table_data(g.graph.keys(), g.graph)
@@ -92,7 +103,7 @@ def from_networkx(g):
         cygraph['elements']['nodes'].append(__create_node(g.node[node_id], node_id))
 
     for edge in edges:
-        cygraph['elements']['edges'].append(__create_edge(edge, g))
+        cygraph['elements']['edges'].append(edge_builder(edge, g))
 
     return cygraph
 

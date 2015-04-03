@@ -58,13 +58,47 @@ class NetworkConversionTests(unittest.TestCase):
         g = nx.scale_free_graph(5)
         cyjs = util.from_networkx(g)
 
-        print(json.dumps(cyjs, indent=4))
+        # print(json.dumps(cyjs, indent=4))
 
         # There is only one edge, so this should be OK...
         edge = cyjs['elements']['edges'][0]
         print(json.dumps(edge, indent=4))
-        self.assertEqual(2, len(edge['data']))
+        self.assertEqual(3, len(edge['data']))
 
+    def test_networkx_digraph_edge_attr(self):
+        print('\n---------- Digraph Edge Att Test Start -----------\n')
+        g = nx.DiGraph()
+        g.add_path([0, 1, 2, 3, 4])
+        eb = nx.edge_betweenness(g)
+        nx.set_edge_attributes(g, 'eb', eb)
+        cyjs = util.from_networkx(g)
+
+        print(json.dumps(cyjs, indent=4))
+
+        # There is only one edge, so this should be OK...
+        edge = cyjs['elements']['edges'][0]
+        self.assertEqual(3, len(edge['data']))
+
+    def test_networkx_multidigraph_edge_attr(self):
+        print('\n---------- Multi-Digraph Edge Att Test Start -----------\n')
+        g = nx.MultiDiGraph()
+        g.add_node(1)
+        g.add_node(2)
+        g.add_node(3)
+        g.add_edge(1, 2)
+        g.add_edge(1, 2, attr_dict={'foo': 'bar'})
+        g.add_edge(1, 2)
+        g.add_edge(1, 3)
+        edges = g.edges(data=True, keys=True)
+        for edge in edges:
+            print(edge)
+
+        cyjs = util.from_networkx(g)
+
+        print(json.dumps(cyjs, indent=4))
+
+        edge = cyjs['elements']['edges'][0]
+        self.assertTrue(3 <= len(edge['data']))
 
     def test_networkx_ba(self):
         g = nx.barabasi_albert_graph(100, 3)
