@@ -14,7 +14,7 @@
         position: absolute;
         left: 4px;
         top: 5px;
-        background-color: #fafafa;
+        background: {{background}};
       }
     </style>
 
@@ -58,7 +58,7 @@
 <body>
   <div id="{{uuid}}"></div>
   <!-- When only #uuid div is placed on this page, the height of output-box on ipynb will be 0px. One line below will prevent that. -->
-  <div id="dammy" style="width:{{widget_width}}px;height:{{widget_height}}px">
+  <div id="dummy" style="width:{{widget_width}}px;height:{{widget_height}}px">
 </body>
 
 </html>

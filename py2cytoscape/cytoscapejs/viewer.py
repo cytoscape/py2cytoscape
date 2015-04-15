@@ -8,6 +8,8 @@ import os
 DEF_HEIGHT = 700
 DEF_WIDTH = 1098 # Same as cell width of Jupyter
 
+DEF_BACKGROUND_COLOR = '#FFFFFF'
+
 HTML_TEMPLATE_FILE = 'template.html'
 STYLE_FILE = 'default_style.json'
 
@@ -42,7 +44,8 @@ for style in style_list:
     styles[style['title']] = style['style']
 
 
-def render(network, style=DEF_STYLE, layout_algorithm=DEF_LAYOUT, height=DEF_HEIGHT, width=DEF_WIDTH):
+def render(network, style=DEF_STYLE, layout_algorithm=DEF_LAYOUT,
+           background=DEF_BACKGROUND_COLOR, height=DEF_HEIGHT, width=DEF_WIDTH):
     from jinja2 import Template
     from IPython.core.display import display, HTML
 
@@ -62,7 +65,7 @@ def render(network, style=DEF_STYLE, layout_algorithm=DEF_LAYOUT, height=DEF_HEI
 
     path = os.path.abspath(os.path.dirname(__file__)) + '/' + HTML_TEMPLATE_FILE
     template = Template(open(path).read())
-    cyjs_widget = template.render(nodes=json.dumps(nodes), edges=json.dumps(edges),
+    cyjs_widget = template.render(nodes=json.dumps(nodes), edges=json.dumps(edges), background=background,
                                   uuid="cy" + str(uuid.uuid4()), widget_width=str(width), widget_height=str(height),
                                   layout=layout_algorithm, style_json=json.dumps(style))
 
