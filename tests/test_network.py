@@ -4,8 +4,10 @@ import unittest
 from py2cytoscape.data.cyrest_client import CyRestClient
 from py2cytoscape.data.cynetwork import CyNetwork
 
-import py2cytoscape.util.util_networkx as util
+import py2cytoscape.util.dataframe as df_util
 import json
+import numpy as np
+import pandas as pd
 
 
 def pp(dict_data):
@@ -61,3 +63,22 @@ class CyRestClientTests(unittest.TestCase):
 
         edge_table = network.get_table('edge')
         pp(edge_table)
+
+    def test_convert(self):
+        print('\n---------- DataFrame Conversion Tests Start -----------\n')
+        df = pd.read_csv('data/galFiltered.sif', names=['source', 'interaction', 'target'], sep=' ')
+        print(df.head(3))
+
+        net = df_util.from_dataframe(df)
+
+        network = CyNetwork(data=net)
+        # print(network)
+        data_table = pd.read_csv('data/galFiltered.nodeAttrTable.txt', sep='\t')
+        result = network.update_table(type='node', df=data_table, data_key_col='ID')
+        pp(result)
+
+
+
+
+
+

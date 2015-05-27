@@ -4,7 +4,7 @@
 """
 Setup script for py2cytoscape
 
-Yo install, run:
+To install, run:
 
 python setup.py install
 """
@@ -13,7 +13,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='py2cytoscape',
-    version='0.3.4',
+    version='0.4.0',
     description='Utility package for using Cytoscape and Cytoscape.js from Python',
     author='Keiichiro Ono',
     author_email='kono@ucsd.edu',
@@ -23,7 +23,6 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'License :: OSI Approved :: MIT License',
         'Intended Audience :: Developers',

@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
-from network import NetworkClient
-
-import requests
 import json
+import pandas
+import requests
 
-from . import BASE_URL, HEADERS, SUID_LIST
-from ..util import cytoscapejs as util
+from network import NetworkClient
+from . import BASE_URL, HEADERS
 
 BASE_URL_NETWORK = BASE_URL + 'networks'
 JSON = 'json'
@@ -16,7 +14,11 @@ class CyNetwork(object):
     def __init__(self, suid=None, name=None, data=None):
         # SUID is immutable
         if suid is None:
-            self.__id = NetworkClient.create()
+            if data is None:
+                self.__id = NetworkClient.create()
+            else:
+                # Create from Cytoscape.js JSON
+                self.__id = NetworkClient.create(data=data)
         else:
             # Fetch network from current session
             id_list = NetworkClient.get_all()
@@ -88,14 +90,36 @@ class CyNetwork(object):
     def set_node_values(self, column, values_tuple):
         pass
 
-    def update_table(self, type, dataframe):
-        pass
+    def update_table(self, type, df, network_key_col='name', data_key_col='name'):
+        table = {
+            'key': network_key_col,
+ 		    'dataKey': data_key_col
+        }
+        data = []
+        col_names = df.columns.values
+        for index, row in df.iterrows():
+            entry = {}
+            for col in col_names:
+                entry[col] = row[col]
+            data.append(entry)
 
-    def __data_frame_to_table(self):
-        pass
+        table['data'] = data
+        result = requests.put(self.__url + 'tables/default' + type,
+                      data=json.dumps(table), headers=HEADERS).json()
+        return result
+
+    def __data_frame_to_table(self, df):
+        """
+        Convert Pandas DataFrame to POSTable table
+
+        :param df:
+        :return:
+        """
+
+        cytable = {}
+
 
 
 class CyTable(object):
-
     def __init__(self, suid, type):
         self.__id = suid
