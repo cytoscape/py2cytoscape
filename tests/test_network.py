@@ -9,6 +9,8 @@ import json
 import numpy as np
 import pandas as pd
 
+import networkx as nx
+
 
 def pp(dict_data):
     print(json.dumps(dict_data, indent=4))
@@ -18,11 +20,29 @@ class CyRestClientTests(unittest.TestCase):
 
     def setUp(self):
         self.client = CyRestClient()
+        # cleanup
+        self.client.network.delete_all()
+
+    def test_cyrest_client(self):
+        print('\n---------- Client status tests start -----------\n')
         # Make sure CyREST server is running
         status = self.client.status()
         self.assertIsNotNone(status)
-        # cleanup
-        self.client.network.delete_all()
+        pp(status)
+        self.assertEqual('v1', status['apiVersion'])
+
+        print('\n---------- Client status tests finished! -----------\n')
+
+    def test_create_network(self):
+        print('\n---------- Create network Tests Start -----------\n')
+        # Create empty network
+        num_networks = 5
+        for i in range(num_networks):
+            self.client.network.create()
+
+        networks = self.client.network.get_all()
+        self.assertIsNotNone(networks)
+        self.assertEqual(num_networks, len(networks))
 
     def test_network_api(self):
         print('\n---------- Network API Tests Start -----------\n')
@@ -36,7 +56,7 @@ class CyRestClientTests(unittest.TestCase):
 
     def test_cynetwork(self):
         print('\n---------- CyNetwork Tests Start -----------\n')
-        network = CyNetwork()
+        network = self.client.network.create()
         self.assertIsNotNone(network)
         nodes = network.get_nodes()
         pp(nodes)
@@ -64,6 +84,8 @@ class CyRestClientTests(unittest.TestCase):
         edge_table = network.get_table('edge')
         pp(edge_table)
 
+        print('\n---------- CyNetwork Tests Finished! -----------\n')
+
     def test_convert(self):
         print('\n---------- DataFrame Conversion Tests Start -----------\n')
         df = pd.read_csv('data/galFiltered.sif', names=['source', 'interaction', 'target'], sep=' ')
@@ -71,14 +93,23 @@ class CyRestClientTests(unittest.TestCase):
 
         net = df_util.from_dataframe(df)
 
-        network = CyNetwork(data=net)
+        network = self.client.network.create(data=net, name='Created from DataFrame')
         # print(network)
         data_table = pd.read_csv('data/galFiltered.nodeAttrTable.txt', sep='\t')
-        result = network.update_table(type='node', df=data_table, data_key_col='ID')
-        pp(result)
+        network.update_table(type='node', df=data_table, data_key_col='ID')
+        print('\n---------- DataFrame Conversion Tests Finished! -----------\n')
 
 
+    def test_delete_network(self):
+        network = self.client.network.create()
+        suids = self.client.network.get_all()
+        self.assertEqual(1, len(suids))
+        self.client.network.delete(network)
+        suids = self.client.network.get_all()
+        self.assertEqual(0, len(suids))
 
+    def test_create_from_networkx(self):
+        networkx1 = nx.scale_free_graph(100)
 
-
-
+        network = self.client.network.create_from_networkx(networkx1)
+        self.assertIsNotNone(network)

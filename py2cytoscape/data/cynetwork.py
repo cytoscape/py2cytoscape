@@ -1,8 +1,7 @@
 import json
-import pandas
+import pandas as pd
 import requests
 
-from network import NetworkClient
 from . import BASE_URL, HEADERS
 
 BASE_URL_NETWORK = BASE_URL + 'networks'
@@ -11,25 +10,12 @@ JSON = 'json'
 
 class CyNetwork(object):
 
-    def __init__(self, suid=None, name=None, data=None):
-        # SUID is immutable
-        if suid is None:
-            if data is None:
-                self.__id = NetworkClient.create()
-            else:
-                # Create from Cytoscape.js JSON
-                self.__id = NetworkClient.create(data=data)
+    def __init__(self, suid=None):
+        # Validate required argument
+        if pd.isnull(suid):
+            raise ValueError("SUID is missing.")
         else:
-            # Fetch network from current session
-            id_list = NetworkClient.get_all()
-            try:
-                id_list.index(suid)
-            except ValueError:
-                print('Network does not exist.')
-            else:
-                self.__id = suid
-            finally:
-                self.__id = None
+            self.__id = suid
 
         self.__url = BASE_URL_NETWORK + '/' + str(self.__id) + '/'
 
@@ -45,6 +31,12 @@ class CyNetwork(object):
         return self.add_nodes([node_name])
 
     def add_nodes(self, node_name_list):
+        """
+        Add new nodes to the network
+
+        :param node_name_list:
+        :return:
+        """
         nodes = requests.post(self.__url + 'nodes', data=json.dumps(
             node_name_list), headers=HEADERS).json()
         node_dict = {}
@@ -100,13 +92,16 @@ class CyNetwork(object):
         for index, row in df.iterrows():
             entry = {}
             for col in col_names:
-                entry[col] = row[col]
+                value = row[col]
+                if pd.isnull(value):
+                    continue
+                else:
+                    entry[col] = value
             data.append(entry)
 
         table['data'] = data
-        result = requests.put(self.__url + 'tables/default' + type,
-                      data=json.dumps(table), headers=HEADERS).json()
-        return result
+        requests.put(self.__url + 'tables/default' + type,
+                      data=json.dumps(table), headers=HEADERS)
 
     def __data_frame_to_table(self, df):
         """

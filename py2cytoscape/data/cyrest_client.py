@@ -1,15 +1,21 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from network import NetworkClient
+from network_client import NetworkClient
 
-from . import BASE_URL
+from . import PORT, IP, VERSION
 
 
 class CyRestClient(object):
 
-    def __init__(self):
-        self.network = NetworkClient()
+    def __init__(self, ip=IP, port=PORT, version=VERSION):
+        self.__url = 'http://' + ip + ':' + str(port) + '/' + version + '/'
+        self.network = NetworkClient(self.__url)
 
     def status(self):
-        return requests.get(BASE_URL).json()
+        try:
+            response = requests.get(self.__url).json()
+        except Exception as e:
+            print('Could not get status from cyREST: ' + e)
+        else:
+            return response
