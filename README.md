@@ -1,20 +1,89 @@
-# py2cytoscape: Utilities for Cytoscape and Cytoscape.js
+# py2cytoscape
+##### _Tools to use Cytoscape and Cytoscape.js from Python_
 
-## What is py2cytoscape?
-This package is a collection of utilities to use Cytoscape and Cytoscape.js with [cyREST RESTful API app](http://apps.cytoscape.org/apps/cyrest).
-This is still experimental and in alpha status.
+![](http://www.cytoscape.org/images/3_1_title3.png)
 
-## What's inside?
+## What is _py2cytoscape_?
+py2cytoscape is a collection of utilities to use [Cytoscape](http://www.cytoscape.org/) and [Cytoscape.js](http://js.cytoscape.org/) from Python.  Network visualization feature is still limited in Python, but with this tool, you can access both of Cytoscape and Cytoscape.js as network visualization engines for your Python code!
 
-### cyREST Wrapper (New!)
-[cyREST]() is a language-agnostic RESTful API for Cytoscape 3.  This package includes wrapper for the raw REST API.
+This package is still experimental and in alpha status.
 
-### Data Conversion Utilities from/to [Cytoscape.js](http://js.cytoscape.org/) JSON.
-The following libraries are supported:
+### Background
 
-* [NetworkX]() - From / To Cytoscape.js JSON
-* [igraph]() - To Cytoscape.js JSON
-* [GraphLab]() - To Cytoscape.js JSON (Partially supported)
+![](http://cl.ly/Xk5o/cytoscape-flat-logo-orange-100.png)
 
-And the following graph libraries will be supported soon:
-* [graph-tool]()
+Cytoscape is a [de-facto standard desktop application for network visualization in bioinformatics community](https://scholar.google.com/scholar?hl=en&q=cytoscape).  But actually, it is a domain-independent graph visualization software for all typs of network data analysis.  We want to introduce cy2cytoscape, along with _cyREST_ and _Jupyter Notebook_, to broader data science community.
+
+
+## Features
+
+### cyREST Wrapper (New from 0.4.0)
+[cyREST](http://apps.cytoscape.org/apps/cyrest) is a language-agnostic RESTful API for [Cytoscape 3](http://www.cytoscape.org/what_is_cytoscape.html).  Of course you can drive Cytoscape by calling raw RESTful API using [requests]() or other http client library, but with this wrapper, you can significantly reduce your lines of code.
+
+#### Example: Creating an empty network in Cytoscape from Python
+
+##### __Without__ py2cytoscape (raw cyREST API call)
+
+```python
+# HTTP Client for Python
+import requests
+
+# Standard JSON library
+import json
+
+# Basic Setup
+PORT_NUMBER = 1234
+BASE = 'http://localhost:' + str(PORT_NUMBER) + '/v1/'
+
+# Header for posting data to the server as JSON
+HEADERS = {'Content-Type': 'application/json'}
+
+# Define dictionary of empty network
+empty_network = {
+        'data': {
+            'name': 'I\'m empty!'
+        },
+        'elements': {
+            'nodes':[],
+            'edges':[]
+        }
+}
+
+res = requests.post(BASE + 'networks?collection=My%20Collection', data=json.dumps(empty_network), headers=HEADERS)
+new_network_id = res.json()['networkSUID']
+print('Empty network created: SUID = ' + str(new_network_id))
+```
+
+##### __With__ py2cytoscape
+
+```python
+from py2cytoscape.data.cyrest_client import CyRestClient
+
+cy = CyRestClient()
+network = cy.network.create(name='My Network', collection='My network collection')
+print(network.get_id())
+```
+
+
+### Embedded Visualization Widget for [Jupyter Notebook](http://jupyter.org/)
+
+![](http://cl.ly/aexk/cyjs_widget.png)
+
+You can use Cytoscape.js network visualization widget in Jupyter Notebook. This is particulaly useful when you share your network analysis results with others.
+
+
+### Data Conversion Utilities from/to [Cytoscape.js](http://js.cytoscape.org/) JSON
+Cytoscape.js JSON is one of the standard data exchange formats in Cytoscape community.  py2cytoscape includes some graph data conversion utilities for popular graph analysis packages in Python.
+
+Currently, the following graph objects are supported:
+
+* [NetworkX](https://networkx.github.io/) - From / To Cytoscape.js JSON
+* [igraph](http://igraph.org/python/) - To Cytoscape.js JSON
+* [pandas DataFrame](http://pandas.pydata.org/) - To Cytoscape.js JSON
+
+And these popular libraries will be supported soon:
+
+* [Numpy adj. matrix](http://www.numpy.org/) (binary/weighted)
+* [graph-tool](http://graph-tool.skewed.de/)
+* [GraphX](https://spark.apache.org/graphx/)
+* [GraphLab](https://github.com/dato-code/Dato-Core)
