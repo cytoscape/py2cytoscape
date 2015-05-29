@@ -7,6 +7,7 @@ from . import HEADERS, SUID_LIST
 from ..util import cytoscapejs as util
 
 from ..util import util_networkx as nx_util
+from ..util import dataframe as df_util
 
 JSON = 'json'
 
@@ -54,6 +55,16 @@ class NetworkClient(object):
         cyjs = nx_util.from_networkx(network)
         return self.create(name=name, collection=collection, data=cyjs)
 
+    def create_from_dataframe(self, dataframe, source_col='source',
+                              target_col='target', interaction_col='interaction',
+                              name='Created from DataFrame', collection=None):
+        if dataframe is None:
+            raise ValueError('DataFrame object is required.')
+
+        cyjs = df_util.from_dataframe(dataframe,source_col=source_col,
+                              target_col=target_col, interaction_col=interaction_col,
+                              name=name)
+        return self.create(collection=collection, data=cyjs)
 
 
     def get_all(self, format=SUID_LIST):
