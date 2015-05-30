@@ -1,6 +1,7 @@
 import pandas as pd
 import cytoscapejs as cyjs
 
+
 def from_dataframe(df, source_col='source', target_col='target', interaction_col='interaction',
                    name='From DataFrame', edge_attr_cols=[]):
     """
@@ -32,6 +33,26 @@ def from_dataframe(df, source_col='source', target_col='target', interaction_col
         network['elements']['edges'].append(get_edge(s, t, interaction='pp'))
     return network
 
+
+def to_dataframe(network, interaction='interaction', default_interaction='-'):
+    edges = network['elements']['edges']
+
+    network_array = []
+    for edge in edges:
+        edge_data = edge['data']
+        source = edge_data['source']
+        target = edge_data['target']
+        if interaction in edge_data:
+            itr = edge_data[interaction]
+        else:
+            itr = default_interaction
+        row = (source, itr, target)
+        network_array.append(row)
+
+    return pd.DataFrame(network_array, columns=['source', 'interaction',
+                                                'target'])
+
+
 def get_node(id):
     node = {
         'data': {
@@ -40,6 +61,7 @@ def get_node(id):
         }
     }
     return node
+
 
 def get_edge(source, target, interaction):
     edge = {

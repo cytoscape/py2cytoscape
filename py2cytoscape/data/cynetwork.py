@@ -1,6 +1,10 @@
 import json
+
 import pandas as pd
 import requests
+
+from ..util import util_networkx as nx_util
+from ..util import dataframe as df_util
 
 from . import BASE_URL, HEADERS
 
@@ -20,15 +24,53 @@ class CyNetwork(object):
         self.__url = BASE_URL_NETWORK + '/' + str(self.__id) + '/'
 
     def get_id(self):
+        """
+        Get session-unique ID of this network
+
+        :return: SUID as integer
+        """
         return self.__id
 
-    def get_nodes(self):
-        result  = requests.get(self.__url + 'nodes')
-        try:
-            return result.json()
-        except:
-            return 'ERROR!!!!!!!!!!!'
+    def to_json(self):
+        """
+        Return this network in Cytoscape.js format.
 
+        :return: Cytoscape.js Style JSON as dictionary.
+        """
+        return requests.get(self.__url).json()
+
+    def to_networkx(self):
+        """
+        Return this network in NetworkX graph object.
+
+        :return: Network as NetworkX graph object
+        """
+        return nx_util.to_networkx(requests.get(self.__url).json())
+
+    def to_dataframe(self):
+        """
+        Return this network in pandas DataFrame.
+
+        :return: Network as DataFrame.  This is equivalent to SIF.
+        """
+        return df_util.to_dataframe(requests.get(self.__url).json())
+
+    def get_nodes(self):
+        """
+        Get all nodes as a list of SUIDs
+
+        :return:
+        """
+        return requests.get(self.__url + 'nodes').json()
+
+    def get_edges(self, format='suid'):
+        if format is 'suid':
+            return requests.get(self.__url + 'edges').json()
+        elif format is 'edgelist':
+            # TODO: implement this
+            pass
+        else:
+            raise ValueError(format + ' is not supported for edge format.')
 
     def add_node(self, node_name):
         if node_name is None:
@@ -72,7 +114,16 @@ class CyNetwork(object):
 
         edges = requests.post(self.__url + 'edges', data=json.dumps(
             new_egdes), headers=HEADERS).json()
-        return edges
+        df = pd.DataFrame(edges)
+        return df.set_index(['SUID'])
+
+    def delete_node(self, id):
+        url = self.__url + 'nodes/' + str(id)
+        requests.delete(url)
+
+    def delete_edge(self, id):
+        url = self.__url + 'edges/' + str(id)
+        requests.delete(url)
 
     def __get_table(self, type, format=None):
         url = self.__url + 'tables/default' + type
@@ -95,6 +146,45 @@ class CyNetwork(object):
     def get_network_table(self, format=None):
         return self.__get_table('network', format)
 
+    def __get_columns(self, type=None):
+        url = self.__url + 'tables/default' + type + '/columns'
+        df = pd.DataFrame(requests.get(url).json())
+        return df.set_index(['name'])
+
+    def get_node_columns(self):
+        """
+        Get node table column information as DataFrame
+
+        :return: Node column information ad DataFrame
+        """
+        return self.__get_columns('node')
+
+    def get_edge_columns(self):
+        """
+        Get edge table column information as DataFrame
+
+        :return: Edge column information ad DataFrame
+        """
+        return self.__get_columns('edge')
+
+    def get_network_columns(self):
+        """
+        Get network table column information as DataFrame
+
+        :return: Network column information ad DataFrame
+        """
+        return self.__get_columns('networks')
+
+    def __get_column(self, type=None, column=None):
+        url = self.__url + 'tables/default' + type + '/columns/' + column
+        return pd.Series(requests.get(url).json())
+
+    def get_node_column(self, column):
+        return self.__get_column('node', column=column)
+
+    def get_edge_column(self, column):
+        return self.__get_column('edge', column=column)
+
     def __get_value(self, type=None, id=None, column=None):
         if column is None and id is not None:
             # Extract a row in table
@@ -106,7 +196,6 @@ class CyNetwork(object):
         else:
             raise ValueError('ID is required.')
 
-
     def get_node_value(self, id, column=None):
         return self.__get_value(type='node', id=id, column=column)
 
@@ -116,19 +205,13 @@ class CyNetwork(object):
     def get_network_value(self, column):
         return self.__get_value(type='network', id=self.__id, column=column)
 
-    def set_node_value(self, id, column, value):
-        pass
-
-    def set_node_values(self, column, values_tuple):
-        pass
-
     def update_node_table(self, df=None, network_key_col='name', data_key_col='name'):
         return self.__update_table('node', df=df, network_key_col=network_key_col, data_key_col=data_key_col)
 
     def __update_table(self, type, df, network_key_col='name', data_key_col='name'):
         table = {
             'key': network_key_col,
- 		    'dataKey': data_key_col
+            'dataKey': data_key_col
         }
         data = []
         col_names = df.columns.values
@@ -145,7 +228,6 @@ class CyNetwork(object):
         table['data'] = data
         requests.put(self.__url + 'tables/default' + type,
                       data=json.dumps(table), headers=HEADERS)
-
 
     def __delete_column(self, type, column):
         url = self.__url + 'tables/default' + type + '/columns/' + column
@@ -178,17 +260,6 @@ class CyNetwork(object):
 
     def create_network_column(self, name, data_type='String', is_immutable=False, is_list=False):
         self.__create_column('network', name=name, data_type=data_type, immutable=is_immutable, list=is_list)
-
-    def __data_frame_to_table(self, df):
-        """
-        Convert Pandas DataFrame to POSTable table
-
-        :param df:
-        :return:
-        """
-
-        cytable = {}
-
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
