@@ -9,7 +9,7 @@ from ..util import dataframe as df_util
 from . import BASE_URL, HEADERS
 
 BASE_URL_NETWORK = BASE_URL + 'networks'
-JSON = 'json'
+# JSON = 'json'
 
 
 class CyNetwork(object):
@@ -269,9 +269,3 @@ class CyNetwork(object):
 
     def __ne__(self, other):
         return not self.__eq__(other)
-
-
-
-class CyTable(object):
-    def __init__(self, suid, type):
-        self.__id = suid
