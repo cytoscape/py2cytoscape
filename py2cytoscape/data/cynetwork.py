@@ -261,6 +261,20 @@ class CyNetwork(object):
     def create_network_column(self, name, data_type='String', is_immutable=False, is_list=False):
         self.__create_column('network', name=name, data_type=data_type, immutable=is_immutable, list=is_list)
 
+
+    # Views
+    def get_views(self):
+        url = self.__url + 'views'
+        return requests.get(url).json()
+
+    def get_first_view(self):
+        url = self.__url + 'views/first'
+        return requests.get(url).json()
+
+    def get_view(self, view_id):
+        url = self.__url + 'views/' + str(view_id)
+        return requests.get(url).json()
+
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             return self.__id == other.__id

@@ -2,3 +2,8 @@
 
 import enum
 
+import requests
+
+from . import HEADERS, SUID_LIST
+
+
