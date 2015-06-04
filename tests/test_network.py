@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from py2cytoscape.data.cyrest_client import CyRestClient
-from py2cytoscape.data.cynetwork import CyNetwork
-
-import py2cytoscape.util.dataframe as df_util
-import json
-import numpy as np
-import pandas as pd
 
 import networkx as nx
+
+from py2cytoscape.data.cyrest_client import CyRestClient
+import py2cytoscape.util.dataframe as df_util
+import json
 
 
 def pp(dict_data):
@@ -48,7 +45,7 @@ class CyRestClientTests(unittest.TestCase):
         print('\n---------- Network API Tests Start -----------\n')
         # Create empty network
         for i in range(5):
-            network = self.client.network.create()
+            self.client.network.create()
 
         networks = self.client.network.get_all(format='json')
         self.assertIsNotNone(networks)
@@ -90,18 +87,19 @@ class CyRestClientTests(unittest.TestCase):
     def test_convert(self):
         print('\n---------- DataFrame Conversion Tests Start -----------\n')
         import os
+        import pandas as pd
         dir_name = os.path.dirname(os.path.realpath(__file__))
-        df = pd.read_csv(dir_name + '/data/galFiltered.sif', names=[
-                                                                           'source',
-                                                         'interaction', 'target'], sep=' ')
+        df = pd.read_csv(
+            dir_name + '/data/galFiltered.sif',
+            names=['source', 'interaction', 'target'], sep=' ')
         print(df.head(3))
         net = df_util.from_dataframe(df)
 
-        network = self.client.network.create(data=net, name='Created from DataFrame')
-        # print(network)
+        network = self.client.network.create(
+            data=net, name='Created from DataFrame')
         dir_name = os.path.dirname(os.path.realpath(__file__))
-        data_table = pd.read_csv(dir_name +
-                                 '/data/galFiltered.nodeAttrTable.txt', sep='\t')
+        file_name = dir_name + '/data/galFiltered.nodeAttrTable.txt'
+        data_table = pd.read_csv(file_name, sep='\t')
         network.update_node_table(df=data_table, data_key_col='ID')
         print('\n---------- DataFrame Conversion Tests Finished! -----------\n')
 

@@ -35,7 +35,23 @@ class StyleClient(object):
         return Style(name=new_style_name)
 
     def get_all(self):
+        """
+        Get list of all available styles.
+
+        :return: List of style names
+        """
         return requests.get(self.__url).json()
+
+    def get(self, name, data_format='cy3'):
+        if name is None:
+            raise ValueError('Style name is required.')
+
+        url = self.__url + '/' + name
+        if data_format == 'cytoscapejs':
+            url = url + '.json'
+            return requests.get(url).json()[0]
+        else:
+            return requests.get(url).json()
 
     def apply(self, style, network=None):
         if network is None:

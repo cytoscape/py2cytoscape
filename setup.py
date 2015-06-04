@@ -36,5 +36,6 @@ setup(
     ],
     test_suite='tests',
     packages=find_packages(),
-    package_data={'py2cytoscape': ['cytoscapejs/*.js', 'cytoscapejs/*.html', 'cytoscapejs/*.json']}
+    package_data={'py2cytoscape': ['cytoscapejs/*.js', 'cytoscapejs/*.html', 'cytoscapejs/*.json']},
+    requires=['networkx']
 )

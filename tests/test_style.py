@@ -6,6 +6,7 @@ from py2cytoscape.data.style import Style
 from py2cytoscape.data.cyrest_client import CyRestClient
 
 import pandas as pd
+import json
 
 STYLE_NAME = 'style1'
 
@@ -20,6 +21,13 @@ class StyleTests(unittest.TestCase):
 
         self.style = self.client.style.create(STYLE_NAME)
         self.assertEqual(STYLE_NAME, self.style.get_name())
+
+    def test_get_style(self):
+        style_as_cy3_json = self.client.style.get(STYLE_NAME)
+        style_as_cyjs_json = self.client.style.get(STYLE_NAME,
+                                                   data_format='cytoscapejs')
+        print(style_as_cy3_json)
+        print(json.dumps(style_as_cyjs_json,indent=4))
 
     def test_mappings(self):
         print('\n---------- Mappings tests start -----------\n')

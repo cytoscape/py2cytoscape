@@ -4,5 +4,6 @@ Tests for py2cytoscape
 -------------------
 
 """
+import json
 
 print('============ Test Init =============')
