@@ -72,33 +72,38 @@ class CyRestClientTests(unittest.TestCase):
 
         new_edges = ((nd['a'], nd['b'], 'i1'), (nd['a'], nd['c'], 'i1'))
         new_edges_result = network.add_edges(new_edges)
-        pp(new_edges_result)
+        print(new_edges_result)
+        self.assertEqual(2, len(new_edges_result))
 
-        node_table = network.get_table('node')
-        pp(node_table)
-        node_table = network.get_table('node', format='tsv')
+        node_table = network.get_node_table()
         print(node_table)
-        node_table = network.get_table('node', format='csv')
+        node_table = network.get_node_table(format='tsv')
+        print(node_table)
+        node_table = network.get_node_table(format='csv')
         print(node_table)
 
-        edge_table = network.get_table('edge')
-        pp(edge_table)
+        edge_table = network.get_edge_table()
+        print(edge_table)
 
         print('\n---------- CyNetwork Tests Finished! -----------\n')
 
     def test_convert(self):
         print('\n---------- DataFrame Conversion Tests Start -----------\n')
-        df = pd.read_csv('data/galFiltered.sif', names=['source', 'interaction', 'target'], sep=' ')
+        import os
+        dir_name = os.path.dirname(os.path.realpath(__file__))
+        df = pd.read_csv(dir_name + '/data/galFiltered.sif', names=[
+                                                                           'source',
+                                                         'interaction', 'target'], sep=' ')
         print(df.head(3))
-
         net = df_util.from_dataframe(df)
 
         network = self.client.network.create(data=net, name='Created from DataFrame')
         # print(network)
-        data_table = pd.read_csv('data/galFiltered.nodeAttrTable.txt', sep='\t')
-        network.update_table(type='node', df=data_table, data_key_col='ID')
+        dir_name = os.path.dirname(os.path.realpath(__file__))
+        data_table = pd.read_csv(dir_name +
+                                 '/data/galFiltered.nodeAttrTable.txt', sep='\t')
+        network.update_node_table(df=data_table, data_key_col='ID')
         print('\n---------- DataFrame Conversion Tests Finished! -----------\n')
-
 
     def test_delete_network(self):
         network = self.client.network.create()

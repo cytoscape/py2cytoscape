@@ -16,7 +16,7 @@ class StyleClient(object):
 
         self.vps = VisualProperties(url)
 
-    def create(self, name=None):
+    def create(self, name=None, original_style=None):
         if name is None:
             raise ValueError('Name is required.')
 
@@ -29,6 +29,7 @@ class StyleClient(object):
             'title': name,
             'defaults': [],
             'mappings': []
+
         }
         new_style_name = requests.post(self.__url, data=json.dumps(style), headers=HEADERS).json()['title']
         return Style(name=new_style_name)
@@ -42,6 +43,12 @@ class StyleClient(object):
 
         url = self.__url_apply + style.get_name() + '/' + str(network.get_id())
         requests.get(url)
+
+    def delete(self, style):
+        requests.delete(self.__url + '/' + style.get_name())
+
+    def delete_all(self):
+        requests.delete(self.__url)
 
 
 class VisualProperties(object):

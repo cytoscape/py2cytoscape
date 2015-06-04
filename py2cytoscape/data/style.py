@@ -1,6 +1,7 @@
 from . import BASE_URL, HEADERS
 import requests
 import json
+import pandas as pd
 
 
 class Style(object):
@@ -22,58 +23,92 @@ class Style(object):
         """
         return self.__name
 
-    def __get_new_mapping(self, mapping_type, column=None, dataType='String', vp=None):
+    def __get_new_mapping(self, mapping_type, column=None, col_type='String',
+                          vp=None):
         if column is None or vp is None:
             raise ValueError('both column name and visual property are required.')
 
         new_maping = {
             'mappingType': mapping_type,
             'mappingColumn': column,
-            'mappingColumnType': dataType,
+            'mappingColumnType': col_type,
             'visualProperty': vp
         }
 
         return new_maping
 
-    def create_discrete_mapping(self, column=None, dataType='String', vp=None, mappings=None):
+    def create_discrete_mapping(self, column=None, col_type='String',
+                                vp=None, mappings=None):
         self.__call_create_mapping(
-            self.__get_discrete(column=column, dataType=dataType, vp=vp, mappings=mappings))
+            self.__get_discrete(column=column, col_type=col_type, vp=vp,
+                                mappings=mappings))
 
-    def create_continuous_mapping(self, column=None, dataType='String', vp=None, points=None):
+    def create_continuous_mapping(self, column=None, col_type='String',
+                                  vp=None, points=None):
         self.__call_create_mapping(
-            self.__get_continuous(column=column, dataType=dataType, vp=vp, points=points))
+            self.__get_continuous(column=column, col_type=col_type, vp=vp,
+                                  points=points))
 
-    def create_passthrough_mapping(self, column=None, dataType='String', vp=None):
+    def create_passthrough_mapping(self, column=None, col_type='String',
+                                   vp=None):
         self.__call_create_mapping(
-            self.__get_passthrough(column=column, dataType=dataType, vp=vp))
+            self.__get_passthrough(column=column, col_type=col_type, vp=vp))
 
     def __call_create_mapping(self, mapping):
         url = self.__url + 'mappings'
         requests.post(url, data=json.dumps([mapping]), headers=HEADERS)
 
-    def __get_passthrough(self, column=None, dataType='String', vp=None):
-        return self.__get_new_mapping('passthrough', column=column, dataType=dataType, vp=vp)
+    def __get_passthrough(self, column=None, col_type='String', vp=None):
+        return self.__get_new_mapping('passthrough', column=column,
+                                      col_type=col_type, vp=vp)
 
-    def __get_discrete(self, column=None, dataType='String', vp=None, mappings=None):
-        new_mapping = self.__get_new_mapping('discrete', column=column, dataType=dataType, vp=vp)
+    def __get_discrete(self, column=None, col_type='String', vp=None,
+                       mappings=None):
+        new_mapping = self.__get_new_mapping('discrete', column=column,
+                                             col_type=col_type, vp=vp)
         if mappings is None:
             raise ValueError('key-value pair object (mappings) is required.')
         body = [{'key': key, 'value': mappings[key]} for key in mappings.keys()]
         new_mapping['map'] = body
         return new_mapping
 
-    def __get_continuous(self, column=None, dataType='String', vp=None, points=None):
+    def __get_continuous(self, column=None, col_type='String', vp=None,
+                         points=None):
         if points is None:
             raise ValueError('key-value pair object (mappings) is required.')
-        new_mapping = self.__get_new_mapping('continuous', column=column, dataType=dataType, vp=vp)
+        new_mapping = self.__get_new_mapping('continuous', column=column,
+                                             col_type=col_type, vp=vp)
         new_mapping['points'] = points
         return new_mapping
 
+    def get_mapping(self, vp=None):
+        if vp is None:
+            raise ValueError('Visual Property ID is required.')
+
+        url = self.__url + 'mappings/' + vp
+        return requests.get(url).json()
+
+    def get_mappings(self):
+        url = self.__url + 'mappings'
+        return requests.get(url).json()
+
     def get_default(self, vp=None):
-        pass
+        if vp is None:
+            raise ValueError('Visual Property ID is required.')
+
+        url = self.__url + 'defaults/' + vp
+        key_value_pair = requests.get(url).content
+        print(key_value_pair)
+        key2 = requests.get(url).json()
+        key_value_pair = key2
+        return pd.Series({key_value_pair['visualProperty']: key_value_pair[
+            'value']})
 
     def get_defaults(self):
-        pass
+        url = self.__url + 'defaults'
+        result = requests.get(url).json()['defaults']
+        vals = {entry['visualProperty']: entry['value'] for entry in result}
+        return pd.Series(vals)
 
     def update_defaults(self, key_value_pair):
         body = []
@@ -87,3 +122,15 @@ class Style(object):
         url = self.__url + 'defaults'
         requests.put(url, data=json.dumps(body), headers=HEADERS)
 
+    # Delete Methods
+
+    def delete_mapping(self, vp=None):
+        if vp is None:
+            return
+
+        url = self.__url + 'mappings/' + vp
+        requests.delete(url)
+
+    def delete_mappings(self):
+        url = self.__url + 'mappings'
+        requests.delete(url)

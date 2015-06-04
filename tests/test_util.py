@@ -25,6 +25,10 @@ def compare_edge_sets(nx_edges, cy_edges):
 
 class NetworkConversionTests(unittest.TestCase):
 
+    def setUp(self):
+        self.cur_dir = os.path.dirname(os.path.realpath(__file__))
+        pass
+
     def test_networkx_emptynetwork(self):
         g = nx.Graph()
         cyjs_g = util.from_networkx(g)
@@ -152,7 +156,7 @@ class NetworkConversionTests(unittest.TestCase):
         self.assertEqual(0, len(diff))
 
     def test_networkx_gml(self):
-        g = nx.read_gml('tests/data/galFiltered.gml')
+        g = nx.read_gml(self.cur_dir + '/data/galFiltered.gml')
         g.graph['name'] = 'gml_test'
 
         cyjs_g = util.from_networkx(g)
@@ -196,7 +200,7 @@ class NetworkConversionTests(unittest.TestCase):
         self.assertEqual(type("1"), type(node0['data']['id']))
 
     def test_networkx_parse_network(self):
-        f = open('tests/data/galFiltered.json', 'r')
+        f = open(self.cur_dir + '/data/galFiltered.json', 'r')
         jsonData = json.load(f)
 
         j_nodes = jsonData['elements']['nodes']
