@@ -9,5 +9,3 @@ py2cytoscape
     http://www.cytoscape.org/
 
 """
-
-
