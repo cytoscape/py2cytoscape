@@ -3,6 +3,9 @@
 
 ![](http://www.cytoscape.org/images/3_1_title3.png)
 
+## Status
+* 6/4/2014: Version 0.4.0 release.  This is still in alpha.
+
 ## What is _py2cytoscape_?
 py2cytoscape is a collection of utilities to use [Cytoscape](http://www.cytoscape.org/) and [Cytoscape.js](http://js.cytoscape.org/) from Python.  Network visualization feature is still limited in Python, but with this tool, you can access both of Cytoscape and Cytoscape.js as network visualization engines for your Python code!
 
