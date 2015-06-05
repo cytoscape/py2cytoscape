@@ -41,6 +41,21 @@ class CyRestClientTests(unittest.TestCase):
         self.assertIsNotNone(networks)
         self.assertEqual(num_networks, len(networks))
 
+    def test_create_from(self):
+        print('\n---------- Loading network tests start -----------\n')
+        # Create from URL
+        locations = [
+            'http://chianti.ucsd.edu/cytoscape-data/galFiltered.sif',
+            'http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/'
+            + 'webservices/current/search/interactor/brca2_human?format=xml25'
+
+        ]
+
+        networks = self.client.network.create_from(locations)
+        print(networks)
+        self.assertIsNotNone(networks)
+        print('---------- Loading networks done! -----------\n')
+
     def test_network_api(self):
         print('\n---------- Network API Tests Start -----------\n')
         # Create empty network

@@ -177,7 +177,8 @@ class CyNetwork(object):
 
     def __get_column(self, type=None, column=None):
         url = self.__url + 'tables/default' + type + '/columns/' + column
-        return pd.Series(requests.get(url).json())
+        result = requests.get(url).json()
+        return pd.Series(result['values'])
 
     def get_node_column(self, column):
         return self.__get_column('node', column=column)
@@ -205,18 +206,27 @@ class CyNetwork(object):
     def get_network_value(self, column):
         return self.__get_value(type='network', id=self.__id, column=column)
 
-    def update_node_table(self, df=None, network_key_col='name', data_key_col='name'):
+    def update_node_table(self, df=None, network_key_col='name',
+                          data_key_col=None):
         return self.__update_table('node', df=df, network_key_col=network_key_col, data_key_col=data_key_col)
 
-    def __update_table(self, type, df, network_key_col='name', data_key_col='name'):
+    def __update_table(self, type, df, network_key_col='name',
+                       data_key_col=None):
+
+        if data_key_col is None:
+            # Use index
+            data_key = 'index'
+        else:
+            data_key = data_key_col
+
         table = {
             'key': network_key_col,
-            'dataKey': data_key_col
+            'dataKey': data_key
         }
         data = []
         col_names = df.columns.values
         for index, row in df.iterrows():
-            entry = {}
+            entry = {'index': index }
             for col in col_names:
                 value = row[col]
                 if pd.isnull(value):
@@ -226,8 +236,8 @@ class CyNetwork(object):
             data.append(entry)
 
         table['data'] = data
-        requests.put(self.__url + 'tables/default' + type,
-                      data=json.dumps(table), headers=HEADERS)
+        url = self.__url + 'tables/default' + type
+        requests.put(url, data=json.dumps(table), headers=HEADERS)
 
     def __delete_column(self, type, column):
         url = self.__url + 'tables/default' + type + '/columns/' + column

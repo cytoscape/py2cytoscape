@@ -30,7 +30,7 @@ def from_dataframe(df, source_col='source', target_col='target', interaction_col
             target = get_node(t)
             network['elements']['nodes'].append(target)
 
-        network['elements']['edges'].append(get_edge(s, t, interaction='pp'))
+        network['elements']['edges'].append(get_edge(s, t, interaction=row[interaction_col]))
     return network
 
 
@@ -64,11 +64,16 @@ def get_node(id):
 
 
 def get_edge(source, target, interaction):
+    if interaction is None:
+        itr = '-'
+    else:
+        itr = interaction
+
     edge = {
         'data': {
             'source': source,
             'target': target,
-            'interaction': interaction
+            'interaction': itr
         }
     }
 

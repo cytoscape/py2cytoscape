@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-
+import os
 import requests
 import json
+import pandas as pd
 
 from . import HEADERS, SUID_LIST
 from ..util import cytoscapejs as util
@@ -19,7 +20,55 @@ class NetworkClient(object):
     def __init__(self, url):
         self.__url = url + 'networks'
 
-    def create(self, suid=None, name=None, collection=None, data=None):
+    def create_from(self, locations=None, collection=None):
+        if locations is None:
+            raise ValueError('Locations parameter is required.')
+
+        input_type = type(locations)
+        if input_type is list or input_type is tuple or input_type is set:
+            location_list = []
+            for loc in locations:
+                if not str(loc).startswith('http'):
+                    location_list.append(self.__to_file_url(loc))
+                else:
+                    location_list.append(loc)
+        else:
+            if not str(locations).startswith('http'):
+                location_list = [self.__to_file_url(locations)]
+            else:
+                location_list = [locations]
+
+        if collection is None:
+            collection_name = 'Created from resources'
+        else:
+            collection_name = collection
+
+        parameters = {
+            'collection': collection_name,
+            'source': 'url'
+        }
+
+        res = requests.post(self.__url, data=json.dumps(location_list),
+                             params=parameters,
+                             headers=HEADERS).json()
+
+        if len(res) == 1:
+            network_ids = res[0]['networkSUID']
+            if len(network_ids) == 1:
+                return CyNetwork(network_ids[0])
+            else:
+                return [CyNetwork(suid) for suid in network_ids]
+        else:
+            result_dict = {entry['source']: CyNetwork(entry['networkSUID'])
+                           for entry in res}
+            return pd.Series(result_dict)
+
+    def __to_file_url(self, file_name):
+        local_file = os.path.abspath(file_name)
+        return 'file:///' + local_file
+
+    def create(self, suid=None, name=None, collection=None,
+               data=None):
         if suid is not None:
             # fetch existing network
             res = requests.get(self.__url)
@@ -61,11 +110,11 @@ class NetworkClient(object):
         if dataframe is None:
             raise ValueError('DataFrame object is required.')
 
-        cyjs = df_util.from_dataframe(dataframe,source_col=source_col,
+        # Convert from DataFrame to Cytoscape.js JSON
+        cyjs = df_util.from_dataframe(dataframe, source_col=source_col,
                               target_col=target_col, interaction_col=interaction_col,
                               name=name)
         return self.create(collection=collection, data=cyjs)
-
 
     def get_all(self, format=SUID_LIST):
         if format is SUID_LIST:

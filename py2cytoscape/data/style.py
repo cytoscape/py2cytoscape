@@ -134,3 +134,46 @@ class Style(object):
     def delete_mappings(self):
         url = self.__url + 'mappings'
         requests.delete(url)
+
+
+class StyleUtil(object):
+
+    @staticmethod
+    def create_2_color_gradient(min=0, max=10, colors=('red', 'green')):
+
+        points = [
+            {
+                'value': str(min),
+                'lesser': colors[0],
+                'equal':  colors[0],
+                'greater': colors[0],
+            },
+            {
+                'value': str(max),
+                'lesser': colors[1],
+                'equal': colors[1],
+                'greater': colors[1]
+            }
+        ]
+
+        return points
+
+    @staticmethod
+    def create_slope(min=0, max=10, values=(1, 10)):
+
+        points = [
+            {
+                'value': str(min),
+                'lesser': values[0],
+                'equal':  values[0],
+                'greater': values[0],
+            },
+            {
+                'value': str(max),
+                'lesser': values[1],
+                'equal': values[1],
+                'greater': values[1]
+            }
+        ]
+
+        return points
