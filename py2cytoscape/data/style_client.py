@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import enum
 import requests
 import json
-import pandas as pd
 
 from . import HEADERS, SUID_LIST
 from style import Style
+
 
 class StyleClient(object):
 
