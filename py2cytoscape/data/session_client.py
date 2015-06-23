@@ -8,3 +8,9 @@ class SessionClient(object):
 
     def delete(self):
         requests.delete(self.__url)
+
+    def save(self, file_name=None):
+        pass
+
+    def load(self, file_name=None):
+        pass

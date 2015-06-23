@@ -136,4 +136,3 @@ class NetworkClient(object):
         id = cynetwork.get_id()
         requests.delete(self.__url + '/' + str(id))
         del cynetwork
-

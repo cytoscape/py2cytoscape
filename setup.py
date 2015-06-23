@@ -13,14 +13,26 @@ from setuptools import setup, find_packages
 
 setup(
     name='py2cytoscape',
-    version='0.4.0',
+    version='0.4.1',
     description='Tools to use Cytoscape and Cytoscape.js from Python',
+    long_description='Collection of tools for using Cytoscape and '
+                     'cytoscape.js from Python.  From v0.4.0, '
+                     'it includes wrapper for Cytoscape '
+                     'cyREST App.',
     author='Keiichiro Ono',
     author_email='kono@ucsd.edu',
-    url='http://www.cytoscape.org/',
+    url='https://github.com/idekerlab/py2cytoscape',
     license='MIT License',
+    install_requires=[
+        'pandas',
+        'networkx',
+        'requests',
+        'python-igraph',
+        'pyparsing',
+        'scipy'
+    ],
     keywords=['data visualization', 'visualization', 'cytoscape',
-              'bioinformatics'],
+              'bioinformatics', 'graph', 'network'],
     classifiers=[
         'Intended Audience :: Science/Research',
         'Intended Audience :: Developers',
@@ -36,6 +48,5 @@ setup(
     ],
     test_suite='tests',
     packages=find_packages(),
-    package_data={'py2cytoscape': ['cytoscapejs/*.js', 'cytoscapejs/*.html', 'cytoscapejs/*.json']},
-    requires=['networkx']
+    include_package_data=True,
 )

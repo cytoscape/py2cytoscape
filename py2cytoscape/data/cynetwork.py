@@ -271,7 +271,6 @@ class CyNetwork(object):
     def create_network_column(self, name, data_type='String', is_immutable=False, is_list=False):
         self.__create_column('network', name=name, data_type=data_type, immutable=is_immutable, list=is_list)
 
-
     # Views
     def get_views(self):
         url = self.__url + 'views'

@@ -23,6 +23,8 @@ EDGES = 'edges'
 SOURCE = 'source'
 TARGET = 'target'
 
+DEF_SCALE = 100
+
 
 def __map_table_data(columns, graph_obj):
     data = {}
@@ -83,12 +85,16 @@ def __build_empty_graph():
     }
 
 
-def from_networkx(g):
+def from_networkx(g, layout=None, scale=DEF_SCALE):
     # Dictionary Object to be converted to Cytoscape.js JSON
     cygraph = __build_empty_graph()
 
+    if layout is not None:
+        pos = map(lambda position:
+                  {'x': position[0]*scale, 'y': position[1]*scale},
+                  layout.values())
+
     nodes = g.nodes()
-    edge_builder = None
     if isinstance(g, nx.MultiDiGraph) or isinstance(g, nx.MultiGraph):
         edges = g.edges(data=True, keys=True)
         edge_builder = __build_multi_edge
@@ -99,8 +105,12 @@ def from_networkx(g):
     # Map network table data
     cygraph[DATA] = __map_table_data(g.graph.keys(), g.graph)
 
-    for node_id in nodes:
-        cygraph['elements']['nodes'].append(__create_node(g.node[node_id], node_id))
+    for i, node_id in enumerate(nodes):
+        new_node = __create_node(g.node[node_id], node_id)
+        if layout is not None:
+            new_node['position'] = pos[i]
+
+        cygraph['elements']['nodes'].append(new_node)
 
     for edge in edges:
         cygraph['elements']['edges'].append(edge_builder(edge, g))

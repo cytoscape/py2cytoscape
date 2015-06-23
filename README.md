@@ -4,6 +4,7 @@
 ![](http://www.cytoscape.org/images/3_1_title3.png)
 
 ## Status
+* 6/23/2014: Version 0.4.1 release.  Graph utility modules have been updated.
 * 6/4/2014: Version 0.4.0 release.  This is still in alpha.
 
 ## What is _py2cytoscape_?
@@ -81,7 +82,7 @@ Cytoscape.js JSON is one of the standard data exchange formats in Cytoscape comm
 Currently, the following graph objects are supported:
 
 * [NetworkX](https://networkx.github.io/) - From / To Cytoscape.js JSON
-* [igraph](http://igraph.org/python/) - To Cytoscape.js JSON
+* [igraph](http://igraph.org/python/) - From / To Cytoscape.js JSON
 * [pandas DataFrame](http://pandas.pydata.org/) - To Cytoscape.js JSON
 
 And these popular libraries will be supported soon:

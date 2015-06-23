@@ -5,7 +5,9 @@ Conversion utilities for igraph
 
 """
 
-DEF_SCALING = 1.0
+import igraph as ig
+
+DEF_SCALING = 100.0
 
 
 def from_igraph(igraph_network, layout=None, scale=DEF_SCALING):
@@ -59,3 +61,66 @@ def from_igraph(igraph_network, layout=None, scale=DEF_SCALING):
     new_graph['data'] = network_data
 
     return new_graph
+
+
+def to_igraph(network):
+
+    nodes = network['elements']['nodes']
+    edges = network['elements']['edges']
+    network_attr = network['data']
+
+    node_count = len(nodes)
+    edge_count = len(edges)
+
+    g = ig.Graph()
+
+    # Graph attributes
+    for key in network_attr.keys():
+        g[key] = network_attr[key]
+
+    g.add_vertices(nodes)
+
+    # Add node attributes
+    node_attributes = {}
+    node_id_dict = {}
+    for i, node in enumerate(nodes):
+        data = node['data']
+        for key in data.keys():
+            if key not in node_attributes:
+                node_attributes[key] = [None] * node_count
+
+            # Save index to map
+            if key == 'id':
+                node_id_dict[data[key]] = i
+
+            node_attributes[key][i] = data[key]
+
+    for key in node_attributes.keys():
+        g.vs[key] = node_attributes[key]
+
+    # Create edges
+    edge_tuples = []
+    edge_attributes = {}
+    for i, edge in enumerate(edges):
+        data = edge['data']
+        source = data['source']
+        target = data['target']
+        edge_tuple = (node_id_dict[source], node_id_dict[target])
+        edge_tuples.append(edge_tuple)
+        for key in data.keys():
+            if key not in edge_attributes:
+                edge_attributes[key] = [None] * edge_count
+
+            # Save index to map
+            edge_attributes[key][i] = data[key]
+
+    g.add_edges(edge_tuples)
+
+    # Assign edge attributes
+    for key in edge_attributes.keys():
+        if key == 'source' or key == 'target':
+            continue
+        else:
+            g.es[key] = edge_attributes[key]
+
+    return g
