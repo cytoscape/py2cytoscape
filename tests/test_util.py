@@ -270,6 +270,28 @@ class NetworkConversionTests(unittest.TestCase):
         self.assertEqual(0, len(cyjs['elements']['nodes']))
         self.assertEqual(0, len(cyjs['elements']['edges']))
 
+    def test_to_igraph(self):
+        print('---------- Cytoscape.js to igraph object -----------\n')
+
+        from py2cytoscape.util.util_igraph import to_igraph
+        f = open(self.cur_dir + '/data/galFiltered.json', 'r')
+        network = json.load(f)
+
+        g = to_igraph(network)
+        self.assertIsNotNone(g)
+        nodes = g.vs
+        edges = g.es
+
+        self.assertEqual(len(network['elements']['nodes']), len(nodes))
+        self.assertEqual(len(network['elements']['edges']), len(edges))
+
+        self.assertEqual('Yeast Network Sample', g['name'])
+        self.assertEqual('Yeast Sample', g['shared_name'])
+
+        print(g.attributes())
+        print(g.vs.attribute_names())
+        print(g.es.attribute_names())
+
     def test_from_igraph_random(self):
         print('---------- From igraph random network object to Cytoscape.js -----------\n')
         ba_graph = ig.Graph.Barabasi(100, 3)
