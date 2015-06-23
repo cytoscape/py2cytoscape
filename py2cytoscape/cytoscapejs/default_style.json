@@ -144,7 +144,7 @@
       "line-style" : "solid",
       "text-opacity" : 1.0,
       "target-arrow-color" : "rgb(51,51,51)",
-      "width" : 2.0,
+      "width" : 1.0,
       "font-family" : "SansSerif",
       "font-weight" : "normal",
       "source-arrow-color" : "rgb(0,0,0)",
