@@ -83,9 +83,14 @@ def __build_empty_graph():
     }
 
 
-def from_networkx(g):
+def from_networkx(g, layout=None):
     # Dictionary Object to be converted to Cytoscape.js JSON
     cygraph = __build_empty_graph()
+
+    if layout is not None:
+        pos = map(lambda position:
+                  {'x': position[0], 'y': position[1]},
+                  layout.values())
 
     nodes = g.nodes()
     edge_builder = None
@@ -140,3 +145,7 @@ def to_networkx(cyjs, directed=True):
         g.add_edge(source, target, attr_dict=data)
 
     return g
+
+
+def __get_positions(pos):
+    pos2 = map(lambda position: {'x': position[0], 'y':position[1] }, pos.values())

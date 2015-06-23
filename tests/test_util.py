@@ -288,9 +288,17 @@ class NetworkConversionTests(unittest.TestCase):
         self.assertEqual('Yeast Network Sample', g['name'])
         self.assertEqual('Yeast Sample', g['shared_name'])
 
-        print(g.attributes())
-        print(g.vs.attribute_names())
-        print(g.es.attribute_names())
+        net_names = g.attributes()
+        print(net_names)
+        self.assertEqual(type([]), type(g['numberList']))
+        self.assertEqual(type([]), type(g['floatList']))
+        self.assertEqual(type(u""), type(g['description']))
+        self.assertEqual(10, len(net_names))
+
+        na_names = g.vs.attribute_names()
+        self.assertEqual(31, len(na_names))
+        ea_names = g.es.attribute_names()
+        self.assertEqual(8, len(ea_names))
 
     def test_from_igraph_random(self):
         print('---------- From igraph random network object to Cytoscape.js -----------\n')
