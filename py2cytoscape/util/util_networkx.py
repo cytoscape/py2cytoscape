@@ -91,7 +91,7 @@ def from_networkx(g, layout=None, scale=DEF_SCALE):
 
     if layout is not None:
         pos = map(lambda position:
-                  {'x': position[0] * scale, 'y': position[1]*scale},
+                  {'x': position[0]*scale, 'y': position[1]*scale},
                   layout.values())
 
     nodes = g.nodes()
@@ -150,7 +150,3 @@ def to_networkx(cyjs, directed=True):
         g.add_edge(source, target, attr_dict=data)
 
     return g
-
-
-def __get_positions(pos):
-    pos2 = map(lambda position: {'x': position[0], 'y':position[1] }, pos.values())
