@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset=utf-8 />
     <style type="text/css">
@@ -31,6 +30,8 @@
                 name: '{{layout}}'
             },
 
+            boxSelectionEnabled: true,
+
             ready: function() {
                 window.cy = this;
                 cy.fit();
@@ -41,10 +42,10 @@
 
       var before_render = function(){
         if(window['cytoscape'] === undefined){
-          console.log("waiting for Cyjs!");
+          console.log("Waiting for Cyjs...");
           window.addEventListener("load_cytoscape", before_render);
         } else {
-          console.log("Ready to render graph...");
+          console.log("Ready to render graph!");
           render();
         }
       }
@@ -57,7 +58,9 @@
 
 <body>
   <div id="{{uuid}}"></div>
-  <!-- When only #uuid div is placed on this page, the height of output-box on ipynb will be 0px. One line below will prevent that. -->
+  <!-- When only #uuid div is placed on this page,
+  the height of output-box on ipynb will be 0px.
+  One line below will prevent that. -->
   <div id="dummy" style="width:{{widget_width}}px;height:{{widget_height}}px">
 </body>
 

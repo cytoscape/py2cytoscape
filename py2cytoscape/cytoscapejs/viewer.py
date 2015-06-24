@@ -24,7 +24,7 @@ DEF_EDGES = [
 ]
 
 DEF_LAYOUT = 'preset'
-DEF_STYLE = 'default'
+DEF_STYLE = 'default2'
 
 PRESET_LAYOUTS = {
     'Preset': 'preset',
@@ -39,22 +39,41 @@ PRESET_LAYOUTS = {
 # Init styles
 style_file = open(os.path.abspath(os.path.dirname(__file__)) + '/' + STYLE_FILE, 'r')
 style_list = json.load(style_file)
-styles = {}
+STYLES = {}
 for style in style_list:
-    styles[style['title']] = style['style']
+    STYLES[style['title']] = style['style']
 
 
-def render(network, style=DEF_STYLE, layout_algorithm=DEF_LAYOUT,
-           background=DEF_BACKGROUND_COLOR, height=DEF_HEIGHT, width=DEF_WIDTH):
+def render(network,
+           style=DEF_STYLE,
+           layout_algorithm=DEF_LAYOUT,
+           background=DEF_BACKGROUND_COLOR,
+           height=DEF_HEIGHT,
+           width=DEF_WIDTH):
+    """Render network data with embedded Cytoscape.js widget.
+
+    :param network: dict (required)
+        The network data should be in Cytoscape.js JSON format.
+    :param style: str or dict
+        If str, pick one of the preset style. [default: 'default']
+        If dict, it should be Cytoscape.js style CSS object
+    :param layout_algorithm: str
+        Name of Cytoscape.js layout algorithm
+    :param background: str
+        Background in CSS format
+    :param height: int
+        Height of the widget.
+    :param width: int
+        Width of the widget.
+    """
+
     from jinja2 import Template
     from IPython.core.display import display, HTML
 
     # Load style file if none available
-    if style is None:
-        style = styles['default2']
-    elif isinstance(style, str):
+    if isinstance(style, str):
         # Specified by name
-        style = styles[style]
+        style = STYLES[style]
 
     if network is None:
         nodes = DEF_NODES
@@ -65,20 +84,29 @@ def render(network, style=DEF_STYLE, layout_algorithm=DEF_LAYOUT,
 
     path = os.path.abspath(os.path.dirname(__file__)) + '/' + HTML_TEMPLATE_FILE
     template = Template(open(path).read())
-    cyjs_widget = template.render(nodes=json.dumps(nodes), edges=json.dumps(edges), background=background,
-                                  uuid="cy" + str(uuid.uuid4()), widget_width=str(width), widget_height=str(height),
-                                  layout=layout_algorithm, style_json=json.dumps(style))
+    cyjs_widget = template.render(
+        nodes=json.dumps(nodes),
+        edges=json.dumps(edges),
+        background=background,
+        uuid="cy" + str(uuid.uuid4()),
+        widget_width=str(width),
+        widget_height=str(height),
+        layout=layout_algorithm,
+        style_json=json.dumps(style)
+    )
 
-    return display(HTML(cyjs_widget))
+    display(HTML(cyjs_widget))
 
 
 # List of available layout algorithms
 def get_layouts():
     return PRESET_LAYOUTS
 
+def get_style_names():
+    return STYLES.keys()
 
-def embed_share(url, width=DEF_WIDTH, height=DEF_HEIGHT):
-    from IPython.core.display import display
-    from IPython.lib.display import IFrame
-
-    return display(IFrame(url, width, height))
+def get_style(name):
+    if name in STYLES.keys():
+        return STYLES[name]
+    else:
+        raise ValueError('Style does not exist: ' + name)
