@@ -4,6 +4,7 @@
 ![](http://www.cytoscape.org/images/3_1_title3.png)
 
 ## Status
+* 6/26/2014: Version 0.4.2 release. Confirmed to work with cyREST 1.1.0.
 * 6/23/2014: Version 0.4.1 release.  Graph utility modules have been updated.
 * 6/4/2014: Version 0.4.0 release.  This is still in alpha.
 
