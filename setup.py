@@ -17,8 +17,7 @@ setup(
     description='Tools to use Cytoscape and Cytoscape.js from Python',
     long_description='Collection of tools for using Cytoscape and '
                      'cytoscape.js from Python.  From v0.4.0, '
-                     'it includes wrapper for Cytoscape\'s '
-                     'cyREST App.',
+                     'it includes wrapper for cyREST REST API.',
     author='Keiichiro Ono',
     author_email='kono@ucsd.edu',
     url='https://github.com/idekerlab/py2cytoscape',
