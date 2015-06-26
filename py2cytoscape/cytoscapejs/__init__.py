@@ -9,7 +9,6 @@ from py2cytoscape.cytoscapejs.viewer import *
 
 JS_LOADER_FILE = "loader.js"
 
-
 def init():
     from IPython.core.display import display, Javascript
 

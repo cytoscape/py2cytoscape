@@ -8,7 +8,7 @@ if (window['cytoscape'] === undefined) {
     });
 
     require(['cytoscape'], function (cytoscape) {
-        console.log('---------- Loading Cytoscape.js Module -----------');
+        console.log('Loading Cytoscape.js Module...');
         window['cytoscape'] = cytoscape;
 
         var event = document.createEvent("HTMLEvents");

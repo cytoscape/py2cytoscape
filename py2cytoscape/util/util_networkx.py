@@ -1,7 +1,6 @@
 """
-*******
 Data conversion utility for NetworkX
-*******
+=====================================
 
 Convert cytoscape.js style graphs from/to NetworkX object.
 
