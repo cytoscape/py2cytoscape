@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
+
 Setup script for py2cytoscape
 
 To install, run:
 
 python setup.py install
+
 """
 
 from setuptools import setup, find_packages
