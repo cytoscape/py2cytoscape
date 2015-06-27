@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from network_client import NetworkClient
-from style_client import StyleClient
-from algorithm_client import LayoutClient
-from session_client import SessionClient
+from .network_client import NetworkClient
+from .style_client import StyleClient
+from .algorithm_client import LayoutClient
+from .session_client import SessionClient
 
 from . import PORT, IP, VERSION
 

@@ -223,21 +223,11 @@ class CyNetwork(object):
             'key': network_key_col,
             'dataKey': data_key
         }
-        data = []
-        col_names = df.columns.values
-        for index, row in df.iterrows():
-            entry = {'index': index }
-            for col in col_names:
-                value = row[col]
-                if pd.isnull(value):
-                    continue
-                else:
-                    entry[col] = value
-            data.append(entry)
 
-        table['data'] = data
+        data = df.to_json(orient='records')
+        table['data'] = json.loads(data)
         url = self.__url + 'tables/default' + type
-        requests.put(url, data=json.dumps(table), headers=HEADERS)
+        requests.put(url, json=table, headers=HEADERS)
 
     def __delete_column(self, type, column):
         url = self.__url + 'tables/default' + type + '/columns/' + column

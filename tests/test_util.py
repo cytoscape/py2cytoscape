@@ -17,7 +17,7 @@ def compare_edge_sets(nx_edges, cy_edges):
     for cyedge in cy_edges:
         source = cyedge['data']['source']
         target = cyedge['data']['target']
-        edge = (long(source), long(target))
+        edge = (int(source), int(target))
         edge_set.add(edge)
 
     return edge_set.difference(nx_edges)
@@ -219,7 +219,7 @@ class NetworkConversionTests(unittest.TestCase):
         self.assertEqual(len(j_nodes), len(nodes))
         self.assertEqual(len(j_edges), len(edges))
 
-        edge_set = set(list(map(lambda x: (long(x[0]), long(x[1])), edges)))
+        edge_set = set(list(map(lambda x: (int(x[0]), int(x[1])), edges)))
         self.assertEqual(0, len(compare_edge_sets(edge_set, j_edges)))
 
     def test_networkx_roundtrip(self):
@@ -245,7 +245,7 @@ class NetworkConversionTests(unittest.TestCase):
         self.assertEqual(len(g2.nodes()), len(nodes))
         self.assertEqual(len(g2.edges()), len(edges))
 
-        edge_set = set(list(map(lambda x: (long(x[0]), long(x[1])), g2.edges())))
+        edge_set = set(list(map(lambda x: (int(x[0]), int(x[1])), g2.edges())))
         self.assertEqual(0, len(edge_set.difference(set(edges))))
 
         node_original = g.node[1]

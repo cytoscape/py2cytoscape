@@ -1,5 +1,4 @@
 import requests
-from . import HEADERS, SUID_LIST
 
 
 class LayoutClient(object):

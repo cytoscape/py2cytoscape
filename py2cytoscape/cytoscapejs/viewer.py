@@ -103,7 +103,7 @@ def get_layouts():
     return PRESET_LAYOUTS
 
 def get_style_names():
-    return STYLES.keys()
+    return list(STYLES.keys())
 
 def get_style(name):
     if name in STYLES.keys():

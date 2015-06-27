@@ -101,8 +101,13 @@ class CyRestClientTests(unittest.TestCase):
 
     def test_convert(self):
         print('\n---------- DataFrame Conversion Tests Start -----------\n')
+
         import os
         import pandas as pd
+
+        # Clean up Cytoscape session
+        self.client.session.delete()
+
         dir_name = os.path.dirname(os.path.realpath(__file__))
         df = pd.read_csv(
             dir_name + '/data/galFiltered.sif',
@@ -110,12 +115,20 @@ class CyRestClientTests(unittest.TestCase):
         print(df.head(3))
         net = df_util.from_dataframe(df)
 
-        network = self.client.network.create(
-            data=net, name='Created from DataFrame')
+        network = self.client.network.create(data=net, name='Created from DataFrame')
+
+        original_column_count = len(network.get_node_columns())
+
         dir_name = os.path.dirname(os.path.realpath(__file__))
         file_name = dir_name + '/data/galFiltered.nodeAttrTable.txt'
         data_table = pd.read_csv(file_name, sep='\t')
+
         network.update_node_table(df=data_table, data_key_col='ID')
+        table_column_count = len(data_table.columns)
+        total_column_count = len(network.get_node_columns())
+
+        self.assertEqual(total_column_count, (original_column_count+table_column_count-1))
+
         print('\n---------- DataFrame Conversion Tests Finished! -----------\n')
 
     def test_delete_network(self):

@@ -4,7 +4,7 @@ import requests
 import json
 
 from . import HEADERS, SUID_LIST
-from style import Style
+from .style import Style
 
 
 class StyleClient(object):
