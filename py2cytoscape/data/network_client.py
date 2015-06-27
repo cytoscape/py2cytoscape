@@ -13,7 +13,7 @@ from ..util import dataframe as df_util
 
 JSON = 'json'
 
-from cynetwork import CyNetwork
+from .cynetwork import CyNetwork
 
 
 class NetworkClient(object):

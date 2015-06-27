@@ -1,5 +1,5 @@
 import pandas as pd
-import cytoscapejs as cyjs
+from . import cytoscapejs as cyjs
 
 
 def from_dataframe(df, source_col='source', target_col='target', interaction_col='interaction',

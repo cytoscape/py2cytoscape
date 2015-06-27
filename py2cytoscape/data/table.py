@@ -1,6 +1,6 @@
 import pandas as pd
 import json
-import requests
+
 
 class Table(object):
     """The Table object provides methods for Cytoscape table manipulation"""
