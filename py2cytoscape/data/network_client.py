@@ -8,6 +8,7 @@ from . import HEADERS, SUID_LIST
 from ..util import cytoscapejs as util
 
 from ..util import util_networkx as nx_util
+from ..util import util_igraph as ig_util
 from ..util import dataframe as df_util
 
 JSON = 'json'
@@ -102,6 +103,13 @@ class NetworkClient(object):
             raise ValueError('NetworkX graph object is required.')
 
         cyjs = nx_util.from_networkx(network)
+        return self.create(name=name, collection=collection, data=cyjs)
+
+    def create_from_igraph(self, network, name=None, collection=None):
+        if network is None:
+            raise ValueError('igraph object is required.')
+
+        cyjs = ig_util.from_igraph(network)
         return self.create(name=name, collection=collection, data=cyjs)
 
     def create_from_dataframe(self, dataframe, source_col='source',
