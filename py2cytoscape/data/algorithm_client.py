@@ -16,5 +16,23 @@ class LayoutClient(object):
         url = self.__url + '/' + name + '/' + str(network.get_id())
         requests.get(url)
 
-    def create_discrete_mapping(self, column=None, visual_property=None, mapping=None):
-        pass
+    def bundle_edge(self, network=None):
+        if network is None:
+            raise ValueError('Target network is required')
+
+        url = self.__url + '/edgebundling/' + str(network.get_id())
+        requests.get(url)
+
+
+class EdgeBundlingClient(object):
+
+    def __init__(self, url):
+        self.__url = url + 'apply/edgebundling'
+
+
+    def apply(self, network=None):
+        if network is None:
+            raise ValueError('Target network is required')
+
+        url = self.__url + '/' + str(network.get_id())
+        requests.get(url)
