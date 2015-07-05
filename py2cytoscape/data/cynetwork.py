@@ -270,6 +270,18 @@ class CyNetwork(object):
         url = self.__url + 'views/first'
         return requests.get(url).json()
 
+    def get_png(self):
+        url = self.__url + 'views/first.png'
+        return requests.get(url).content
+
+    def get_svg(self):
+        url = self.__url + 'views/first.svg'
+        return requests.get(url).content
+
+    def get_pdf(self):
+        url = self.__url + 'views/first.pdf'
+        return requests.get(url).content
+
     def get_view(self, view_id):
         url = self.__url + 'views/' + str(view_id)
         return requests.get(url).json()
