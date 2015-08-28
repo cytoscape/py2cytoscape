@@ -135,7 +135,7 @@ class NetworkClient(object):
         return result.json()
 
     def get(self, id):
-        return requests.get(self.__url + '/' + str(id) + '.json').json()
+        return requests.get(self.__url + '/' + str(id)).json()
 
     def delete_all(self):
         requests.delete(self.__url)
