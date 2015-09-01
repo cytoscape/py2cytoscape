@@ -99,6 +99,34 @@ class CyRestClientTests(unittest.TestCase):
 
         print('\n---------- CyNetwork Tests Finished! -----------\n')
 
+    def test_create_view(self):
+        print('\n---------- CyNetworkView Tests Start -----------\n')
+        network = self.client.network.create()
+        self.assertIsNotNone(network)
+        nodes = network.get_nodes()
+        pp(nodes)
+        new_nodes = ['a', 'b', 'c']
+        nd = network.add_nodes(new_nodes)
+        views = network.get_views()
+        print('Views: ')
+        print(views)
+        view_id = views[0]
+        view = network.get_view_object(view_id)
+        self.assertIsNotNone(view)
+        self.assertEqual(view_id, view.get_id())
+
+        node_views = view.get_node_views()
+        self.assertIsNotNone(node_views)
+        self.assertEqual(3, len(node_views))
+
+        view1 = node_views[0]
+        self.assertIsNotNone(view1)
+        self.assertEqual(0, view1.get_x())
+        view1.set_x(100)
+        self.assertEqual(100, view1.get_value('NODE_X_LOCATION'))
+
+
+
     def test_convert(self):
         print('\n---------- DataFrame Conversion Tests Start -----------\n')
 

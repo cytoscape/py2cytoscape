@@ -2,6 +2,7 @@ import json
 
 import pandas as pd
 import requests
+from py2cytoscape.data.network_view import CyNetworkView
 
 from ..util import util_networkx as nx_util
 from ..util import dataframe as df_util
@@ -285,6 +286,16 @@ class CyNetwork(object):
     def get_view(self, view_id):
         url = self.__url + 'views/' + str(view_id)
         return requests.get(url).json()
+
+    def get_view_object(self, view_id):
+        """
+        Create a new CyNetworkView object for the given ID.
+
+        :param view_id:
+        :return:
+        """
+        view = CyNetworkView(self, view_id)
+        return view
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
