@@ -264,11 +264,12 @@ class CyNetwork(object):
 
     # Views
     def get_views(self):
-        url = self.__url + 'views'
-        return requests.get(url).json()
+        """
+        Get views as a list of SUIDs
 
-    def get_first_view(self):
-        url = self.__url + 'views/first'
+        :return:
+        """
+        url = self.__url + 'views'
         return requests.get(url).json()
 
     def get_png(self):
@@ -283,11 +284,24 @@ class CyNetwork(object):
         url = self.__url + 'views/first.pdf'
         return requests.get(url).content
 
-    def get_view(self, view_id):
-        url = self.__url + 'views/' + str(view_id)
+    def get_first_view(self, format='json'):
+        """
+        Get a first view model as dict
+        :return:
+        """
+        url = self.__url + 'views/first'
         return requests.get(url).json()
 
-    def get_view_object(self, view_id):
+    def get_view(self, view_id, format='json'):
+        if format is 'json':
+            url = self.__url + 'views/' + str(view_id)
+            return requests.get(url).json()
+        elif format is 'view':
+            return self.__get_view_object(view_id)
+        else:
+            return None
+
+    def __get_view_object(self, view_id):
         """
         Create a new CyNetworkView object for the given ID.
 

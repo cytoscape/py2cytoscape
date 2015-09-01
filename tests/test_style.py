@@ -47,13 +47,13 @@ class StyleTests(unittest.TestCase):
         print(defs)
         self.assertIsNotNone(defs)
         self.assertEqual(pd.Series, type(defs))
-        self.assertEqual(103, len(defs))
+        self.assertEqual(106, len(defs))
 
         defs2 = self.style.get_defaults()
         print(defs2)
         self.assertIsNotNone(defs2)
         self.assertEqual(pd.Series, type(defs2))
-        self.assertEqual(103, len(defs2))
+        self.assertEqual(106, len(defs2))
 
         print('\n---------- Defaults tests finished! -----------\n')
 

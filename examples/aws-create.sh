@@ -44,6 +44,9 @@ echo "Instance type: \033[31m $aws_instance_type \033[0m"
 echo "Max. bid price: $aws_price"
 echo "Machine name: \033[31m $1 \033[0m"
 
+
+exit 1
+
 # Run AWS
 echo "\n<Creating new Docker host: $1>\n"
 

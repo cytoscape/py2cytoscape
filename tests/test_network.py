@@ -111,7 +111,34 @@ class CyRestClientTests(unittest.TestCase):
         print('Views: ')
         print(views)
         view_id = views[0]
-        view = network.get_view_object(view_id)
+        view = network.get_view(view_id, format='view')
+        self.assertIsNotNone(view)
+        self.assertEqual(view_id, view.get_id())
+
+        node_views = view.get_node_views()
+        self.assertIsNotNone(node_views)
+        self.assertEqual(3, len(node_views))
+
+        view1 = node_views[0]
+        self.assertIsNotNone(view1)
+        all_values = view1.get_values()
+        print(all_values)
+
+
+    def test_view_api(self):
+        print('\n---------- View API test start -----------\n')
+        network = self.client.network.create()
+        self.assertIsNotNone(network)
+        nodes = network.get_nodes()
+        pp(nodes)
+        new_nodes = ['a', 'b', 'c']
+        nd = network.add_nodes(new_nodes)
+        print(nd)
+        views = network.get_views()
+        print('Views: ')
+        print(views)
+        view_id = views[0]
+        view = network.get_view(view_id, format='view')
         self.assertIsNotNone(view)
         self.assertEqual(view_id, view.get_id())
 
@@ -125,6 +152,18 @@ class CyRestClientTests(unittest.TestCase):
         view1.set_x(100)
         self.assertEqual(100, view1.get_value('NODE_X_LOCATION'))
 
+        new_values = {}
+        for key in nd.keys():
+            suid = nd[key]
+            new_values[suid] = 'red'
+
+        view.update_node_views('NODE_FILL_COLOR', new_values)
+
+        new_values_name = {}
+        for node_name in new_nodes:
+            new_values_name[node_name] = 'pink'
+
+        view.update_node_views('NODE_FILL_COLOR', new_values_name, key_type='name')
 
 
     def test_convert(self):

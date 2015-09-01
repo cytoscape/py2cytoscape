@@ -6,10 +6,8 @@ import requests
 from py2cytoscape.data.edge_view import EdgeView
 from py2cytoscape.data.node_view import NodeView
 
-from ..util import util_networkx as nx_util
-from ..util import dataframe as df_util
-
 from . import BASE_URL, HEADERS
+from py2cytoscape.data.util_network import NetworkUtil
 
 BASE_URL_NETWORK = BASE_URL + 'networks'
 
@@ -47,26 +45,52 @@ class CyNetworkView(object):
         return self.__network.get_id()
 
     def get_node_views(self):
-        url = self.__url + '/nodes'
-        node_views = requests.get(url).json()
-        view_list = []
-        for view in node_views:
-            node_view = NodeView(self, view, 'nodes')
-            view_list.append(node_view)
-
-        return view_list
+        return self.__get_views('nodes')
 
     def get_edge_views(self):
-        url = self.__url + '/edges'
-        edge_views = requests.get(url).json()
-        view_list = []
-        for view in edge_views:
-            edge_view = EdgeView(self, view, 'edges')
-            view_list.append(edge_view)
+        return self.__get_views('edges')
 
+    def __get_views(self, obj_type=None):
+        url = self.__url + '/' + obj_type
+        views = requests.get(url).json()
+        view_list = []
+        for view in views:
+            if obj_type is 'nodes':
+                view = NodeView(self, view['SUID'], obj_type)
+            elif obj_type is 'edges':
+                view = EdgeView(self, view['SUID'], obj_type)
+
+            view_list.append(view)
         return view_list
 
-    def set_edge_views(self, new_views):
-        pass
+    def update_node_views(self, visual_property=None, values=None, key_type='suid'):
+        self.__update_views(visual_property, values, 'nodes', key_type)
 
+    def update_edge_views(self, visual_property=None, values=None, key_type='suid'):
+        self.__update_views(visual_property, values, 'edges', key_type)
 
+    def __update_views(self, visual_property, values,
+                       object_type=None, key_type='suid'):
+        if key_type is 'name':
+            name2suid = NetworkUtil.name2suid(self.__network)
+
+        body = []
+        for key in values.keys():
+            if key_type is 'name':
+                suid = name2suid[key]
+                if suid is None:
+                    continue
+            else:
+                suid = key
+
+            new_value = {
+                "SUID": suid,
+                "view": [
+                    {
+                        "visualProperty": visual_property,
+                        "value": values[key]
+                    }
+                ]
+            }
+            body.append(new_value)
+        requests.put(self.__url + '/' + object_type , data=json.dumps(body), headers=HEADERS)
