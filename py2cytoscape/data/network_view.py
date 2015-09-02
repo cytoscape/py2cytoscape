@@ -56,11 +56,17 @@ class CyNetworkView(object):
     def get_edge_views_as_dict(self):
         return self.__get_views('edges', format='dict')
 
+    def get_network_view_as_dict(self):
+        return self.__get_views('network', format='dict')
+
     def __get_views(self, obj_type=None, format='view'):
         url = self.__url + '/' + obj_type
         views = requests.get(url).json()
         if format is 'dict':
-            return self.__get_view_dict(views)
+            if obj_type is 'network':
+                return self.__get_network_view_dict(views)
+            else:
+                return self.__get_view_dict(views)
 
         elif format is 'view':
             return self.__get_view_objects(views, obj_type)
@@ -98,6 +104,17 @@ class CyNetworkView(object):
                 value = entry['value']
                 key_val_pair[vp] = value
             view_dict[key] = key_val_pair
+
+        return view_dict
+
+    def __get_network_view_dict(self, values):
+        # reformat return value to simple dict
+        view_dict = {}
+        # Flatten the JSON
+        for entry in values:
+            vp = entry['visualProperty']
+            value = entry['value']
+            view_dict[vp] = value
 
         return view_dict
 
