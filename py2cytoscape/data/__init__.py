@@ -5,4 +5,3 @@ BASE_URL = 'http://' + IP + ':' + str(PORT) + '/' + VERSION + '/'
 HEADERS = {'Content-Type': 'application/json'}
 
 SUID_LIST = 'suid'
-

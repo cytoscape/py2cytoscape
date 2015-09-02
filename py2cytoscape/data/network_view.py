@@ -50,18 +50,56 @@ class CyNetworkView(object):
     def get_edge_views(self):
         return self.__get_views('edges')
 
-    def __get_views(self, obj_type=None):
+    def get_node_views_as_dict(self):
+        return self.__get_views('nodes', format='dict')
+
+    def get_edge_views_as_dict(self):
+        return self.__get_views('edges', format='dict')
+
+    def __get_views(self, obj_type=None, format='view'):
         url = self.__url + '/' + obj_type
         views = requests.get(url).json()
-        view_list = []
-        for view in views:
-            if obj_type is 'nodes':
-                view = NodeView(self, view['SUID'], obj_type)
-            elif obj_type is 'edges':
-                view = EdgeView(self, view['SUID'], obj_type)
+        if format is 'dict':
+            return self.__get_view_dict(views)
 
-            view_list.append(view)
+        elif format is 'view':
+            return self.__get_view_objects(views, obj_type)
+
+        else:
+            raise ValueError('Format not supported: ' + format)
+
+    def __get_view_objects(self, views, obj_type):
+        view_list = []
+        if obj_type is 'nodes':
+            for view in views:
+                view = NodeView(self, view['SUID'], obj_type)
+                view_list.append(view)
+
+        elif obj_type is 'edges':
+            for view in views:
+                view = EdgeView(self, view['SUID'], obj_type)
+                view_list.append(view)
+
+        else:
+            raise ValueError('No such object type: ' + obj_type)
+
         return view_list
+
+    def __get_view_dict(self, views):
+        # reformat return value to simple dict
+        view_dict = {}
+        for view in views:
+            key = view['SUID']
+            values = view['view']
+            # Flatten the JSON
+            key_val_pair = {}
+            for entry in values:
+                vp = entry['visualProperty']
+                value = entry['value']
+                key_val_pair[vp] = value
+            view_dict[key] = key_val_pair
+
+        return view_dict
 
     def update_node_views(self, visual_property=None, values=None, key_type='suid'):
         self.__update_views(visual_property, values, 'nodes', key_type)
