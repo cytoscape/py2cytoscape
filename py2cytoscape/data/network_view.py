@@ -59,6 +59,12 @@ class CyNetworkView(object):
     def get_network_view_as_dict(self):
         return self.__get_views('network', format='dict')
 
+    def get_node_views_as_dataframe(self):
+        return self.__get_views('nodes', format='df')
+
+    def get_edge_views_as_dataframe(self):
+        return self.__get_views('edges', format='df')
+
     def __get_views(self, obj_type=None, format='view'):
         url = self.__url + '/' + obj_type
         views = requests.get(url).json()
@@ -107,6 +113,23 @@ class CyNetworkView(object):
 
         return view_dict
 
+    def __get_view_df(self, views):
+        # reformat return value to simple dict
+        view_dict = {}
+
+        for view in views:
+            key = view['SUID']
+            values = view['view']
+            # Flatten the JSON
+            key_val_pair = {}
+            for entry in values:
+                vp = entry['visualProperty']
+                value = entry['value']
+                key_val_pair[vp] = value
+            view_dict[key] = key_val_pair
+
+        return view_dict
+
     def __get_network_view_dict(self, values):
         # reformat return value to simple dict
         view_dict = {}
@@ -121,8 +144,32 @@ class CyNetworkView(object):
     def update_node_views(self, visual_property=None, values=None, key_type='suid'):
         self.__update_views(visual_property, values, 'nodes', key_type)
 
+    def batch_update_node_views(self, value_dataframe=None):
+        self.__batch_update(value_dataframe, 'nodes')
+
+    def batch_update_edge_views(self, value_dataframe=None):
+        self.__batch_update(value_dataframe, 'edges')
+
     def update_edge_views(self, visual_property=None, values=None, key_type='suid'):
         self.__update_views(visual_property, values, 'edges', key_type)
+
+    def update_network_view(self, visual_property=None, value=None):
+        """
+        Updates single value for Network-related VP.
+
+        :param visual_property:
+        :param value:
+        :return:
+        """
+
+        new_value = [
+            {
+                "visualProperty": visual_property,
+                "value": value
+            }
+        ]
+        requests.put(self.__url + '/network', data=json.dumps(new_value),
+                     headers=HEADERS)
 
     def __update_views(self, visual_property, values,
                        object_type=None, key_type='suid'):
@@ -138,14 +185,42 @@ class CyNetworkView(object):
             else:
                 suid = key
 
-            new_value = {
-                "SUID": suid,
-                "view": [
-                    {
-                        "visualProperty": visual_property,
-                        "value": values[key]
-                    }
-                ]
-            }
+            new_value = self.__create_new_value(suid, visual_property,
+                                                values[key])
             body.append(new_value)
-        requests.put(self.__url + '/' + object_type , data=json.dumps(body), headers=HEADERS)
+        requests.put(self.__url + '/' + object_type, data=json.dumps(body), headers=HEADERS)
+
+    def __create_new_value(self, suid, visual_property, value):
+        return {
+            "SUID": suid,
+            "view": [
+                {
+                    "visualProperty": visual_property,
+                    "value": value
+                }
+            ]
+        }
+
+    def __batch_update(self, df, object_type=None):
+        body = []
+
+        columns = df.columns
+        for index, row in df.iterrows():
+            entry = {
+                'SUID': int(index),
+                'view': self.__create_new_values_from_row(columns, row)
+            }
+            body.append(entry)
+
+        requests.put(self.__url + '/' + object_type, data=json.dumps(body), headers=HEADERS)
+
+    def __create_new_values_from_row(self, columns, row):
+        views = []
+        for column in columns:
+            view = {
+                "visualProperty": column,
+                "value": row[column]
+            }
+            views.append(view)
+
+        return views

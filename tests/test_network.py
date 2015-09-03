@@ -124,7 +124,6 @@ class CyRestClientTests(unittest.TestCase):
         all_values = view1.get_values()
         print(all_values)
 
-
     def test_view_api(self):
         print('\n---------- View API test start -----------\n')
         network = self.client.network.create()
@@ -164,7 +163,10 @@ class CyRestClientTests(unittest.TestCase):
             new_values_name[node_name] = 'pink'
 
         view.update_node_views('NODE_FILL_COLOR', new_values_name, key_type='name')
-
+        view.update_network_view('NETWORK_BACKGROUND_PAINT', 'red')
+        net_view = view.get_network_view_as_dict()
+        bg_paint = net_view['NETWORK_BACKGROUND_PAINT']
+        self.assertEqual('#FF0000', bg_paint)
 
     def test_convert(self):
         print('\n---------- DataFrame Conversion Tests Start -----------\n')
