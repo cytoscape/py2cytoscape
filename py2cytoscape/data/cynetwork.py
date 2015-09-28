@@ -15,7 +15,7 @@ BASE_URL_NETWORK = BASE_URL + 'networks'
 
 class CyNetwork(object):
 
-    def __init__(self, suid=None):
+    def __init__(self, suid=None, session=None):
         # Validate required argument
         if pd.isnull(suid):
             raise ValueError("SUID is missing.")
@@ -23,6 +23,7 @@ class CyNetwork(object):
             self.__id = suid
 
         self.__url = BASE_URL_NETWORK + '/' + str(self.__id) + '/'
+        self.session = session if session is not None else requests.Session()
 
     def get_id(self):
         """
@@ -38,7 +39,7 @@ class CyNetwork(object):
 
         :return: Cytoscape.js Style JSON as dictionary.
         """
-        return requests.get(self.__url).json()
+        return self.session.get(self.__url).json()
 
     def to_networkx(self):
         """
@@ -46,7 +47,7 @@ class CyNetwork(object):
 
         :return: Network as NetworkX graph object
         """
-        return nx_util.to_networkx(requests.get(self.__url).json())
+        return nx_util.to_networkx(self.session.get(self.__url).json())
 
     def to_dataframe(self):
         """
@@ -54,7 +55,7 @@ class CyNetwork(object):
 
         :return: Network as DataFrame.  This is equivalent to SIF.
         """
-        return df_util.to_dataframe(requests.get(self.__url).json())
+        return df_util.to_dataframe(self.session.get(self.__url).json())
 
     def get_nodes(self):
         """
@@ -62,11 +63,11 @@ class CyNetwork(object):
 
         :return:
         """
-        return requests.get(self.__url + 'nodes').json()
+        return self.session.get(self.__url + 'nodes').json()
 
     def get_edges(self, format='suid'):
         if format is 'suid':
-            return requests.get(self.__url + 'edges').json()
+            return self.session.get(self.__url + 'edges').json()
         elif format is 'edgelist':
             # TODO: implement this
             pass
@@ -87,7 +88,7 @@ class CyNetwork(object):
         :param dataframe: If True, return a pandas dataframe instead of a dict.
         :return: A dict mapping names to SUIDs for the newly-created nodes.
         """
-        res = requests.post(self.__url + 'nodes', data=json.dumps(node_name_list), headers=HEADERS)
+        res = self.session.post(self.__url + 'nodes', data=json.dumps(node_name_list), headers=HEADERS)
         check_response(res)
         nodes = res.json()
         if dataframe:
@@ -120,7 +121,7 @@ class CyNetwork(object):
                           'target': edge_tuple[1],
                           'interaction': edge_tuple[2]}
                          for edge_tuple in edge_list]
-        res = requests.post(self.__url + 'edges', data=json.dumps(edge_list), headers=HEADERS)
+        res = self.session.post(self.__url + 'edges', data=json.dumps(edge_list), headers=HEADERS)
         check_response(res)
         edges = res.json()
         if dataframe:
@@ -130,11 +131,11 @@ class CyNetwork(object):
 
     def delete_node(self, id):
         url = self.__url + 'nodes/' + str(id)
-        requests.delete(url)
+        self.session.delete(url)
 
     def delete_edge(self, id):
         url = self.__url + 'edges/' + str(id)
-        requests.delete(url)
+        self.session.delete(url)
 
     def __get_table(self, type, format=None):
         url = self.__url + 'tables/default' + type
@@ -142,9 +143,9 @@ class CyNetwork(object):
             uri = url + '.tsv'
             return pd.read_csv(uri, sep='\t', index_col=0, header=0)
         elif format is 'csv' or format is 'tsv':
-            return requests.get(url + '.' + format).content
+            return self.session.get(url + '.' + format).content
         elif format is 'cytoscapejs':
-            return requests.get(url).json()['rows']
+            return self.session.get(url).json()['rows']
         else:
             raise ValueError('Unsupported format: ' + format)
 
@@ -159,7 +160,7 @@ class CyNetwork(object):
 
     def __get_columns(self, type=None):
         url = self.__url + 'tables/default' + type + '/columns'
-        df = pd.DataFrame(requests.get(url).json())
+        df = pd.DataFrame(self.session.get(url).json())
         return df.set_index(['name'])
 
     def get_node_columns(self):
@@ -188,7 +189,7 @@ class CyNetwork(object):
 
     def __get_column(self, type=None, column=None):
         url = self.__url + 'tables/default' + type + '/columns/' + column
-        result = requests.get(url).json()
+        result = self.session.get(url).json()
         return pd.Series(result['values'])
 
     def get_node_column(self, column):
@@ -201,10 +202,10 @@ class CyNetwork(object):
         if column is None and id is not None:
             # Extract a row in table
             url = self.__url + 'tables/default' + type + '/rows/' + str(id)
-            return pd.Series(requests.get(url).json())
+            return pd.Series(self.session.get(url).json())
         elif column is not None and id is not None:
             url = self.__url + 'tables/default' + type + '/rows/' + str(id) + '/' + column
-            return requests.get(url).content
+            return self.session.get(url).content
         else:
             raise ValueError('ID is required.')
 
@@ -238,11 +239,11 @@ class CyNetwork(object):
         data = df.to_json(orient='records')
         table['data'] = json.loads(data)
         url = self.__url + 'tables/default' + type
-        requests.put(url, json=table, headers=HEADERS)
+        self.session.put(url, json=table, headers=HEADERS)
 
     def __delete_column(self, type, column):
         url = self.__url + 'tables/default' + type + '/columns/' + column
-        requests.delete(url)
+        self.session.delete(url)
 
     def delete_node_table_column(self, column):
         self.__delete_column('node', column=column)
@@ -261,7 +262,7 @@ class CyNetwork(object):
             'immutable': immutable,
             'list': list
         }
-        requests.post(url, data=json.dumps(new_column), headers=HEADERS)
+        self.session.post(url, data=json.dumps(new_column), headers=HEADERS)
 
     def create_node_column(self, name, data_type='String', is_immutable=False, is_list=False):
         self.__create_column('node', name=name, data_type=data_type, immutable=is_immutable, list=is_list)
@@ -276,11 +277,11 @@ class CyNetwork(object):
     # Utility functions
     def get_neighbours(self, node_id):
         url = self.__url + 'nodes/' + str(node_id) + '/neighbors'
-        return requests.get(url).json()
+        return self.session.get(url).json()
 
     def get_adjacent_edges(self, node_id):
         url = self.__url + 'nodes/' + str(node_id) + '/adjEdges'
-        return requests.get(url).json()
+        return self.session.get(url).json()
 
 
     # Views
@@ -291,19 +292,19 @@ class CyNetwork(object):
         :return:
         """
         url = self.__url + 'views'
-        return requests.get(url).json()
+        return self.session.get(url).json()
 
     def get_png(self):
         url = self.__url + 'views/first.png'
-        return requests.get(url).content
+        return self.session.get(url).content
 
     def get_svg(self):
         url = self.__url + 'views/first.svg'
-        return requests.get(url).content
+        return self.session.get(url).content
 
     def get_pdf(self):
         url = self.__url + 'views/first.pdf'
-        return requests.get(url).content
+        return self.session.get(url).content
 
     def get_first_view(self, format='json'):
         """
@@ -311,12 +312,12 @@ class CyNetwork(object):
         :return:
         """
         url = self.__url + 'views/first'
-        return requests.get(url).json()
+        return self.session.get(url).json()
 
     def get_view(self, view_id, format='json'):
         if format is 'json':
             url = self.__url + 'views/' + str(view_id)
-            return requests.get(url).json()
+            return self.session.get(url).json()
         elif format is 'view':
             return self.__get_view_object(view_id)
         else:
