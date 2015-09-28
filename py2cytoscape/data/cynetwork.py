@@ -73,50 +73,58 @@ class CyNetwork(object):
         else:
             raise ValueError(format + ' is not supported for edge format.')
 
-    def add_node(self, node_name):
+    def add_node(self, node_name, dataframe=False):
+        """ Add a single node to the network. """
         if node_name is None:
             return None
-        return self.add_nodes([node_name])
+        return self.add_nodes([node_name], dataframe=dataframe)
 
-    def add_nodes(self, node_name_list):
+    def add_nodes(self, node_name_list, dataframe=False):
         """
         Add new nodes to the network
 
-        :param node_name_list:
-        :return:
+        :param node_name_list: list of node names, e.g. ['a', 'b', 'c']
+        :param dataframe: If True, return a pandas dataframe instead of a dict.
+        :return: A dict mapping names to SUIDs for the newly-created nodes.
         """
         nodes = requests.post(self.__url + 'nodes', data=json.dumps(
             node_name_list), headers=HEADERS).json()
-        node_dict = {}
-        for node in nodes:
-            node_dict[node['name']] = node['SUID']
-        return node_dict
+        if dataframe:
+            return pd.DataFrame(nodes).set_index(['SUID'])
+        else:
+            return {node['name']: node['SUID'] for node in nodes}
 
-    def add_edge(self, source, target, interaction='-', directed=True):
+    def add_edge(self, source, target, interaction='-', directed=True, dataframe=True):
+        """ Add a single edge from source to target. """
         new_edge = {
             'source': source,
             'target': target,
             'interaction': interaction,
             'directed': directed
         }
-        edges = requests.post(self.__url + 'edges', data=json.dumps(
-            [new_edge]), headers=HEADERS).json()
-        return edges
+        return self.add_edges([new_edge], dataframe=dataframe)
 
-    def add_edges(self, edge_list):
-        new_egdes = []
-        for edge_tuple in edge_list:
-            new_edge = {
-                'source': edge_tuple[0],
-                'target': edge_tuple[1],
-                'interaction': edge_tuple[2],
-            }
-            new_egdes.append(new_edge)
-
+    def add_edges(self, edge_list, dataframe=True):
+        """
+        Add a all edges in edge_list.
+        :return: A data structure with Cytoscape SUIDs for the newly-created edges.
+        :param edge_list: List of (source, target, interaction) tuples *or*
+                          list of dicts with 'source', 'target', 'interaction', 'direction' keys.
+        :param dataframe: If dataframe is True (default), return a Pandas DataFrame.
+                          If dataframe is False, return a list of dicts with keys 'SUID', 'source' and 'target'.
+        """
+        # It might be nice to have an option pass a list of dicts instead of list of tuples
+        if not isinstance(edge_list[0], dict):
+            edge_list = [{'source': edge_tuple[0],
+                          'target': edge_tuple[1],
+                          'interaction': edge_tuple[2]}
+                         for edge_tuple in edge_list]
         edges = requests.post(self.__url + 'edges', data=json.dumps(
-            new_egdes), headers=HEADERS).json()
-        df = pd.DataFrame(edges)
-        return df.set_index(['SUID'])
+            edge_list), headers=HEADERS).json()
+        if dataframe:
+            return pd.DataFrame(edges).set_index(['SUID'])
+        else:
+            return edges
 
     def delete_node(self, id):
         url = self.__url + 'nodes/' + str(id)
