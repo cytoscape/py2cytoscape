@@ -87,8 +87,9 @@ class CyNetwork(object):
         :param dataframe: If True, return a pandas dataframe instead of a dict.
         :return: A dict mapping names to SUIDs for the newly-created nodes.
         """
-        nodes = requests.post(self.__url + 'nodes', data=json.dumps(
-            node_name_list), headers=HEADERS).json()
+        res = requests.post(self.__url + 'nodes', data=json.dumps(node_name_list), headers=HEADERS)
+        check_response(res)
+        nodes = res.json()
         if dataframe:
             return pd.DataFrame(nodes).set_index(['SUID'])
         else:
@@ -119,8 +120,9 @@ class CyNetwork(object):
                           'target': edge_tuple[1],
                           'interaction': edge_tuple[2]}
                          for edge_tuple in edge_list]
-        edges = requests.post(self.__url + 'edges', data=json.dumps(
-            edge_list), headers=HEADERS).json()
+        res = requests.post(self.__url + 'edges', data=json.dumps(edge_list), headers=HEADERS)
+        check_response(res)
+        edges = res.json()
         if dataframe:
             return pd.DataFrame(edges).set_index(['SUID'])
         else:
@@ -338,3 +340,21 @@ class CyNetwork(object):
 
     def __ne__(self, other):
         return not self.__eq__(other)
+
+
+def check_response(res):
+    """ Check HTTP response and raise exception if response is not OK. """
+    try:
+        res.raise_for_status() # ALternative is res.ok
+    except Exception as exc:
+        # Bad response code, e.g. if adding an edge with nodes that doesn't exist
+        try:
+            err_info = res.json()
+            err_msg = err_info['message'] # or 'localizeMessage'
+        except ValueError:
+            err_msg = res.text[:40] # Take the first 40 chars of the response
+        except KeyError:
+            err_msg = res.text[:40] + ("(No 'message' in err_info dict: %s"
+                                       % list(err_info.keys()))
+        exc.args += (err_msg,)
+        raise exc
