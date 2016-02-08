@@ -1,4 +1,6 @@
 # py2cytoscape
+[![Build Status](https://travis-ci.org/idekerlab/py2cytoscape.svg?branch=develop)](https://travis-ci.org/idekerlab/py2cytoscape)
+
 ##### _Tools to use Cytoscape and Cytoscape.js from Python_
 
 ![](http://www.cytoscape.org/images/3_1_title3.png)
