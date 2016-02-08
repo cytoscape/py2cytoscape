@@ -6,6 +6,7 @@ addons:
   apt:
     packages:
       - python-scipy
+      - python-numpy
       - libblas-dev
       - liblapack-dev
 script:
