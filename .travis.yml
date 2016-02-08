@@ -5,8 +5,7 @@ python:
 addons:
   apt:
     packages:
-      - python-scipy
-      - python-numpy
+      - gfortran
       - libblas-dev
       - liblapack-dev
 script:
