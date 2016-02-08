@@ -6,6 +6,8 @@ addons:
   apt:
     packages:
       - python-scipy
+      - libblas-dev
+      - liblapack-dev
 script:
   - python setup.py install
   - python setup.py test
