@@ -2,6 +2,7 @@ import json
 
 import pandas as pd
 import requests
+from py2cytoscape.data.network_view import CyNetworkView
 
 from ..util import util_networkx as nx_util
 from ..util import dataframe as df_util
@@ -261,13 +262,25 @@ class CyNetwork(object):
     def create_network_column(self, name, data_type='String', is_immutable=False, is_list=False):
         self.__create_column('network', name=name, data_type=data_type, immutable=is_immutable, list=is_list)
 
-    # Views
-    def get_views(self):
-        url = self.__url + 'views'
+
+    # Utility functions
+    def get_neighbours(self, node_id):
+        url = self.__url + 'nodes/' + str(node_id) + '/neighbors'
         return requests.get(url).json()
 
-    def get_first_view(self):
-        url = self.__url + 'views/first'
+    def get_adjacent_edges(self, node_id):
+        url = self.__url + 'nodes/' + str(node_id) + '/adjEdges'
+        return requests.get(url).json()
+
+
+    # Views
+    def get_views(self):
+        """
+        Get views as a list of SUIDs
+
+        :return:
+        """
+        url = self.__url + 'views'
         return requests.get(url).json()
 
     def get_png(self):
@@ -282,9 +295,32 @@ class CyNetwork(object):
         url = self.__url + 'views/first.pdf'
         return requests.get(url).content
 
-    def get_view(self, view_id):
-        url = self.__url + 'views/' + str(view_id)
+    def get_first_view(self, format='json'):
+        """
+        Get a first view model as dict
+        :return:
+        """
+        url = self.__url + 'views/first'
         return requests.get(url).json()
+
+    def get_view(self, view_id, format='json'):
+        if format is 'json':
+            url = self.__url + 'views/' + str(view_id)
+            return requests.get(url).json()
+        elif format is 'view':
+            return self.__get_view_object(view_id)
+        else:
+            return None
+
+    def __get_view_object(self, view_id):
+        """
+        Create a new CyNetworkView object for the given ID.
+
+        :param view_id:
+        :return:
+        """
+        view = CyNetworkView(self, view_id)
+        return view
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):

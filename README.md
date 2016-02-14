@@ -1,9 +1,12 @@
 # py2cytoscape
+[![Build Status](https://travis-ci.org/idekerlab/py2cytoscape.svg?branch=develop)](https://travis-ci.org/idekerlab/py2cytoscape)
+
 ##### _Tools to use Cytoscape and Cytoscape.js from Python_
 
 ![](http://www.cytoscape.org/images/3_1_title3.png)
 
 ## Status
+* 9/1/2015: Version 0.5.0 release.  View utilities added.
 * 6/27/2014: Version 0.4.3 release. Minor update version for Python 3.4.x.
 * 6/26/2014: Version 0.4.2 release. Confirmed to work with cyREST 1.1.0.
 * 6/23/2014: Version 0.4.1 release.  Graph utility modules have been updated.
