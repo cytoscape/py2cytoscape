@@ -24,6 +24,16 @@ This package is still experimental and in alpha status.
 Cytoscape is a [de-facto standard desktop application for network visualization in bioinformatics community](https://scholar.google.com/scholar?hl=en&q=cytoscape).  But actually, it is a domain-independent graph visualization software for all typs of network data analysis.  We want to introduce cy2cytoscape, along with _cyREST_ and _Jupyter Notebook_, to broader data science community.
 
 ## Installation
+
+### Mac
+
+```
+brew install wget
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py --user
+~/Library/Python/2.7/bin/pip install py2cytoscape --user
+```
+
 ### Windows
 
 To install the latest version of py2cytoscape, try this:
