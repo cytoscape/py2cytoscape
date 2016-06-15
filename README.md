@@ -24,23 +24,19 @@ This package is still experimental and in alpha status.
 Cytoscape is a [de-facto standard desktop application for network visualization in bioinformatics community](https://scholar.google.com/scholar?hl=en&q=cytoscape).  But actually, it is a domain-independent graph visualization software for all typs of network data analysis.  We want to introduce cy2cytoscape, along with _cyREST_ and _Jupyter Notebook_, to broader data science community.
 
 ## Installation
+We recommend that you install most of the py2cytoscape dependent packages with [Miniconda](http://conda.pydata.org/miniconda.html) Python package manager.
 
 ### Mac
 
-```
-brew install wget
-wget https://bootstrap.pypa.io/get-pip.py
-python get-pip.py --user
-~/Library/Python/2.7/bin/pip install py2cytoscape --user
+```shell
+~/miniconda2/bin/conda install scipy pandas networkx jupyter
+~/miniconda2/bin/pip install py2cytoscape
 ```
 
 ### Windows
 
-To install the latest version of py2cytoscape, try this:
-(We strongly recommend that you use [Miniconda](http://conda.pydata.org/miniconda.html) Python package manager.)
-
 ```
-conda install pandas networkx scipy
+conda install scipy pandas networkx jupyter
 ```
 Next download **python-igraph** whl file from http://www.lfd.uci.edu/~gohlke/pythonlibs/ and
 
@@ -52,9 +48,6 @@ Finally,
 ```
 pip install py2cytoscape
 ```
-
-
-
 
 ## Features
 
