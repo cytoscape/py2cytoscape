@@ -76,7 +76,8 @@ class CyNetworkView(object):
 
         elif format is 'view':
             return self.__get_view_objects(views, obj_type)
-
+        elif format is 'df':
+            return _self.__get_view_df(views)
         else:
             raise ValueError('Format not supported: ' + format)
 
@@ -114,21 +115,15 @@ class CyNetworkView(object):
         return view_dict
 
     def __get_view_df(self, views):
-        # reformat return value to simple dict
-        view_dict = {}
-
-        for view in views:
-            key = view['SUID']
-            values = view['view']
-            # Flatten the JSON
-            key_val_pair = {}
-            for entry in values:
-                vp = entry['visualProperty']
-                value = entry['value']
-                key_val_pair[vp] = value
-            view_dict[key] = key_val_pair
-
-        return view_dict
+        # view_df depends on view_dict.
+        view_dict = self.__get_view_dict(views)
+        view_df = pd.DataFrame(view_dict)
+        
+        # Transpose the DataFrame to make the visual properties as columns
+        view_df = view_df.T
+        
+        view_df.index.name = 'SUID'
+        return view_df
 
     def __get_network_view_dict(self, values):
         # reformat return value to simple dict
