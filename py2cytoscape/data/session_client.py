@@ -1,5 +1,5 @@
-
 import requests
+
 
 class SessionClient(object):
 
@@ -10,7 +10,19 @@ class SessionClient(object):
         requests.delete(self.__url)
 
     def save(self, file_name=None):
-        pass
+        if file_name is None:
+            raise ValueError('Session file name is required.')
 
-    def load(self, file_name=None):
-        pass
+        post_url = self.__url
+        params = {'file': file_name}
+        res = requests.post(post_url, params=params)
+        return res
+
+    def open(self, file_name=None):
+        if file_name is None:
+            raise ValueError('Session file name is required.')
+
+        get_url = self.__url
+        params = {'file': file_name}
+        res = requests.get(get_url, params=params)
+        return res
