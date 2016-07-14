@@ -2,6 +2,7 @@
 import json
 
 import pandas as pd
+import numpy as np
 import requests
 from py2cytoscape.data.edge_view import EdgeView
 from py2cytoscape.data.node_view import NodeView
@@ -182,12 +183,21 @@ class CyNetworkView(object):
 
             new_value = self.__create_new_value(suid, visual_property,
                                                 values[key])
+            print(type(suid))
+
             body.append(new_value)
-        requests.put(self.__url + '/' + object_type, data=json.dumps(body), headers=HEADERS)
+
+
+        requests.put(self.__url + '/' + object_type, json=body,
+                     headers=HEADERS)
 
     def __create_new_value(self, suid, visual_property, value):
+        if(isinstance( suid, np.int64 )):
+            int_id = np.asscalar(suid)
+        else:
+            int_id = suid
         return {
-            "SUID": suid,
+            "SUID": int_id,
             "view": [
                 {
                     "visualProperty": visual_property,

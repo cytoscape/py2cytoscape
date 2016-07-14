@@ -13,6 +13,9 @@ BASE_URL_NETWORK = BASE_URL + 'networks'
 # JSON = 'json'
 
 
+INDEX_COLUMN_NAME = 'temp_dataframe_index'
+
+
 class CyNetwork(object):
 
     def __init__(self, suid=None, session=None):
@@ -225,9 +228,12 @@ class CyNetwork(object):
     def __update_table(self, type, df, network_key_col='name',
                        data_key_col=None):
 
+        is_index_col = False
+
         if data_key_col is None:
             # Use index
-            data_key = 'index'
+            data_key = network_key_col
+            is_index_col = True
         else:
             data_key = data_key_col
 
@@ -236,8 +242,17 @@ class CyNetwork(object):
             'dataKey': data_key
         }
 
-        data = df.to_json(orient='records')
+        if is_index_col:
+            # Use DataFrame's index as the mapping key
+            df2 = pd.DataFrame(df)
+            df2[network_key_col] = df.index
+            data = df2.to_json(orient='records')
+            del df2
+        else:
+            data = df.to_json(orient='records')
+
         table['data'] = json.loads(data)
+
         url = self.__url + 'tables/default' + type
         self.session.put(url, json=table, headers=HEADERS)
 
