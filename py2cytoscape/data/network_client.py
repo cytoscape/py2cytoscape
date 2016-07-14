@@ -13,13 +13,15 @@ from ..util import dataframe as df_util
 
 JSON = 'json'
 
-from .cynetwork import CyNetwork
+from .cynetwork import CyNetwork, check_response
 
 
 class NetworkClient(object):
 
-    def __init__(self, url):
+    def __init__(self, url, session=None):
         self.__url = url + 'networks'
+        # Using a persistent session object, so we don't have to create one for every request.
+        self.session = session if session is not None else requests.Session()
 
     def create_from(self, locations=None, collection=None):
         if locations is None:
@@ -49,18 +51,19 @@ class NetworkClient(object):
             'source': 'url'
         }
 
-        res = requests.post(self.__url, data=json.dumps(location_list),
-                             params=parameters,
-                             headers=HEADERS).json()
+        res = self.session.post(self.__url, data=json.dumps(location_list),
+                                params=parameters, headers=HEADERS)
+        check_response(res)
+        res = res.json()
 
         if len(res) == 1:
             network_ids = res[0]['networkSUID']
             if len(network_ids) == 1:
-                return CyNetwork(network_ids[0])
+                return CyNetwork(network_ids[0], session=self.session)
             else:
-                return [CyNetwork(suid) for suid in network_ids]
+                return [CyNetwork(suid, session=self.session) for suid in network_ids]
         else:
-            result_dict = {entry['source']: CyNetwork(entry['networkSUID'])
+            result_dict = {entry['source']: CyNetwork(entry['networkSUID'], session=self.session)
                            for entry in res}
             return pd.Series(result_dict)
 
@@ -72,7 +75,7 @@ class NetworkClient(object):
                data=None):
         if suid is not None:
             # fetch existing network
-            res = requests.get(self.__url)
+            res = self.session.get(self.__url)
             existing_networks = res.json()
             if suid in existing_networks:
                 network_id = suid
@@ -92,11 +95,13 @@ class NetworkClient(object):
             else:
                 network_collection = collection
 
-            res = requests.post(self.__url + '?collection=' + network_collection, data=json.dumps(network_data), headers=HEADERS)
+            res = self.session.post(self.__url + '?collection=' + network_collection,
+                                    data=json.dumps(network_data), headers=HEADERS)
+            check_response(res)
             result = res.json()
             network_id = result['networkSUID']
 
-        return CyNetwork(network_id)
+        return CyNetwork(network_id, session=self.session)
 
     def create_from_networkx(self, network, name=None, collection=None):
         if network is None:
@@ -126,21 +131,21 @@ class NetworkClient(object):
 
     def get_all(self, format=SUID_LIST):
         if format is SUID_LIST:
-            result = requests.get(self.__url)
+            result = self.session.get(self.__url)
         elif format is JSON:
-            result = requests.get(self.__url + '.json')
+            result = self.session.get(self.__url + '.json')
         else:
             raise ValueError('Unsupported format type: ' + format)
 
         return result.json()
 
     def get(self, id):
-        return requests.get(self.__url + '/' + str(id)).json()
+        return self.session.get(self.__url + '/' + str(id)).json()
 
     def delete_all(self):
-        requests.delete(self.__url)
+        self.session.delete(self.__url)
 
     def delete(self, cynetwork):
         id = cynetwork.get_id()
-        requests.delete(self.__url + '/' + str(id))
+        self.session.delete(self.__url + '/' + str(id))
         del cynetwork
