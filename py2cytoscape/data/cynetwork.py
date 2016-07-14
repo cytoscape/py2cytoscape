@@ -10,22 +10,20 @@ from ..util import dataframe as df_util
 from . import BASE_URL, HEADERS
 
 BASE_URL_NETWORK = BASE_URL + 'networks'
-# JSON = 'json'
-
-
-INDEX_COLUMN_NAME = 'temp_dataframe_index'
 
 
 class CyNetwork(object):
 
-    def __init__(self, suid=None, session=None):
+    def __init__(self, suid=None, session=None, url=None):
+        if pd.isnull(url):
+            raise ValueError("URL is missing.")
         # Validate required argument
         if pd.isnull(suid):
             raise ValueError("SUID is missing.")
         else:
             self.__id = suid
 
-        self.__url = BASE_URL_NETWORK + '/' + str(self.__id) + '/'
+        self.__url = url + '/' + str(self.__id) + '/'
         self.session = session if session is not None else requests.Session()
 
     def get_id(self):

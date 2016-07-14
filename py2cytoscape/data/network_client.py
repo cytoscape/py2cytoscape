@@ -59,11 +59,17 @@ class NetworkClient(object):
         if len(res) == 1:
             network_ids = res[0]['networkSUID']
             if len(network_ids) == 1:
-                return CyNetwork(network_ids[0], session=self.session)
+                return CyNetwork(network_ids[0], session=self.session,
+                                 url=self.__url)
             else:
-                return [CyNetwork(suid, session=self.session) for suid in network_ids]
+                return [CyNetwork(suid, session=self.session, url=self.__url) for
+                        suid
+                        in
+                        network_ids]
         else:
-            result_dict = {entry['source']: CyNetwork(entry['networkSUID'], session=self.session)
+            result_dict = {entry['source']: CyNetwork(entry['networkSUID'],
+                                                      session=self.session,
+                                                      url=self.__url)
                            for entry in res}
             return pd.Series(result_dict)
 
@@ -101,7 +107,7 @@ class NetworkClient(object):
             result = res.json()
             network_id = result['networkSUID']
 
-        return CyNetwork(network_id, session=self.session)
+        return CyNetwork(network_id, session=self.session, url=self.__url)
 
     def create_from_networkx(self, network, name=None, collection=None):
         if network is None:
