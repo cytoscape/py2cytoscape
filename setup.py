@@ -27,6 +27,8 @@ setup(
     install_requires=[
         'pandas',
         'networkx',
+        'pydot',
+        'pydotplus',
         'requests',
         'python-igraph',
         'pyparsing',
