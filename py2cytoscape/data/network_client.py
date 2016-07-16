@@ -10,6 +10,7 @@ from ..util import cytoscapejs as util
 from ..util import util_networkx as nx_util
 from ..util import util_igraph as ig_util
 from ..util import dataframe as df_util
+from ..util import util_numpy as np_util
 
 JSON = 'json'
 
@@ -121,6 +122,14 @@ class NetworkClient(object):
             raise ValueError('igraph object is required.')
 
         cyjs = ig_util.from_igraph(network)
+        return self.create(name=name, collection=collection, data=cyjs)
+
+    def create_from_ndarray(self, matrix, name=None, labels=None,
+        collection=None, weighted=False):
+        if matrix is None:
+            raise ValueError('2D ndarray object is required.')
+
+        cyjs = np_util.from_ndarray(matrix, name, labels, weighted=weighted)
         return self.create(name=name, collection=collection, data=cyjs)
 
     def create_from_dataframe(self, dataframe, source_col='source',

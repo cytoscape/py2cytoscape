@@ -307,11 +307,11 @@ class CyNetwork(object):
         url = self.__url + 'views'
         return self.session.get(url).json()
 
-    def get_png(self, height=1100):
+    def get_png(self, height=1200):
         url = self.__url + 'views/first.png?h=' + str(height)
         return self.session.get(url).content
 
-    def get_svg(self, height=1100):
+    def get_svg(self, height=1200):
         url = self.__url + 'views/first.svg?h=' + str(height)
         return self.session.get(url).content
 
