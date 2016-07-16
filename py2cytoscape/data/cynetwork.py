@@ -10,19 +10,21 @@ from ..util import dataframe as df_util
 from . import BASE_URL, HEADERS
 
 BASE_URL_NETWORK = BASE_URL + 'networks'
-# JSON = 'json'
 
 
 class CyNetwork(object):
 
-    def __init__(self, suid=None):
+    def __init__(self, suid=None, session=None, url=None):
+        if pd.isnull(url):
+            raise ValueError("URL is missing.")
         # Validate required argument
         if pd.isnull(suid):
             raise ValueError("SUID is missing.")
         else:
             self.__id = suid
 
-        self.__url = BASE_URL_NETWORK + '/' + str(self.__id) + '/'
+        self.__url = url + '/' + str(self.__id) + '/'
+        self.session = session if session is not None else requests.Session()
 
     def get_id(self):
         """
@@ -38,7 +40,7 @@ class CyNetwork(object):
 
         :return: Cytoscape.js Style JSON as dictionary.
         """
-        return requests.get(self.__url).json()
+        return self.session.get(self.__url).json()
 
     def to_networkx(self):
         """
@@ -46,7 +48,7 @@ class CyNetwork(object):
 
         :return: Network as NetworkX graph object
         """
-        return nx_util.to_networkx(requests.get(self.__url).json())
+        return nx_util.to_networkx(self.session.get(self.__url).json())
 
     def to_dataframe(self):
         """
@@ -54,7 +56,7 @@ class CyNetwork(object):
 
         :return: Network as DataFrame.  This is equivalent to SIF.
         """
-        return df_util.to_dataframe(requests.get(self.__url).json())
+        return df_util.to_dataframe(self.session.get(self.__url).json())
 
     def get_nodes(self):
         """
@@ -62,69 +64,79 @@ class CyNetwork(object):
 
         :return:
         """
-        return requests.get(self.__url + 'nodes').json()
+        return self.session.get(self.__url + 'nodes').json()
 
     def get_edges(self, format='suid'):
         if format is 'suid':
-            return requests.get(self.__url + 'edges').json()
+            return self.session.get(self.__url + 'edges').json()
         elif format is 'edgelist':
             # TODO: implement this
             pass
         else:
             raise ValueError(format + ' is not supported for edge format.')
 
-    def add_node(self, node_name):
+    def add_node(self, node_name, dataframe=False):
+        """ Add a single node to the network. """
         if node_name is None:
             return None
-        return self.add_nodes([node_name])
+        return self.add_nodes([node_name], dataframe=dataframe)
 
-    def add_nodes(self, node_name_list):
+    def add_nodes(self, node_name_list, dataframe=False):
         """
         Add new nodes to the network
 
-        :param node_name_list:
-        :return:
+        :param node_name_list: list of node names, e.g. ['a', 'b', 'c']
+        :param dataframe: If True, return a pandas dataframe instead of a dict.
+        :return: A dict mapping names to SUIDs for the newly-created nodes.
         """
-        nodes = requests.post(self.__url + 'nodes', data=json.dumps(
-            node_name_list), headers=HEADERS).json()
-        node_dict = {}
-        for node in nodes:
-            node_dict[node['name']] = node['SUID']
-        return node_dict
+        res = self.session.post(self.__url + 'nodes', data=json.dumps(node_name_list), headers=HEADERS)
+        check_response(res)
+        nodes = res.json()
+        if dataframe:
+            return pd.DataFrame(nodes).set_index(['SUID'])
+        else:
+            return {node['name']: node['SUID'] for node in nodes}
 
-    def add_edge(self, source, target, interaction='-', directed=True):
+    def add_edge(self, source, target, interaction='-', directed=True, dataframe=True):
+        """ Add a single edge from source to target. """
         new_edge = {
             'source': source,
             'target': target,
             'interaction': interaction,
             'directed': directed
         }
-        edges = requests.post(self.__url + 'edges', data=json.dumps(
-            [new_edge]), headers=HEADERS).json()
-        return edges
+        return self.add_edges([new_edge], dataframe=dataframe)
 
-    def add_edges(self, edge_list):
-        new_egdes = []
-        for edge_tuple in edge_list:
-            new_edge = {
-                'source': edge_tuple[0],
-                'target': edge_tuple[1],
-                'interaction': edge_tuple[2],
-            }
-            new_egdes.append(new_edge)
-
-        edges = requests.post(self.__url + 'edges', data=json.dumps(
-            new_egdes), headers=HEADERS).json()
-        df = pd.DataFrame(edges)
-        return df.set_index(['SUID'])
+    def add_edges(self, edge_list, dataframe=True):
+        """
+        Add a all edges in edge_list.
+        :return: A data structure with Cytoscape SUIDs for the newly-created edges.
+        :param edge_list: List of (source, target, interaction) tuples *or*
+                          list of dicts with 'source', 'target', 'interaction', 'direction' keys.
+        :param dataframe: If dataframe is True (default), return a Pandas DataFrame.
+                          If dataframe is False, return a list of dicts with keys 'SUID', 'source' and 'target'.
+        """
+        # It might be nice to have an option pass a list of dicts instead of list of tuples
+        if not isinstance(edge_list[0], dict):
+            edge_list = [{'source': edge_tuple[0],
+                          'target': edge_tuple[1],
+                          'interaction': edge_tuple[2]}
+                         for edge_tuple in edge_list]
+        res = self.session.post(self.__url + 'edges', data=json.dumps(edge_list), headers=HEADERS)
+        check_response(res)
+        edges = res.json()
+        if dataframe:
+            return pd.DataFrame(edges).set_index(['SUID'])
+        else:
+            return edges
 
     def delete_node(self, id):
         url = self.__url + 'nodes/' + str(id)
-        requests.delete(url)
+        self.session.delete(url)
 
     def delete_edge(self, id):
         url = self.__url + 'edges/' + str(id)
-        requests.delete(url)
+        self.session.delete(url)
 
     def __get_table(self, type, format=None):
         url = self.__url + 'tables/default' + type
@@ -132,9 +144,9 @@ class CyNetwork(object):
             uri = url + '.tsv'
             return pd.read_csv(uri, sep='\t', index_col=0, header=0)
         elif format is 'csv' or format is 'tsv':
-            return requests.get(url + '.' + format).content
+            return self.session.get(url + '.' + format).content
         elif format is 'cytoscapejs':
-            return requests.get(url).json()['rows']
+            return self.session.get(url).json()['rows']
         else:
             raise ValueError('Unsupported format: ' + format)
 
@@ -149,7 +161,7 @@ class CyNetwork(object):
 
     def __get_columns(self, type=None):
         url = self.__url + 'tables/default' + type + '/columns'
-        df = pd.DataFrame(requests.get(url).json())
+        df = pd.DataFrame(self.session.get(url).json())
         return df.set_index(['name'])
 
     def get_node_columns(self):
@@ -178,7 +190,7 @@ class CyNetwork(object):
 
     def __get_column(self, type=None, column=None):
         url = self.__url + 'tables/default' + type + '/columns/' + column
-        result = requests.get(url).json()
+        result = self.session.get(url).json()
         return pd.Series(result['values'])
 
     def get_node_column(self, column):
@@ -191,10 +203,10 @@ class CyNetwork(object):
         if column is None and id is not None:
             # Extract a row in table
             url = self.__url + 'tables/default' + type + '/rows/' + str(id)
-            return pd.Series(requests.get(url).json())
+            return pd.Series(self.session.get(url).json())
         elif column is not None and id is not None:
             url = self.__url + 'tables/default' + type + '/rows/' + str(id) + '/' + column
-            return requests.get(url).content
+            return self.session.get(url).content
         else:
             raise ValueError('ID is required.')
 
@@ -214,9 +226,12 @@ class CyNetwork(object):
     def __update_table(self, type, df, network_key_col='name',
                        data_key_col=None):
 
+        is_index_col = False
+
         if data_key_col is None:
             # Use index
-            data_key = 'index'
+            data_key = network_key_col
+            is_index_col = True
         else:
             data_key = data_key_col
 
@@ -225,14 +240,23 @@ class CyNetwork(object):
             'dataKey': data_key
         }
 
-        data = df.to_json(orient='records')
+        if is_index_col:
+            # Use DataFrame's index as the mapping key
+            df2 = pd.DataFrame(df)
+            df2[network_key_col] = df.index
+            data = df2.to_json(orient='records')
+            del df2
+        else:
+            data = df.to_json(orient='records')
+
         table['data'] = json.loads(data)
+
         url = self.__url + 'tables/default' + type
-        requests.put(url, json=table, headers=HEADERS)
+        self.session.put(url, json=table, headers=HEADERS)
 
     def __delete_column(self, type, column):
         url = self.__url + 'tables/default' + type + '/columns/' + column
-        requests.delete(url)
+        self.session.delete(url)
 
     def delete_node_table_column(self, column):
         self.__delete_column('node', column=column)
@@ -251,7 +275,7 @@ class CyNetwork(object):
             'immutable': immutable,
             'list': list
         }
-        requests.post(url, data=json.dumps(new_column), headers=HEADERS)
+        self.session.post(url, data=json.dumps(new_column), headers=HEADERS)
 
     def create_node_column(self, name, data_type='String', is_immutable=False, is_list=False):
         self.__create_column('node', name=name, data_type=data_type, immutable=is_immutable, list=is_list)
@@ -266,11 +290,11 @@ class CyNetwork(object):
     # Utility functions
     def get_neighbours(self, node_id):
         url = self.__url + 'nodes/' + str(node_id) + '/neighbors'
-        return requests.get(url).json()
+        return self.session.get(url).json()
 
     def get_adjacent_edges(self, node_id):
         url = self.__url + 'nodes/' + str(node_id) + '/adjEdges'
-        return requests.get(url).json()
+        return self.session.get(url).json()
 
 
     # Views
@@ -281,19 +305,19 @@ class CyNetwork(object):
         :return:
         """
         url = self.__url + 'views'
-        return requests.get(url).json()
+        return self.session.get(url).json()
 
-    def get_png(self):
-        url = self.__url + 'views/first.png'
-        return requests.get(url).content
+    def get_png(self, height=1200):
+        url = self.__url + 'views/first.png?h=' + str(height)
+        return self.session.get(url).content
 
-    def get_svg(self):
-        url = self.__url + 'views/first.svg'
-        return requests.get(url).content
+    def get_svg(self, height=1200):
+        url = self.__url + 'views/first.svg?h=' + str(height)
+        return self.session.get(url).content
 
     def get_pdf(self):
         url = self.__url + 'views/first.pdf'
-        return requests.get(url).content
+        return self.session.get(url).content
 
     def get_first_view(self, format='json'):
         """
@@ -301,12 +325,12 @@ class CyNetwork(object):
         :return:
         """
         url = self.__url + 'views/first'
-        return requests.get(url).json()
+        return self.session.get(url).json()
 
     def get_view(self, view_id, format='json'):
         if format is 'json':
             url = self.__url + 'views/' + str(view_id)
-            return requests.get(url).json()
+            return self.session.get(url).json()
         elif format is 'view':
             return self.__get_view_object(view_id)
         else:
@@ -330,3 +354,21 @@ class CyNetwork(object):
 
     def __ne__(self, other):
         return not self.__eq__(other)
+
+
+def check_response(res):
+    """ Check HTTP response and raise exception if response is not OK. """
+    try:
+        res.raise_for_status() # ALternative is res.ok
+    except Exception as exc:
+        # Bad response code, e.g. if adding an edge with nodes that doesn't exist
+        try:
+            err_info = res.json()
+            err_msg = err_info['message'] # or 'localizeMessage'
+        except ValueError:
+            err_msg = res.text[:40] # Take the first 40 chars of the response
+        except KeyError:
+            err_msg = res.text[:40] + ("(No 'message' in err_info dict: %s"
+                                       % list(err_info.keys()))
+        exc.args += (err_msg,)
+        raise exc

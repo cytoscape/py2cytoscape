@@ -25,7 +25,6 @@ class CytoscapejsWidgetTests(unittest.TestCase):
         print(def_style)
         self.assertRaises(ValueError, cyjs.get_style, 'foo')
 
-
     def test_render(self):
         from py2cytoscape.cytoscapejs import viewer as cyjs
         g = nx.scale_free_graph(100)

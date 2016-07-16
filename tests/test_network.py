@@ -80,7 +80,7 @@ class CyRestClientTests(unittest.TestCase):
 
         edge = network.add_edge(nd['a'], nd['b'])
         self.assertIsNotNone(edge)
-        pp(edge)
+        print(edge)
 
         new_edges = ((nd['a'], nd['b'], 'i1'), (nd['a'], nd['c'], 'i1'))
         new_edges_result = network.add_edges(new_edges)
@@ -161,6 +161,9 @@ class CyRestClientTests(unittest.TestCase):
         new_values_name = {}
         for node_name in new_nodes:
             new_values_name[node_name] = 'pink'
+
+        print('---------- New Fill colors -----------')
+        print(new_values_name)
 
         view.update_node_views('NODE_FILL_COLOR', new_values_name, key_type='name')
         view.update_network_view('NETWORK_BACKGROUND_PAINT', 'red')

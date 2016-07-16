@@ -14,6 +14,7 @@ class CyRestClient(object):
 
     def __init__(self, ip=IP, port=PORT, version=VERSION):
         self.__url = 'http://' + ip + ':' + str(port) + '/' + version + '/'
+
         self.network = NetworkClient(self.__url)
         self.style = StyleClient(self.__url)
         self.layout = LayoutClient(self.__url)

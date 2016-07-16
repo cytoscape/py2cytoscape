@@ -15,7 +15,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='py2cytoscape',
-    version='0.5.0',
+    version='0.6.0',
     description='Utilities to use Cytoscape and Cytoscape.js from Python',
     long_description='Collection of tools for using Cytoscape and '
                      'cytoscape.js from Python.  From v0.4.0, '
@@ -27,6 +27,8 @@ setup(
     install_requires=[
         'pandas',
         'networkx',
+        'pydot',
+        'pydotplus',
         'requests',
         'python-igraph',
         'pyparsing',
@@ -41,6 +43,7 @@ setup(
         'Development Status :: 3 - Alpha',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'License :: OSI Approved :: MIT License',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
         'Topic :: Scientific/Engineering :: Information Analysis',
