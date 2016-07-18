@@ -26,18 +26,19 @@ Cytoscape is a [de-facto standard desktop application for network visualization 
 
 ## Installation
 We recommend that you install most of the py2cytoscape dependent packages with [Miniconda](http://conda.pydata.org/miniconda.html) Python package manager.
+py2cytoscape supports both Python 2.7 and 3.5.
 
 ### Mac
 
 ```shell
-~/miniconda2/bin/conda install scipy pandas networkx jupyter
-~/miniconda2/bin/pip install py2cytoscape
+~/miniconda3/bin/conda install scipy pandas networkx jupyter requests pytz
+~/miniconda3/bin/pip install py2cytoscape
 ```
 
 ### Windows
 
 ```
-conda install scipy pandas networkx jupyter
+conda install scipy pandas networkx jupyter requests pytz
 ```
 Next download **python-igraph** whl file from http://www.lfd.uci.edu/~gohlke/pythonlibs/ and
 
