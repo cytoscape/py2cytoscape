@@ -6,6 +6,7 @@
 ![](http://www.cytoscape.org/images/3_1_title3.png)
 
 ## Status
+* 7/16/2016: Version 0.6.0 release. Session Saving and loading API, Preset layout utility method, Numpy array support, Bug fixes.
 * 9/1/2015: Version 0.5.0 release.  View utilities added.
 * 6/27/2014: Version 0.4.3 release. Minor update version for Python 3.4.x.
 * 6/26/2014: Version 0.4.2 release. Confirmed to work with cyREST 1.1.0.
