@@ -9,6 +9,7 @@ from py2cytoscape.data.node_view import NodeView
 
 from . import BASE_URL, HEADERS
 from py2cytoscape.data.util_network import NetworkUtil
+from py2cytoscape.data.util_http import check_response
 
 BASE_URL_NETWORK = BASE_URL + 'networks'
 
@@ -78,7 +79,7 @@ class CyNetworkView(object):
         elif format is 'view':
             return self.__get_view_objects(views, obj_type)
         elif format is 'df':
-            return _self.__get_view_df(views)
+            return self.__get_view_df(views)
         else:
             raise ValueError('Format not supported: ' + format)
 
@@ -164,8 +165,11 @@ class CyNetworkView(object):
                 "value": value
             }
         ]
-        requests.put(self.__url + '/network', data=json.dumps(new_value),
-                     headers=HEADERS)
+        res = requests.put(self.__url + '/network',
+                           data=json.dumps(new_value),
+                           headers=HEADERS)
+        check_response(res)
+        
 
     def __update_views(self, visual_property, values,
                        object_type=None, key_type='suid'):
@@ -183,13 +187,14 @@ class CyNetworkView(object):
 
             new_value = self.__create_new_value(suid, visual_property,
                                                 values[key])
-            print(type(suid))
 
             body.append(new_value)
 
 
-        requests.put(self.__url + '/' + object_type, json=body,
-                     headers=HEADERS)
+        res = requests.put(self.__url + '/' + object_type,
+                           json=body,
+                           headers=HEADERS)
+        check_response(res)
 
     def __create_new_value(self, suid, visual_property, value):
         if(isinstance( suid, np.int64 )):
@@ -217,7 +222,13 @@ class CyNetworkView(object):
             }
             body.append(entry)
 
-        requests.put(self.__url + '/' + object_type, data=json.dumps(body), headers=HEADERS)
+        res = requests.put(self.__url + '/' + object_type,
+                           data=json.dumps(body),
+                           headers=HEADERS)
+
+        check_response(res)
+        
+        
 
     def __create_new_values_from_row(self, columns, row):
         views = []
@@ -227,5 +238,5 @@ class CyNetworkView(object):
                 "value": row[column]
             }
             views.append(view)
-
         return views
+
