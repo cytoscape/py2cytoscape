@@ -30,10 +30,14 @@ setup(
         'pydot',
         'pydotplus',
         'requests',
-        'python-igraph',
         'pyparsing',
-        'scipy'
     ],
+    extras_require={
+        'alldeps' : (
+            'python-igraph',
+            'scipy',
+        ),
+    },
     keywords=['data visualization', 'visualization', 'cytoscape',
               'bioinformatics', 'graph', 'network'],
     classifiers=[
