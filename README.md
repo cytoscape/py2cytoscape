@@ -1,11 +1,13 @@
 # py2cytoscape
 [![Build Status](https://travis-ci.org/idekerlab/py2cytoscape.svg?branch=develop)](https://travis-ci.org/idekerlab/py2cytoscape)
+[![PyPI](https://img.shields.io/pypi/v/py2cytoscape.svg)](https://pypi.python.org/pypi/py2cytoscape)
 
 ##### _Tools to use Cytoscape and Cytoscape.js from Python_
 
 ![](http://www.cytoscape.org/images/3_1_title3.png)
 
 ## Status
+* 7/16/2016: Version 0.6.0 release. Session Saving and loading API, Preset layout utility method, Numpy array support, Bug fixes.
 * 9/1/2015: Version 0.5.0 release.  View utilities added.
 * 6/27/2014: Version 0.4.3 release. Minor update version for Python 3.4.x.
 * 6/26/2014: Version 0.4.2 release. Confirmed to work with cyREST 1.1.0.
@@ -24,29 +26,46 @@ This package is still experimental and in alpha status.
 Cytoscape is a [de-facto standard desktop application for network visualization in bioinformatics community](https://scholar.google.com/scholar?hl=en&q=cytoscape).  But actually, it is a domain-independent graph visualization software for all typs of network data analysis.  We want to introduce cy2cytoscape, along with _cyREST_ and _Jupyter Notebook_, to broader data science community.
 
 ## Installation
-We recommend that you install most of the py2cytoscape dependent packages with [Miniconda](http://conda.pydata.org/miniconda.html) Python package manager.
+
+py2cytoscape supports both Python 2.7 and 3.5.
+You can install py2cytoscape with pip.
+
+```
+pip install py2cytoscape
+```
+
+py2cytocape optionally depends on python-igraph and scipy.
+We do not include these packages to py2cytoscape prerequisite dependencies.
+Because these packages are relatively difficult to install (especially on Windows).
+
+When you get some error about these optional dependencies, please run the follwing commands.
 
 ### Mac
 
 ```shell
-~/miniconda2/bin/conda install scipy pandas networkx jupyter
-~/miniconda2/bin/pip install py2cytoscape
+pip install python-igraph scipy
 ```
 
 ### Windows
 
+On Windows, we recommend that you use [Miniconda](http://conda.pydata.org/miniconda.html) Python package manager.
+(Because the scipy wheel package in PyPI does not support Windows.)
+
 ```
-conda install scipy pandas networkx jupyter
+conda install scipy
 ```
+
 Next download **python-igraph** whl file from http://www.lfd.uci.edu/~gohlke/pythonlibs/ and
 
 ```
 pip install THE_PYTHON_IGRAPH.whl
 ```
-Finally,
 
-```
-pip install py2cytoscape
+### Ubuntu Linux
+
+```shell
+apt install g++ make libxml2-dev python-dev python3-dev zlib1g-dev
+pip install python-igraph scipy
 ```
 
 ## Features
