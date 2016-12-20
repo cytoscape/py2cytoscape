@@ -15,7 +15,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='py2cytoscape',
-    version='0.6.0',
+    version='0.6.1',
     description='Utilities to use Cytoscape and Cytoscape.js from Python',
     long_description='Collection of tools for using Cytoscape and '
                      'cytoscape.js from Python.  From v0.4.0, '
