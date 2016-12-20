@@ -26,30 +26,46 @@ This package is still experimental and in alpha status.
 Cytoscape is a [de-facto standard desktop application for network visualization in bioinformatics community](https://scholar.google.com/scholar?hl=en&q=cytoscape).  But actually, it is a domain-independent graph visualization software for all typs of network data analysis.  We want to introduce cy2cytoscape, along with _cyREST_ and _Jupyter Notebook_, to broader data science community.
 
 ## Installation
-We recommend that you install most of the py2cytoscape dependent packages with [Miniconda](http://conda.pydata.org/miniconda.html) Python package manager.
+
 py2cytoscape supports both Python 2.7 and 3.5.
+You can install py2cytoscape with pip.
+
+```
+pip install py2cytoscape
+```
+
+py2cytocape optionally depends on python-igraph and scipy.
+We do not include these packages to py2cytoscape prerequisite dependencies.
+Because these packages are relatively difficult to install (especially on Windows).
+
+When you get some error about these optional dependencies, please run the follwing commands.
 
 ### Mac
 
 ```shell
-~/miniconda3/bin/conda install scipy pandas networkx jupyter requests pytz
-~/miniconda3/bin/pip install py2cytoscape
+pip install python-igraph scipy
 ```
 
 ### Windows
 
+On Windows, we recommend that you use [Miniconda](http://conda.pydata.org/miniconda.html) Python package manager.
+(Because the scipy wheel package in PyPI does not support Windows.)
+
 ```
-conda install scipy pandas networkx jupyter requests pytz
+conda install scipy
 ```
+
 Next download **python-igraph** whl file from http://www.lfd.uci.edu/~gohlke/pythonlibs/ and
 
 ```
 pip install THE_PYTHON_IGRAPH.whl
 ```
-Finally,
 
-```
-pip install py2cytoscape
+### Ubuntu Linux
+
+```shell
+apt install g++ make
+pip install python-igraph scipy
 ```
 
 ## Features
