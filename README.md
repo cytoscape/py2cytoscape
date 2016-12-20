@@ -64,7 +64,7 @@ pip install THE_PYTHON_IGRAPH.whl
 ### Ubuntu Linux
 
 ```shell
-apt install g++ make
+apt install g++ make libxml2-dev python-dev python3-dev zlib1g-dev
 pip install python-igraph scipy
 ```
 
