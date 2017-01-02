@@ -37,7 +37,6 @@ You can install py2cytoscape with pip.
 ### Mac
 
 ```shell
-pip install python-igraph
 pip install py2cytoscape
 #if you use the scipy dependent py2cytoscape method
 pip install scipy
@@ -50,6 +49,7 @@ To install py2cytoscape dependencies, we recommend that you use [Miniconda](http
 Miniconda has scipy binary package, but do not have python-igraph binary package.
 So download the python-igraph whl for your Python (2 or 3, 32bit or 64bit) from [Christoph’s site](http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph).
 And install it with `pip`.
+Please install python-igraph before you install py2cytoscape, otherwise pip will try to **build** python-igraph (and will fail). 
 
 (In the case of Python3.5 64bit)
 
@@ -63,7 +63,6 @@ conda install scipy
 
 ```shell
 apt install g++ make libxml2-dev python-dev python3-dev zlib1g-dev
-pip install python-igraph
 pip install py2cytoscape
 #if you use the scipy dependent py2cytoscape method
 pip install scipy
