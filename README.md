@@ -28,44 +28,45 @@ Cytoscape is a [de-facto standard desktop application for network visualization 
 ## Installation
 
 py2cytoscape supports both Python 2.7 and 3.5.
+
+py2cytocape depends on python-igraph and optionary depends on scipy.
+(We do not include scipy to py2cytoscape prerequisite dependencies.)
+
 You can install py2cytoscape with pip.
-
-```
-pip install py2cytoscape
-```
-
-py2cytocape optionally depends on python-igraph and scipy.
-We do not include these packages to py2cytoscape prerequisite dependencies.
-Because these packages are relatively difficult to install (especially on Windows).
-
-When you get some error about these optional dependencies, please run the follwing commands.
 
 ### Mac
 
 ```shell
-pip install python-igraph scipy
+pip install python-igraph
+pip install py2cytoscape
+#if you use the scipy dependent py2cytoscape method
+pip install scipy
 ```
 
 ### Windows
 
-On Windows, we recommend that you use [Miniconda](http://conda.pydata.org/miniconda.html) Python package manager.
-(Because the scipy wheel package in PyPI does not support Windows.)
+To install py2cytoscape dependencies, we recommend that you use [Miniconda](http://conda.pydata.org/miniconda.html) Python package manager.
+
+Miniconda has scipy binary package, but do not have python-igraph binary package.
+So download the python-igraph whl for your Python (2 or 3, 32bit or 64bit) from [Christoph’s site](http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph).
+And install it with `pip`.
+
+(In the case of Python3.5 64bit)
 
 ```
+pip install .\python_igraph-0.7.1.post6-cp35-none-win_amd64.whl
+pip install py2cytoscape
 conda install scipy
-```
-
-Next download **python-igraph** whl file from http://www.lfd.uci.edu/~gohlke/pythonlibs/ and
-
-```
-pip install THE_PYTHON_IGRAPH.whl
 ```
 
 ### Ubuntu Linux
 
 ```shell
 apt install g++ make libxml2-dev python-dev python3-dev zlib1g-dev
-pip install python-igraph scipy
+pip install python-igraph
+pip install py2cytoscape
+#if you use the scipy dependent py2cytoscape method
+pip install scipy
 ```
 
 ## Features
