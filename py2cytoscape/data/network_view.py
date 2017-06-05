@@ -78,7 +78,7 @@ class CyNetworkView(object):
         elif format is 'view':
             return self.__get_view_objects(views, obj_type)
         elif format is 'df':
-            return _self.__get_view_df(views)
+            return self.__get_view_df(views)
         else:
             raise ValueError('Format not supported: ' + format)
 
