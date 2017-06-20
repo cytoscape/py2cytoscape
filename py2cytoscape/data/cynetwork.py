@@ -5,7 +5,7 @@ import requests
 from py2cytoscape.data.network_view import CyNetworkView
 
 from ..util import util_networkx as nx_util
-from ..util import dataframe as df_util
+from ..util import util_dataframe as df_util
 
 from . import BASE_URL, HEADERS
 
@@ -50,13 +50,16 @@ class CyNetwork(object):
         """
         return nx_util.to_networkx(self.session.get(self.__url).json())
 
-    def to_dataframe(self):
+    def to_dataframe(self, extra_edges_columns=[]):
         """
         Return this network in pandas DataFrame.
 
         :return: Network as DataFrame.  This is equivalent to SIF.
         """
-        return df_util.to_dataframe(self.session.get(self.__url).json())
+        return df_util.to_dataframe(
+            self.session.get(self.__url).json(),
+            edges_attr_cols=extra_edges_columns
+        )
 
     def get_nodes(self):
         """
