@@ -109,19 +109,19 @@ class Style(object):
         vals = {entry['visualProperty']: entry['value'] for entry in result}
         return pd.Series(vals)
 
-    def update_defaults(self, key_value_dict):
+    def update_defaults(self, prop_value_dict):
         """
         Updates the value of one or more visual properties.
 
-        :param key_value_dict: Dictionary containing, for each visual property,
+        :param prop_value_dict: Dictionary containing, for each visual property,
             the new value to use.
         """
 
         body = []
-        for key in key_value_dict:
+        for key in prop_value_dict:
             entry = {
                 'visualProperty': key,
-                'value': key_value_dict[key]
+                'value': prop_value_dict[key]
             }
             body.append(entry)
 
