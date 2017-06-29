@@ -183,7 +183,7 @@ class CyNetworkView(object):
 
             new_value = self.__create_new_value(suid, visual_property,
                                                 values[key])
-            print(type(suid))
+            #print(type(suid))
 
             body.append(new_value)
 
