@@ -16,6 +16,6 @@ class NetworkUtil(object):
         name2suid = {}
         for suid in subset.index:
             name2suid[subset[suid]] = suid
-
+            table.set_index(["SUID"],inplace=True)
         return name2suid
 
