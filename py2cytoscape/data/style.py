@@ -157,7 +157,33 @@ class StyleUtil(object):
         ]
 
         return points
+    
+    @staticmethod
+    def create_3_color_gradient(min=-5, mid=0, max=5, colors=('blue', 'white', 'red')):
 
+        points = [
+            {
+                'value': str(min),
+                'lesser': colors[0],
+                'equal':  colors[0],
+                'greater': colors[0],
+            },
+            {
+                'value': str(mid),
+                'lesser': colors[1],
+                'equal':  colors[1],
+                'greater': colors[1],
+            },
+            {
+                'value': str(max),
+                'lesser': colors[2],
+                'equal': colors[2],
+                'greater': colors[2]
+            }
+        ]
+
+        return points
+    
     @staticmethod
     def create_slope(min=0, max=10, values=(1, 10)):
 
