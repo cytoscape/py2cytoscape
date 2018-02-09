@@ -145,8 +145,7 @@ class CyNetwork(object):
     def __get_table(self, type, format=None):
         url = self.__url + 'tables/default' + type
         if format is None or format is 'dataframe':
-            uri = url + '.tsv'
-            return pd.read_csv(uri, sep='\t', index_col=0, header=0)
+            return pd.DataFrame(self.session.get(url).json()['rows'])
         elif format is 'csv' or format is 'tsv':
             return self.session.get(url + '.' + format).content
         elif format is 'cytoscapejs':
