@@ -102,3 +102,9 @@ ENV/
 .ipynb_checkpoints/
 
 py2cytoscape.iml
+
+# docs
+site
+
+# Other
+*.swp
