@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import json
 import unittest
 
 import networkx as nx
 
+import py2cytoscape.util.util_dataframe as df_util
 from py2cytoscape.data.cyrest_client import CyRestClient
-import py2cytoscape.util.dataframe as df_util
-import json
 
 
 def pp(dict_data):
@@ -14,7 +14,6 @@ def pp(dict_data):
 
 
 class CyRestClientTests(unittest.TestCase):
-
     def setUp(self):
         self.client = CyRestClient()
         # cleanup
@@ -48,7 +47,6 @@ class CyRestClientTests(unittest.TestCase):
             'http://chianti.ucsd.edu/cytoscape-data/galFiltered.sif',
             'http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/'
             + 'webservices/current/search/interactor/brca2_human?format=xml25'
-
         ]
 
         networks = self.client.network.create_from(locations)
@@ -182,26 +180,60 @@ class CyRestClientTests(unittest.TestCase):
 
         dir_name = os.path.dirname(os.path.realpath(__file__))
         df = pd.read_csv(
-            dir_name + '/data/galFiltered.sif',
+            os.path.join(dir_name, 'data/galFiltered.sif'),
             names=['source', 'interaction', 'target'], sep=' ')
         print(df.head(3))
         net = df_util.from_dataframe(df)
 
-        network = self.client.network.create(data=net, name='Created from DataFrame')
+        network = self.client.network.create(data=net,
+                                             name='Created from DataFrame')
 
         original_column_count = len(network.get_node_columns())
 
         dir_name = os.path.dirname(os.path.realpath(__file__))
-        file_name = dir_name + '/data/galFiltered.nodeAttrTable.txt'
+        file_name = os.path.join(dir_name, 'data/galFiltered.nodeAttrTable.txt')
         data_table = pd.read_csv(file_name, sep='\t')
 
         network.update_node_table(df=data_table, data_key_col='ID')
         table_column_count = len(data_table.columns)
         total_column_count = len(network.get_node_columns())
 
-        self.assertEqual(total_column_count, (original_column_count+table_column_count-1))
+        self.assertEqual(total_column_count,
+                         (original_column_count + table_column_count - 1))
 
         print('\n---------- DataFrame Conversion Tests Finished! -----------\n')
+
+    def test_convert_multiple_columns(self):
+        print('\n--------- DataFrame Conversion MCs Tests Start ----------\n')
+
+        import os
+        import pandas as pd
+        import numpy as np
+
+        # Clean up Cytoscape session
+        self.client.session.delete()
+
+        dir_name = os.path.dirname(os.path.realpath(__file__))
+        df = pd.read_csv(
+            os.path.join(dir_name, 'data/galFiltered.sif'),
+            names=['source', 'interaction', 'target'], sep=' ')
+        df["weight"] = np.ones(df.shape[0])
+        df["extra"] = np.empty(df.shape[0])
+        df["not_considered"] = np.zeros(df.shape[0])
+        print(df.head(3))
+        net = df_util.from_dataframe(df, edge_attr_cols=["weight", "extra"])
+
+        network = self.client.network.create(
+            data=net, name='Created from DataFrame'
+        )
+        actual = network.to_dataframe(
+            extra_edges_columns=["weight", "extra", "not_considered"]
+        )
+
+        actual_columns = sorted(actual.columns.tolist() + ["not_considered"])
+        self.assertListEqual(sorted(df.columns.tolist()), actual_columns)
+
+        print('\n--------- DataFrame Conversion MCs Tests Ended! ----------\n')
 
     def test_delete_network(self):
         network = self.client.network.create()
