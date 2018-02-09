@@ -1,0 +1,6 @@
+theme: readthedocs
+site_name: py2cytoscape
+pages:
+  - Home: index.md
+  - REST: 
+    - intro: rest/intro.md 

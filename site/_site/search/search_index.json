@@ -1,0 +1,19 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "AGEpy", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#agepy", 
+            "text": "", 
+            "title": "AGEpy"
+        }, 
+        {
+            "location": "/rest/intro/", 
+            "text": "", 
+            "title": "intro"
+        }
+    ]
+}

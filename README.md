@@ -1,18 +1,8 @@
-# py2cytoscape
-[![Build Status](https://travis-ci.org/idekerlab/py2cytoscape.svg?branch=develop)](https://travis-ci.org/idekerlab/py2cytoscape)
-[![PyPI](https://img.shields.io/pypi/v/py2cytoscape.svg)](https://pypi.python.org/pypi/py2cytoscape)
+# py2cytoscape [![Build Status](https://travis-ci.org/cytoscape/py2cytoscape.svg?branch=master)](https://travis-ci.org/cytoscape/py2cytoscape) [![PyPI version](https://badge.fury.io/py/py2cytoscape.svg)](https://badge.fury.io/py/py2cytoscape) [![ReadtheDocs](https://readthedocs.org/projects/py2cytoscape/badge/?version=latest)](https:/py2cytoscape.readthedocs.io)
 
 ##### _Tools to use Cytoscape and Cytoscape.js from Python_
 
 ![](http://www.cytoscape.org/images/3_1_title3.png)
-
-## Status
-* 7/16/2016: Version 0.6.0 release. Session Saving and loading API, Preset layout utility method, Numpy array support, Bug fixes.
-* 9/1/2015: Version 0.5.0 release.  View utilities added.
-* 6/27/2014: Version 0.4.3 release. Minor update version for Python 3.4.x.
-* 6/26/2014: Version 0.4.2 release. Confirmed to work with cyREST 1.1.0.
-* 6/23/2014: Version 0.4.1 release.  Graph utility modules have been updated.
-* 6/4/2014: Version 0.4.0 release.  This is still in alpha.
 
 ## What is _py2cytoscape_?
 py2cytoscape is a collection of utilities to use [Cytoscape](http://www.cytoscape.org/) and [Cytoscape.js](http://js.cytoscape.org/) from Python.  Network visualization feature is still limited in Python, but with this tool, you can access both of Cytoscape and Cytoscape.js as network visualization engines for your Python code!
@@ -42,23 +32,6 @@ pip install py2cytoscape
 pip install scipy
 ```
 
-### Windows
-
-To install py2cytoscape dependencies, we recommend that you use [Miniconda](http://conda.pydata.org/miniconda.html) Python package manager.
-
-Miniconda has scipy binary package, but do not have python-igraph binary package.
-So download the python-igraph whl for your Python (2 or 3, 32bit or 64bit) from [Christoph’s site](http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph).
-And install it with `pip`.
-Please install python-igraph before you install py2cytoscape, otherwise pip will try to **build** python-igraph (and will fail). 
-
-(In the case of Python3.5 64bit)
-
-```
-pip install .\python_igraph-0.7.1.post6-cp35-none-win_amd64.whl
-pip install py2cytoscape
-conda install scipy
-```
-
 ### Ubuntu Linux
 
 ```shell
@@ -66,6 +39,23 @@ apt install g++ make libxml2-dev python-dev python3-dev zlib1g-dev
 pip install py2cytoscape
 #if you use the scipy dependent py2cytoscape method
 pip install scipy
+```
+
+### Windows
+
+To install py2cytoscape dependencies, we recommend that you use [Miniconda](http://conda.pydata.org/miniconda.html) Python package manager.
+
+Miniconda has scipy binary package, but do not have python-igraph binary package.
+So download the python-igraph whl for your Python (2 or 3, 32bit or 64bit) from [Christoph’s site](http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph).
+And install it with `pip`.
+Please install python-igraph before you install py2cytoscape, otherwise pip will try to **build** python-igraph (and will fail).
+
+(In the case of Python3.5 64bit)
+
+```
+pip install .\python_igraph-0.7.1.post6-cp35-none-win_amd64.whl
+pip install py2cytoscape
+conda install scipy
 ```
 
 ## Features
