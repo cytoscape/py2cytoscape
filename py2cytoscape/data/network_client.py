@@ -9,7 +9,7 @@ from ..util import cytoscapejs as util
 
 from ..util import util_networkx as nx_util
 from ..util import util_igraph as ig_util
-from ..util import dataframe as df_util
+from ..util import util_dataframe as df_util
 from ..util import util_numpy as np_util
 
 JSON = 'json'
@@ -18,10 +18,10 @@ from .cynetwork import CyNetwork, check_response
 
 
 class NetworkClient(object):
-
     def __init__(self, url, session=None):
         self.__url = url + 'networks'
-        # Using a persistent session object, so we don't have to create one for every request.
+        # Using a persistent session object, so we don't have to create one
+        # for every request.
         self.session = session if session is not None else requests.Session()
 
     def create_from(self, locations=None, collection=None):
@@ -63,15 +63,14 @@ class NetworkClient(object):
                 return CyNetwork(network_ids[0], session=self.session,
                                  url=self.__url)
             else:
-                return [CyNetwork(suid, session=self.session, url=self.__url) for
-                        suid
-                        in
-                        network_ids]
+                return [CyNetwork(suid, session=self.session, url=self.__url)
+                        for suid in network_ids]
         else:
-            result_dict = {entry['source']: CyNetwork(entry['networkSUID'],
-                                                      session=self.session,
-                                                      url=self.__url)
-                           for entry in res}
+            result_dict = {
+                entry['source']: CyNetwork(
+                    entry['networkSUID'], session=self.session, url=self.__url
+                ) for entry in res
+            }
             return pd.Series(result_dict)
 
     def __to_file_url(self, file_name):
@@ -102,8 +101,11 @@ class NetworkClient(object):
             else:
                 network_collection = collection
 
-            res = self.session.post(self.__url + '?collection=' + network_collection,
-                                    data=json.dumps(network_data), headers=HEADERS)
+            res = self.session.post(
+                self.__url + '?collection=' + network_collection,
+                data=json.dumps(network_data),
+                headers=HEADERS
+            )
             check_response(res)
             result = res.json()
             network_id = result['networkSUID']
@@ -125,23 +127,31 @@ class NetworkClient(object):
         return self.create(name=name, collection=collection, data=cyjs)
 
     def create_from_ndarray(self, matrix, name=None, labels=None,
-        collection=None, weighted=False):
+                            collection=None, weighted=False):
         if matrix is None:
             raise ValueError('2D ndarray object is required.')
 
         cyjs = np_util.from_ndarray(matrix, name, labels, weighted=weighted)
         return self.create(name=name, collection=collection, data=cyjs)
 
-    def create_from_dataframe(self, dataframe, source_col='source',
-                              target_col='target', interaction_col='interaction',
-                              name='Created from DataFrame', collection=None):
+    def create_from_dataframe(self, dataframe,
+                              source_col='source',
+                              target_col='target',
+                              interaction_col='interaction',
+                              name='Created from DataFrame',
+                              collection=None,
+                              extra_columns=[]):
         if dataframe is None:
             raise ValueError('DataFrame object is required.')
 
         # Convert from DataFrame to Cytoscape.js JSON
-        cyjs = df_util.from_dataframe(dataframe, source_col=source_col,
-                              target_col=target_col, interaction_col=interaction_col,
-                              name=name)
+        cyjs = df_util.from_dataframe(
+            dataframe,
+            source_col=source_col,
+            target_col=target_col,
+            interaction_col=interaction_col,
+            name=name,
+            edge_attr_cols=extra_columns)
         return self.create(collection=collection, data=cyjs)
 
     def get_all(self, format=SUID_LIST):

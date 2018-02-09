@@ -5,7 +5,6 @@ import pandas as pd
 
 
 class Style(object):
-
     def __init__(self, name):
         # Validate required argument
         if name is None:
@@ -110,12 +109,19 @@ class Style(object):
         vals = {entry['visualProperty']: entry['value'] for entry in result}
         return pd.Series(vals)
 
-    def update_defaults(self, key_value_pair):
+    def update_defaults(self, prop_value_dict):
+        """
+        Updates the value of one or more visual properties.
+
+        :param prop_value_dict: Dictionary containing, for each visual property,
+            the new value to use.
+        """
+
         body = []
-        for key in key_value_pair:
+        for key in prop_value_dict:
             entry = {
                 'visualProperty': key,
-                'value': key_value_pair[key]
+                'value': prop_value_dict[key]
             }
             body.append(entry)
 
@@ -137,43 +143,25 @@ class Style(object):
 
 
 class StyleUtil(object):
+    @staticmethod
+    def create_point(value, lesser, equal, greater):
+        return [
+            {
+                'value': str(value),
+                'lesser': lesser,
+                'equal': equal,
+                'greater': greater
+            }
+        ]
 
     @staticmethod
     def create_2_color_gradient(min=0, max=10, colors=('red', 'green')):
-
-        points = [
-            {
-                'value': str(min),
-                'lesser': colors[0],
-                'equal':  colors[0],
-                'greater': colors[0],
-            },
-            {
-                'value': str(max),
-                'lesser': colors[1],
-                'equal': colors[1],
-                'greater': colors[1]
-            }
-        ]
-
-        return points
+        point_1 = StyleUtil.create_point(min, colors[0], colors[0], colors[0])
+        point_2 = StyleUtil.create_point(max, colors[1], colors[1], colors[1])
+        return point_1 + point_2
 
     @staticmethod
     def create_slope(min=0, max=10, values=(1, 10)):
-
-        points = [
-            {
-                'value': str(min),
-                'lesser': values[0],
-                'equal':  values[0],
-                'greater': values[0],
-            },
-            {
-                'value': str(max),
-                'lesser': values[1],
-                'equal': values[1],
-                'greater': values[1]
-            }
-        ]
-
-        return points
+        point_1 = StyleUtil.create_point(min, values[0], values[0], values[0])
+        point_2 = StyleUtil.create_point(max, values[1], values[1], values[1])
+        return point_1 + point_2
