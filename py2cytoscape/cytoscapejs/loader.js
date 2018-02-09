@@ -1,6 +1,6 @@
 if (window['cytoscape'] === undefined) {
     var paths = {
-        cytoscape: 'http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min'
+        cytoscape: 'https://raw.githubusercontent.com/cytoscape/cytoscape.js/master/dist/cytoscape.min.js'
     };
 
     require.config({
