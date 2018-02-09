@@ -143,7 +143,6 @@ class Style(object):
 
 
 class StyleUtil(object):
-    @staticmethod
     def create_point(value, lesser, equal, greater):
         return [
             {
@@ -154,13 +153,37 @@ class StyleUtil(object):
             }
         ]
 
-    @staticmethod
+
     def create_2_color_gradient(min=0, max=10, colors=('red', 'green')):
         point_1 = StyleUtil.create_point(min, colors[0], colors[0], colors[0])
         point_2 = StyleUtil.create_point(max, colors[1], colors[1], colors[1])
         return point_1 + point_2
 
-    @staticmethod
+    def create_3_color_gradient(min=-5, mid=0, max=5, colors=('blue', 'white', 'red')):
+        # can be updated to use StyleUtil.create_point like in create_point
+        points = [
+            {
+                'value': str(min),
+                'lesser': colors[0],
+                'equal':  colors[0],
+                'greater': colors[0],
+            },
+            {
+                'value': str(mid),
+                'lesser': colors[1],
+                'equal':  colors[1],
+                'greater': colors[1],
+            },
+            {
+                'value': str(max),
+                'lesser': colors[2],
+                'equal': colors[2],
+                'greater': colors[2]
+            }
+        ]
+
+        return points
+    
     def create_slope(min=0, max=10, values=(1, 10)):
         point_1 = StyleUtil.create_point(min, values[0], values[0], values[0])
         point_2 = StyleUtil.create_point(max, values[1], values[1], values[1])
