@@ -1,6 +1,9 @@
 if (window['cytoscape'] === undefined) {
     var paths = {
-        cytoscape: 'http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min'
+        //seems like cystoscape.min.js has been relocated
+        //from version 3.0.0 cytoscape.min.js does not work :(
+        //cytoscape: 'http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min'
+        cytoscape: 'https://cdnjs.cloudflare.com/ajax/libs/cytoscape/2.7.21/cytoscape.min'
     };
 
     require.config({
