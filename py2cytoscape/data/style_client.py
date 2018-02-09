@@ -23,13 +23,17 @@ class StyleClient(object):
 
         if name in existing_styles:
             return Style(name)
-
-        style = {
-            'title': name,
-            'defaults': [],
-            'mappings': []
-
-        }
+            
+        if original_style is None:
+            style = {
+                'title': name,
+                'defaults': [],
+                'mappings': []
+            }
+        else:
+            style = original_style
+            style['title'] = name
+            
         new_style_name = requests.post(self.__url, data=json.dumps(style), headers=HEADERS).json()['title']
         return Style(name=new_style_name)
 
