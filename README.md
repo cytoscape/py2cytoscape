@@ -14,7 +14,7 @@ pip install py2cytoscape
 pip install git+https://github.com/cytoscape/py2cytoscape.git
 ```
 
-### Documentation
+## Documentation
 
 Package documentation can be found on [https://py2cytoscape.readthedocs.io](https://py2cytoscape.readthedocs.io).
 
