@@ -2,5 +2,6 @@ theme: readthedocs
 site_name: py2cytoscape
 pages:
   - Home: index.md
-  - REST: 
-    - intro: rest/intro.md 
+  - cyrest:
+    - Intro: rest/index.md
+    - Commands: rest/Commands.md
