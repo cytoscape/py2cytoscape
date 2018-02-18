@@ -10,25 +10,27 @@ class commands(object):
     def __init__(self, url):
         self.__url = url + 'commands'
 
-    def list(self):
+    def list(self, verbose=False):
         """
         List all available command namespaces.
         """
-        response=api(url=self.__url,method="HTML")
+        response=api(url=self.__url,method="HTML", verbose=False)
 
-    def namespace(self,namespace):
+    def namespace(self, namespace, verbose=False):
         """
         List all available commands in a namespace.
 
         :param namespace: a namespace as listed in rest.cyclient.commands.list().
+        :param verbose: print more
         """
-        response=api(url=self.__url+"/"+namespace,method="HTML")
+        response=api(url=self.__url+"/"+namespace,method="HTML",verbose=verbose)
 
-    def command(self, namespace, command):
+    def command(self, namespace, command, verbose=False):
         """
         Execute a command or list its arguments.
 
         :param namespace: a namespace as listed in rest.cyclient.commands.list().
         :param command: a commands as listed in rest.cyclient.commands.namespace(<namespace>).
+        :param verbose: print more
         """
-        response=api(url=self.__url+"/"+namespace+"/"+command,method="HTML")
+        response=api(url=self.__url+"/"+namespace+"/"+command,method="HTML",verbose=verbose)

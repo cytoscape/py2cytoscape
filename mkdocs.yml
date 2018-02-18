@@ -3,5 +3,6 @@ site_name: py2cytoscape
 pages:
   - Home: index.md
   - cyrest:
-    - Intro: rest/index.md
-    - Commands: rest/Commands.md
+    - Intro: cyrest/index.md
+    - Commands: cyrest/commands.md
+    - command: cyrest/command.md

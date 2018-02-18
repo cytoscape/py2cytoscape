@@ -1,5 +1,6 @@
 from .base import *
 from .commands import *
+from .command import *
 
 class cyclient(object):
     """
@@ -15,6 +16,7 @@ class cyclient(object):
     def __init__(self, host=HOST, port=PORT, version=VERSION):
         self.__url = 'http://' + host + ':' + str(port) + '/' + version + '/'
         self.commands=commands(self.__url)
+        self.command=command(self.__url)
 
     def status(self):
         """

@@ -2,7 +2,9 @@
 
 List all available command namespaces.
 
-**`cyclient.commands.list()`**
+**`cyclient.commands.list(verbose=False)`**
+
+* **`verbose`** print more
 
 ```python
 >>> from py2cytoscape import cyrest as p2c
@@ -31,7 +33,9 @@ ___
 
 List all available commands in a namespace.
 
-**`cyclient.commands.namespace(namespace)`**
+**`cyclient.commands.namespace(namespace, verbose=False)`**
+
+* **`verbose`** print more
 
 ```python
 >>> from py2cytoscape import cyrest as p2c
@@ -74,7 +78,9 @@ ___
 
 Execute a command or list its arguments.
 
-**`cyclient.commands.command(namespace, command)`**
+**`cyclient.commands.command(namespace, command, verbose=False)`**
+
+* **`verbose`** print more
 
 ```python
 >>> from py2cytoscape import cyrest as p2c

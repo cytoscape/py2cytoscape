@@ -1,6 +1,7 @@
 import requests
 import urllib2
 import sys
+import json
 
 HOST = 'localhost'
 IP=HOST # temporary
@@ -82,7 +83,8 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
             print "'"+baseurl+"'"
             sys.stdout.flush()
         r = requests.post(url = baseurl, json = PARAMS)
-        CheckResponse(r)
+        if verbose:
+            checkresponse(r)
         res=r.content
         if verbose:
             print res
