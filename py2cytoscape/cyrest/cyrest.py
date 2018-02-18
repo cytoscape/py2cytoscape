@@ -1,6 +1,8 @@
 from .base import *
 from .commands import *
 from .command import *
+from .cybrowser import *
+from .session import *
 
 class cyclient(object):
     """
@@ -17,8 +19,10 @@ class cyclient(object):
         self.__url = 'http://' + host + ':' + str(port) + '/' + version + '/'
         self.commands=commands(self.__url)
         self.command=command(self.__url)
+        self.cybrowser=cybrowser(self.__url)
+        self.session=session(self.__url)
 
-    def status(self):
+    def new(self):
         """
         Checks the status of your CyREST server.
         """

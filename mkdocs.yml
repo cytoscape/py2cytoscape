@@ -6,3 +6,5 @@ pages:
     - Intro: cyrest/index.md
     - Commands: cyrest/commands.md
     - command: cyrest/command.md
+    - cybrowser: cyrest/cybrowser.md
+    - session: cyrest/session.md

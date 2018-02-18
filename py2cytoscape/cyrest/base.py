@@ -75,7 +75,7 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
             sys.stdout.flush()
         r = requests.get(url = URL)
         if verbose:
-            CheckResponse(r)
+            checkresponse(r)
         res=r
 
     elif (method == "POST") or (method == "P"):

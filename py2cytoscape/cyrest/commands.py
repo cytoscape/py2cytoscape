@@ -14,7 +14,7 @@ class commands(object):
         """
         List all available command namespaces.
         """
-        response=api(url=self.__url,method="HTML", verbose=False)
+        response=api(url=self.__url,method="HTML", verbose=verbose)
 
     def namespace(self, namespace, verbose=False):
         """
