@@ -7,8 +7,8 @@ List all available command namespaces.
 * **`verbose`** print more
 
 ```python
->>> from py2cytoscape import cyrest as p2c
->>> cytoscape=p2c.cyclient()
+>>> from py2cytoscape import cyrest
+>>> cytoscape=cyrest.cyclient()
 >>> cytoscape.commands.list()
 
 Available namespaces:
@@ -38,8 +38,8 @@ List all available commands in a namespace.
 * **`verbose`** print more
 
 ```python
->>> from py2cytoscape import cyrest as p2c
->>> cytoscape=p2c.cyclient()
+>>> from py2cytoscape import cyrest
+>>> cytoscape=cyrest.cyclient()
 >>> cytoscape.commands.namespace("network")
 
 Available commands for 'network':
@@ -83,8 +83,8 @@ List the arguments of a command.
 * **`verbose`** print more
 
 ```python
->>> from py2cytoscape import cyrest as p2c
->>> cytoscape=p2c.cyclient()
+>>> from py2cytoscape import cyrest
+>>> cytoscape=cyrest.cyclient()
 >>> cytoscape.commands.command("network","rename")
 
 Available arguments for 'network rename':

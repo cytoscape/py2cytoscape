@@ -9,8 +9,8 @@ variableName argument, or all variables if variableName is not provided.
 * **`verbose`** print more
 
 ```python
->>> from py2cytoscape import cyrest as p2c
->>> cytoscape=p2c.cyclient()
+>>> from py2cytoscape import cyrest
+>>> cytoscape=cyrest.cyclient()
 >>> cytoscape.command.echo("*")
 ```
 ___
@@ -26,8 +26,8 @@ commands, and arguments.
 * **`verbose`** print more
 
 ```python
->>> from py2cytoscape import cyrest as p2c
->>> cytoscape=p2c.cyclient()
+>>> from py2cytoscape import cyrest
+>>> cytoscape=cyrest.cyclient()
 >>> cytoscape.command.open_dialog()
 ```
 ___
@@ -43,8 +43,8 @@ message argument and waits for the user to click OK
 * **`verbose`** print more
 
 ```python
->>> from py2cytoscape import cyrest as p2c
->>> cytoscape=p2c.cyclient()
+>>> from py2cytoscape import cyrest
+>>> cytoscape=cyrest.cyclient()
 >>> cytoscape.command.pause("check out the results before continuing")
 ```
 ___
@@ -59,8 +59,8 @@ the end of a script file.
 * **`verbose`** print more
 
 ```python
->>> from py2cytoscape import cyrest as p2c
->>> cytoscape=p2c.cyclient()
+>>> from py2cytoscape import cyrest
+>>> cytoscape=cyrest.cyclient()
 >>> cytoscape.command.quit()
 ```
 ___
@@ -79,8 +79,8 @@ line. Arguments to the script are provided by the args argument.
 * **`verbose`** print more
 
 ```python
->>> from py2cytoscape import cyrest as p2c
->>> cytoscape=p2c.cyclient()
+>>> from py2cytoscape import cyrest
+>>> cytoscape=cyrest.cyclient()
 >>> cytoscape.command.run("/path/to/myscript","title:miRNA_network,nodes:100")
 ```
 ___
@@ -97,7 +97,7 @@ The sleep command will pause processing for a period of time as
 * **`verbose`** print more
 
 ```python
->>> from py2cytoscape import cyrest as p2c
->>> cytoscape=p2c.cyclient()
+>>> from py2cytoscape import cyrest
+>>> cytoscape=cyrest.cyclient()
 >>> cytoscape.command.sleep(60)
 ```

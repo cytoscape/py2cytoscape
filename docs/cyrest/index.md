@@ -11,8 +11,8 @@ A CyREST client.
 * **`returns status`** a cyclient object.
 
 ```python
->>> from py2cytoscape import cyrest as p2c
->>> cytoscape=p2c.cyclient()
+>>> from py2cytoscape import cyrest
+>>> cytoscape=cyrest.cyclient()
 ```
 ___
 
@@ -23,8 +23,8 @@ Checks the status of your CyREST server.
 **`cyclient.status()`**
 
 ```python
->>> from py2cytoscape import cyrest as p2c
->>> cytoscape=p2c.cyclient()
+>>> from py2cytoscape import cyrest
+>>> cytoscape=cyrest.cyclient()
 >>> cytoscape.status()
 
 CyREST online!
