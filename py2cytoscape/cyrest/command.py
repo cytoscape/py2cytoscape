@@ -62,7 +62,7 @@ class command(object):
         by the file argument, which should contain Cytoscape commands, one per
         line. Arguments to the script are provided by the args argument.
 
-        :param file: file to run
+        :param script_file: file to run
         :param args: enter the script arguments as key:value pairs separated by
                         commas. eg. "arg1:value1,arg2:value2"
         :param verbose: print more

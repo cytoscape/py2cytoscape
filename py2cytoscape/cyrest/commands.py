@@ -27,7 +27,7 @@ class commands(object):
 
     def command(self, namespace, command, verbose=False):
         """
-        Execute a command or list its arguments.
+        List the arguments of a command.
 
         :param namespace: a namespace as listed in rest.cyclient.commands.list().
         :param command: a commands as listed in rest.cyclient.commands.namespace(<namespace>).

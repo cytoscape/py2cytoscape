@@ -76,7 +76,7 @@ Available commands for 'network':
 ___
 ## ___cyclient.commands.command___
 
-Execute a command or list its arguments.
+List the arguments of a command.
 
 **`cyclient.commands.command(namespace, command, verbose=False)`**
 
