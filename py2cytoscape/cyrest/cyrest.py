@@ -22,7 +22,7 @@ class cyclient(object):
         self.cybrowser=cybrowser(self.__url)
         self.session=session(self.__url)
 
-    def new(self):
+    def status(self):
         """
         Checks the status of your CyREST server.
         """
