@@ -3,6 +3,7 @@ from .commands import *
 from .command import *
 from .cybrowser import *
 from .session import *
+from .network import *
 
 class cyclient(object):
     """
@@ -21,6 +22,7 @@ class cyclient(object):
         self.command=command(self.__url)
         self.cybrowser=cybrowser(self.__url)
         self.session=session(self.__url)
+        self.network=network(self.__url)
 
     def status(self):
         """

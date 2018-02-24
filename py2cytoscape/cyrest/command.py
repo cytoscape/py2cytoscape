@@ -40,11 +40,8 @@ class command(object):
         :param message: a message to display. default=None
         :param verbose: print more
         """
-        if message:
-            PARAMS={"message":message}
-        else:
-            PARAMS={}
 
+        PARAMS=set_param(["message"],[message])
         response=api(url=self.__url+"/pause", PARAMS=PARAMS, verbose=verbose)
 
     def quit(self,verbose=False):
@@ -67,9 +64,8 @@ class command(object):
                         commas. eg. "arg1:value1,arg2:value2"
         :param verbose: print more
         """
-        PARAMS={"file":script_file}
-        if args:
-            PARAMS["args"]=args
+
+        PARAMS=set_param(["file","args"],[script_file,args])
         response=api(url=self.__url+"/run", PARAMS=PARAMS, verbose=verbose)
 
     def sleep(self,duration,verbose=False):

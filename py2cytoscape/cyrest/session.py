@@ -29,11 +29,7 @@ class session(object):
         :param verbose: print more
         """
 
-        PARAMS={}
-        for p,v in zip(["file", "url"],[session_file, session_url]):
-                if v:
-                    PARAMS[p]=v
-
+        PARAMS=set_param(["file", "url"],[session_file, session_url])
         response=api(url=self.__url+"/open", PARAMS=PARAMS, verbose=verbose)
 
     def save(self, session_file, verbose=False):

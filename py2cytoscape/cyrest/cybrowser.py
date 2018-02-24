@@ -22,11 +22,7 @@ class cybrowser(object):
         :param verbose: print more
         """
 
-        PARAMS={}
-        for p,v in zip(["id","text","title","url","debug"],[wid,text,title,url,debug]):
-            if v:
-                PARAMS[p]=v
-
+        PARAMS=set_param(["id","text","title","url","debug"],[wid,text,title,url,debug])
         response=api(url=self.__url+"/dialog?",PARAMS=PARAMS, method="GET", verbose=verbose)
 
     def hide(self, wid, verbose=False):

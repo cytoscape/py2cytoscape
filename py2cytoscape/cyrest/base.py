@@ -16,6 +16,29 @@ SUID_LIST = 'suid'
 
 BASE_URL_NETWORK = BASE_URL + 'networks'
 
+def set_param(parameters,values):
+    PARAMS={}
+    for p,v in zip(parameters,values):
+        if v:
+            PARAMS[p]=v
+    return PARAMS
+
+def check_network(cyrest,network):
+    if not network:
+        try:
+            network_name=cyrest.network_name
+            network_suid=cyrest.network_suid
+            print("Working on '%s', SUID %s." %(str(network_name),str(network_suid))
+        except:
+            network_name='CURRENT'
+            print("No network specified. Working on 'CURRENT'.")
+        return network_name
+    else:
+        print("Working on '%s' Network." %str(network))
+        return network
+
+
+
 def checkresponse(r):
     status=str(r.status_code)
     if status == "200":
