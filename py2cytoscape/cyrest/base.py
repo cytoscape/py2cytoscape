@@ -23,21 +23,14 @@ def set_param(parameters,values):
             PARAMS[p]=v
     return PARAMS
 
-def check_network(cyrest,network):
+def check_network(cyrest_network,network,verbose=False):
     if not network:
-        try:
-            network_name=cyrest.network_name
-            network_suid=cyrest.network_suid
-            print("Working on '%s', SUID %s." %(str(network_name),str(network_suid))
-        except:
-            network_name='CURRENT'
-            print("No network specified. Working on 'CURRENT'.")
-        return network_name
+        network_name=cyrest_network.network_name
     else:
-        print("Working on '%s' Network." %str(network))
-        return network
-
-
+        network_name=network
+    if verbose:
+        print("Working on '%s' network." %str(network_name) )
+    return network_name
 
 def checkresponse(r):
     status=str(r.status_code)
