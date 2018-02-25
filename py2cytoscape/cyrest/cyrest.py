@@ -4,6 +4,7 @@ from .command import *
 from .cybrowser import *
 from .session import *
 from .network import *
+import copy
 
 class cyclient(object):
     """
@@ -34,3 +35,9 @@ class cyclient(object):
             print('Could not get status from CyREST: ' + str(e))
         else:
             print('CyREST online!')
+
+    def copy(self):
+        """
+        Creates a copy of the cyclient object.
+        """
+        return copy.deepcopy(self)
