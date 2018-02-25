@@ -25,7 +25,10 @@ def set_param(parameters,values):
 
 def check_network(cyrest_network,network,verbose=False):
     if not network:
-        network_name=cyrest_network.network_name
+        try:
+            network_name=cyrest_network.network_name
+        except:
+            network_name='CURRENT'
     else:
         network_name=network
     if verbose:

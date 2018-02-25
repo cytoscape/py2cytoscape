@@ -9,7 +9,7 @@ class network(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/network'
-        self.network_name='CURRENT'
+
 
 
     def add(self, edgeList=None, network=None, nodeList=None, verbose=False):
@@ -319,8 +319,6 @@ class network(object):
         :returns: { dictionary with values for the respective network }
         """
 
-        print(self.network_name)
-        print("Getting '%s' network." %str(network))
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/get", PARAMS=PARAMS, method="POST", verbose=verbose)
@@ -704,6 +702,8 @@ class network(object):
         """
         Sets the current network, which can also be null.
 
+        This will set the .network.network_name value to network.
+
         :param network (string, optional): Specifies a network by name, or by
             SUID if the prefix SUID: is used. The keyword CURRENT, or a blank
             value can also be used to specify the current network.
@@ -711,7 +711,7 @@ class network(object):
         """
         PARAMS=set_param(["network"], [network])
         response=api(url=self.__url+"/set current", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        #self.network_name=network
 
     def set_properties(self, network=None, propertyList=None, valueList=None, verbose=False):
         """
