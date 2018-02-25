@@ -113,6 +113,10 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
             print res
             sys.stdout.flush()
         res=json.loads(res)
+        if "errors" in res.keys():
+            if len(res["errors"]) > 0:
+                for e in res["errors"]:
+                    print(e)
         res=res["data"]
 
     elif (method=="HTML") or (method == "H") or (method=="HELP"):
