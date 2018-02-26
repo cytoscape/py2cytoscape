@@ -4,4 +4,4 @@
     CyRest tools for python.
 
 """
-from cyrest import *
+from .cyrest import *
