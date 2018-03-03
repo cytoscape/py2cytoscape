@@ -83,11 +83,13 @@ class network(object):
             if the prefix SUID: is used. The keyword CURRENT, or a blank value can
             also be used to specify the current network.
         :param verbose: print more
+
+        :returns: node SUID
         """
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["name","network"],[name,network])
         response=api(url=self.__url+"/add node", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        return response
 
     def clone(self, network=None, verbose=False):
         """
@@ -102,7 +104,7 @@ class network(object):
             also be used to specify the current network.
         :param verbose: print more
 
-        :returns: { netowrk, view }
+        :returns: { network, view }
         """
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"], [network])
