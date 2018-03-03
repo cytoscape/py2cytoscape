@@ -4,6 +4,9 @@ from .command import *
 from .cybrowser import *
 from .session import *
 from .network import *
+from .node import *
+from .vizmap import *
+
 import copy
 
 class cyclient(object):
@@ -24,6 +27,8 @@ class cyclient(object):
         self.cybrowser=cybrowser(self.__url)
         self.session=session(self.__url)
         self.network=network(self.__url)
+        self.node=node(sefl.__url)
+        self.vizmap=vizmap(sel.__url)
 
     def status(self):
         """
