@@ -7,6 +7,7 @@ from .network import *
 from .node import *
 from .vizmap import *
 from .diffusion import *
+from .idmapper import *
 
 import copy
 
