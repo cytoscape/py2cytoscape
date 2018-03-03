@@ -6,6 +6,7 @@ from .session import *
 from .network import *
 from .node import *
 from .vizmap import *
+from .diffusion import *
 
 import copy
 
@@ -29,6 +30,7 @@ class cyclient(object):
         self.network=network(self.__url)
         self.node=node(sefl.__url)
         self.vizmap=vizmap(sel.__url)
+        self.diffusion(sel.__url)
 
     def status(self):
         """
