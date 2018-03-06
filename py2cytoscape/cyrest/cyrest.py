@@ -8,6 +8,8 @@ from .node import *
 from .vizmap import *
 from .diffusion import *
 from .idmapper import *
+from .edge import *
+from .group import *
 
 import copy
 
@@ -32,6 +34,8 @@ class cyclient(object):
         self.node=node(sefl.__url)
         self.vizmap=vizmap(sel.__url)
         self.diffusion(sel.__url)
+        self.edge(sel.__url)
+        self.group(sel.__url)
 
     def status(self):
         """
