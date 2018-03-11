@@ -10,6 +10,7 @@ from .diffusion import *
 from .idmapper import *
 from .edge import *
 from .group import *
+from .view import *
 
 import copy
 
@@ -31,11 +32,12 @@ class cyclient(object):
         self.cybrowser=cybrowser(self.__url)
         self.session=session(self.__url)
         self.network=network(self.__url)
-        self.node=node(sefl.__url)
-        self.vizmap=vizmap(sel.__url)
-        self.diffusion(sel.__url)
-        self.edge(sel.__url)
-        self.group(sel.__url)
+        self.node=node(self.__url)
+        self.vizmap=vizmap(self.__url)
+        self.diffusion(self.__url)
+        self.edge(self.__url)
+        self.group(self.__url)
+        self.view(self.__url)
 
     def status(self):
         """
