@@ -58,10 +58,13 @@ class edge(object):
             sourceNode and targetNode parameters to produce results.
         :param verbose: print more
 
+        :returns: {"columnName": columnName }
+
         """
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edge","network","sourceNode","targetNode","type"],[edge,network,sourceNode,targetNode,atype])
         response=api(url=self.__url+"/add", PARAMS=PARAMS, method="POST", verbose=verbose)
+        return response
 
     def get_attribute(self,columnList=None,edgeList=None,namespace=None, network=None, verbose=False):
         """
@@ -85,10 +88,13 @@ class edge(object):
             value can also be used to specify the current network.
         :param verbose: print more
 
+        :returns: eg. [ {"name": "TAT (pp) O60563"}, {"name": "TAT (pp) O60563"}]
+
         """
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["columnList","edgeList","namespace","network"],[columnList,edgeList,namespace,network])
         response=api(url=self.__url+"/get attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
+        return response
 
     def get_properties(self,edgeList=None,network=None,propertyList=None, verbose=False):
         """
@@ -108,10 +114,27 @@ class edge(object):
             separated by commas.
         :param verbose: print more
 
+        :returns: eg. [
+                        {
+                          "SUID": 1647,
+                          "visualProperties": [
+                            {
+                              "visualProperty": "EDGE_PAINT",
+                              "value": "#808080"
+                            },
+                            {
+                              "visualProperty": "EDGE_VISIBLE",
+                              "value": true
+                            }
+                          ]
+                        },
+                        ...
+                        ]
         """
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edgeList","network","propertyList"],[edgeList,network,propertyList])
         response=api(url=self.__url+"/get properties", PARAMS=PARAMS, method="POST", verbose=verbose)
+        return response
 
     def list(self, edgeList=None, network=None, verbose=False):
         """
@@ -129,10 +152,12 @@ class edge(object):
             value can also be used to specify the current network.
         :param verbose: print more
 
+        :returns: eg. [ 772, 773, .. ]
         """
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edgeList","network"],[edgeList,network])
         response=api(url=self.__url+"/list", PARAMS=PARAMS, method="POST", verbose=verbose)
+        return response
 
     def list_attributes(self,columnList=None,edgeList=None,namespace=None, network=None, verbose=False):
         """
@@ -156,10 +181,20 @@ class edge(object):
             value can also be used to specify the current network.
         :param verbose: print more
 
+        :returns:  eg. [
+                        "SUID",
+                        "shared name",
+                        "shared interaction",
+                        "name",
+                        "selected",
+                        "interaction",
+                        "Annotation",
+                        .. ]
         """
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["columnList","edgeList","namespace","network"],[columnList,edgeList,namespace,network])
         response=api(url=self.__url+"/list attributes", PARAMS=PARAMS, method="POST", verbose=verbose)
+        return response
 
     def list_properties(self,columnList=None,edgeList=None,namespace=None, network=None, verbose=False):
         """
@@ -170,10 +205,22 @@ class edge(object):
             value can also be used to specify the current network.
         :param verbose: print more
 
+        :returns:  eg. [
+                        "Label Font Size",
+                        "Source Arrow Size",
+                        "Stroke Color (Unselected)",
+                        "Source Arrow Selected Paint",
+                        "Label Font Face",
+                        "Target Arrow Unselected Paint",
+                        "Transparency",
+                        "Source Arrow Unselected Paint",
+                        "Tooltip",
+                        .. ]
         """
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/list properties", PARAMS=PARAMS, method="POST", verbose=verbose)
+        return response
 
     def rename(self, edge=None, network=None, newName=None, verbose=False):
         """
@@ -239,7 +286,6 @@ class edge(object):
             separated by commas.
         :param valueList (string, optional): A list of values separated by commas.
         :param verbose: print more
-
         """
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edgeList","network","propertyList","valueList"],[edgeList, network, propertyList, valueList])
