@@ -11,6 +11,7 @@ from .idmapper import *
 from .edge import *
 from .group import *
 from .view import *
+from .layout import *
 
 import copy
 
