@@ -12,6 +12,7 @@ from .edge import *
 from .group import *
 from .view import *
 from .layout import *
+from .table import *
 
 import copy
 
@@ -39,6 +40,8 @@ class cyclient(object):
         self.edge(self.__url)
         self.group(self.__url)
         self.view(self.__url)
+        self.layout(self.__url)
+        self.table(self.__url)
 
     def status(self):
         """
