@@ -1,6 +1,6 @@
 from .base import *
 
-class session(object):
+class table(object):
     """
     cytoscape session interface as shown in CyREST's swagger documentation for 'table'.
 
