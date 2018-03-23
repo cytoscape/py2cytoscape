@@ -3,8 +3,10 @@
 """
 Usage:
 
-./cyrest.parse.py cyparse.txt force-directed-cl
+./cyrest.parse.py cyparse.txt layout.py force-directed-cl
 """
+
+cyrest_folder="/Users/jboucas/py2cytoscape/py2cytoscape/cyrest/"
 
 import sys
 
@@ -63,5 +65,5 @@ textf=text+'\n\t\tPARAMS=set_param('+textb+')\n\t\tresponse=api(url=self.__url+"
 
 print textd+textf
 
-with open("/Users/jboucas/py2cytoscape/py2cytoscape/cyrest/"+sys.argv[2], "a") as fout:
+with open(cyrest_folder+sys.argv[2], "a") as fout:
     fout.write("\n\n"+textd+textf)
