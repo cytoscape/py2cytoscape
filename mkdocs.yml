@@ -3,15 +3,14 @@ site_name: py2cytoscape
 pages:
   - Home: index.md
   - cyrest:
-    - Intro: cyrest/index.md
-    - Commands: cyrest/commands.md
+    - intro: cyrest/index.md
+    - commands: cyrest/commands.md
     - command: cyrest/command.md
     - cybrowser: cyrest/cybrowser.md
     - diffusion: cyrest/diffusion.md
     - edge: cyrest/edge.md
     - group: cyrest/group.md
     - idmapper: cyrest/idmapper.md
-    - index: cyrest/index.md
     - layout: cyrest/layout.md
     - network: cyrest/network.md
     - node: cyrest/node.md
