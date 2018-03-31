@@ -7,4 +7,15 @@ pages:
     - Commands: cyrest/commands.md
     - command: cyrest/command.md
     - cybrowser: cyrest/cybrowser.md
+    - diffusion: cyrest/diffusion.md
+    - edge: cyrest/edge.md
+    - group: cyrest/group.md
+    - idmapper: cyrest/idmapper.md
+    - index: cyrest/index.md
+    - layout: cyrest/layout.md
+    - network: cyrest/network.md
+    - node: cyrest/node.md
     - session: cyrest/session.md
+    - table: cyrest/table.md
+    - view: cyrest/view.md
+    - vizmap: cyrest/vizmap.md

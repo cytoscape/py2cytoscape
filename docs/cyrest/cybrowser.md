@@ -1,8 +1,29 @@
-## ___cyclient.cybrowser.dialog___
+## ***cyclient.cybrowser.version***
+
+**`cyclient.cybrowser.version(self, verbose=False)`**
+
+Display the CyBrowser version.
+
+* **`verbose`** print more
+
+___
+
+## ***cyclient.cybrowser.hide***
+
+**`cyclient.cybrowser.hide(self, wid, verbose=False)`**
+
+Hide and HTML browser in the Results Panel.
+
+* **`wid`** Window ID
+* **`verbose`** print more
+
+___
+
+## ***cyclient.cybrowser.dialog***
+
+**`cyclient.cybrowser.dialog(self=None, wid=None, text=None, title=None, url=None, debug=False, verbose=False)`**
 
 Launch and HTML browser in a separate window.
-
-**`cyclient.cybrowser.dialog(wid=None, text=None, title=None, url=None, debug=False, verbose=False)`**
 
 * **`wid`** Window ID
 * **`text`** HTML text
@@ -11,34 +32,13 @@ Launch and HTML browser in a separate window.
 * **`debug`** Show debug tools. boolean
 * **`verbose`** print more
 
-```python
->>> from py2cytoscape import cyrest
->>> cytoscape=cyrest.cyclient()
->>> cytoscape.cybrowser.dialog(wid="1", "http://www.cytoscape.org")
-```
 ___
 
-## ___cyclient.cybrowser.hide___
+## ***cyclient.cybrowser.show***
 
-Hide and HTML browser in the Results Panel.
+**`cyclient.cybrowser.show(self, wid=None, text=None, title=None, url=None, verbose=False)`**
 
-**`cyclient.cybrowser.hide(wid, verbose=False)`**
-
-* **`wid`** Window ID
-* **`verbose`** print more
-
-```python
->>> from py2cytoscape import cyrest
->>> cytoscape=cyrest.cyclient()
->>> cytoscape.cybrowser.hide("1")
-```
-___
-
-## ___cyclient.cybrowser.show___
-
-Launch and HTML browser in the Results Panel.
-
-**`cyclient.cybrowser.show(wid, text, title, url, verbose=False)`**
+Launch an HTML browser in the Results Panel.
 
 * **`wid`** Window ID
 * **`text`** HTML text
@@ -46,27 +46,5 @@ Launch and HTML browser in the Results Panel.
 * **`url`** URL
 * **`verbose`** print more
 
-```python
->>> from py2cytoscape import cyrest
->>> cytoscape=cyrest.cyclient()
->>> cytoscape.cybrowser.show(url="http://www.cytoscape.org")
-```
 ___
 
-## ___cyclient.cybrowser.show___
-
-Display the CyBrowser version.
-
-**`cyclient.cybrowser.version(verbose=False)`**
-
-* **`verbose`** print more
-
-```python
->>> from py2cytoscape import cyrest
->>> cytoscape=cyrest.cyclient()
->>> cytoscape.cybrowser.version()
-
-Version: 0.5.1
-
-Finished
-```
