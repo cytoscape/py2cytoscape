@@ -60,10 +60,12 @@ class cyclient(object):
         """
         return copy.deepcopy(self)
 
-    def version(self, verbose=False)
+    def version(self, verbose=False):
         """
         Checks Cytoscape version
         """
-        response=api(url=self.__url+"version",method="POST", verbose=verbose)
+        response=api(url=self.__url+"version",method="H", verbose=verbose)
+        response=json.loads(response)
         for k in response.keys():
-            print k, r[k]
+            print k, response[k]
+        
