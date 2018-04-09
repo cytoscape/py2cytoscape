@@ -26,7 +26,6 @@ class table(object):
 		if verbose:
 			return response
     
-
 	def create_column(self,columnName=None,listType=None,table=None,ntype=None,verbose=None):
 		"""
         Appends an additional column of attribute values to the current table.
@@ -107,7 +106,6 @@ class table(object):
 		response=api(url=self.__url+"/destroy", PARAMS=PARAMS, method="POST", verbose=verbose)
 		if verbose:
 			return response
-    
 
 	def export(self,options=None,OutputFile=None,table=None,verbose=None):
 		"""
@@ -124,7 +122,6 @@ class table(object):
 		response=api(url=self.__url+"/export", PARAMS=PARAMS, method="POST", verbose=verbose)
 		if verbose:
 			return response
-    
 
 	def get_column(self,column=None,table=None,verbose=None):
 		"""
@@ -357,7 +354,6 @@ class table(object):
 		if verbose:
 			return response
     
-
 	def merge(self,DataTypeTargetForNetworkCollection=None,\
     dataTypeTargetForNetworkList=None,mergeType=None,SourceMergeColumns=None,\
     SourceMergeKey=None,SourceTable=None,TargetKeyNetworkCollection=None,\
@@ -410,7 +406,6 @@ class table(object):
 		if verbose:
 			return response
     
-
 	def set_title(self,table=None,title=None,verbose=None):
 		"""
         Changes the visible identifier of a single table.
@@ -426,7 +421,6 @@ class table(object):
 		if verbose:
 			return response
     
-
 	def set_values(self,columnName=None,rowList=None,table=None,value=None,verbose=None):
 		"""
         Set all the values in the specified list of rows with a single value.
