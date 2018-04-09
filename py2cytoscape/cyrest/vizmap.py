@@ -36,6 +36,8 @@ class vizmap(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["styles"],[styles])
         response=api(url=self.__url+"/apply", PARAMS=PARAMS, method="POST", verbose=verbose)
+        if verbose:
+            return response
 
     def export(self, options=None, OutputFile=None, styles=None, verbose=False):
         """
@@ -67,6 +69,8 @@ class vizmap(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["options","OutputFile", "styles"],[options,OutputFile,styles])
         response=api(url=self.__url+"/export", PARAMS=PARAMS, method="POST", verbose=verbose)
+        if verbose:
+            return response
 
     def load_file(self, afile=None, verbose=False):
         """
@@ -80,3 +84,5 @@ class vizmap(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["afile"],[afile])
         response=api(url=self.__url+"/load file", PARAMS=PARAMS, method="POST", verbose=verbose)
+        if verbose:
+            return response

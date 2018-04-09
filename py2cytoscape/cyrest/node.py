@@ -133,7 +133,9 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network", "nodeList", "propertyList"],[network, nodeList, propertyList])
         response=api(url=self.__url+"/get properties", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
     def list(self, network=None, nodeList=None, verbose=False):
         """
         Returns a list of the node SUIDs associated with the passed network parameter.
@@ -210,7 +212,9 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network", "newName", "node"],[network, newName, node])
         response=api(url=self.__url+"/rename", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
     def select_from_file(self, afile=None, verbose=False):
         """
         Selects nodes in the current network based on node names provided by a file.
@@ -221,7 +225,9 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["file"],[afile])
         response=api(url=self.__url+"/select from file", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
     def set_attribute(self, columnList=None, namespace=None, network=None, nodeList=None, valueList=None, verbose=False):
         """
         Sets the value of a specified column for the passed node or set of nodes.
@@ -248,7 +254,9 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["columnList", "namespace", "network", "nodeList", "valueList"],[columnList, namespace, network, nodeList, valueList])
         response=api(url=self.__url+"/set attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
     def set_properties(self, network=None, nodeList=None, propertyList=None, valueList=None, verbose=False):
         """
         Sets the value of a specified property for the passed node or set of nodes.
@@ -271,3 +279,6 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network", "nodeList", "propertyList", "valueList"],[network, nodeList, propertyList, valueList])
         response=api(url=self.__url+"/set properties", PARAMS=PARAMS, method="POST", verbose=verbose)
+        if verbose:
+            return response
+    

@@ -32,7 +32,9 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["column","listType","namespace","network","type"],[column,listType,namespace,network,atype])
         response=api(url=self.__url+"/create attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
     def get(self,edge=None,network=None,sourceNode=None, targetNode=None, atype=None, verbose=False):
         """
         Returns the SUID of an edge that matches the passed parameters. If
@@ -238,7 +240,9 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edge","network","newName"],[edge,network,newName])
         response=api(url=self.__url+"/rename", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
     def set_attribute(self, columnList=None, edgeList=None, namespace=None, network=None, valueList=None, verbose=False):
         """
         Sets the value of a specified column for the passed edge or set of edges.
@@ -267,7 +271,9 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["columnList","edgeList","namespace","network", "valueList"],[columnList, edgeList, namespace, network, valueList])
         response=api(url=self.__url+"/set attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
     def set_properties(self, edgeList=None, network=None, propertyList=None, valueList=None, verbose=False):
         """
         Sets the value of a specified property for the passed edge or set of edges.
@@ -290,3 +296,6 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edgeList","network","propertyList","valueList"],[edgeList, network, propertyList, valueList])
         response=api(url=self.__url+"/set properties", PARAMS=PARAMS, method="POST", verbose=verbose)
+        if verbose:
+            return response
+    

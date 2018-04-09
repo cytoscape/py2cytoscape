@@ -19,7 +19,9 @@ class session(object):
         """
 
         response=api(url=self.__url+"/new", verbose=verbose)
-
+        if verbose:
+            return response
+    
     def open(self, session_file=None,session_url=None, verbose=False):
         """
         Opens a session from a local file or URL.
@@ -31,7 +33,9 @@ class session(object):
 
         PARAMS=set_param(["file", "url"],[session_file, session_url])
         response=api(url=self.__url+"/open", PARAMS=PARAMS, verbose=verbose)
-
+        if verbose:
+            return response
+    
     def save(self, session_file, verbose=False):
         """
         Saves the current session to an existing file, which will be replaced.
@@ -46,7 +50,9 @@ class session(object):
         PARAMS={"file":session_file}
 
         response=api(url=self.__url+"/save", PARAMS=PARAMS, verbose=verbose)
-
+        if verbose:
+            return response
+    
     def save_as(self, session_file, verbose=False):
         """
         Saves the current session as a new file.
@@ -59,3 +65,6 @@ class session(object):
         PARAMS={"file":session_file}
 
         response=api(url=self.__url+"/save as", PARAMS=PARAMS, verbose=verbose)
+        if verbose:
+            return response
+    

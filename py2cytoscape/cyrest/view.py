@@ -94,7 +94,8 @@ class view(object):
         """
         PARAMS={}
         response=api(url=self.__url+"/fit content", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
 
     def fit_selected(self, verbose=False):
         """
@@ -106,7 +107,9 @@ class view(object):
         """
         PARAMS={}
         response=api(url=self.__url+"/fit selected", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
     def get_current(self, layout=None, network=None, verbose=False):
         """
         Returns the current view or null if there is none.
@@ -117,6 +120,8 @@ class view(object):
         """
         PARAMS={}
         response=api(url=self.__url+"/get_current", PARAMS=PARAMS, method="POST", verbose=verbose)
+        if verbose:
+            return response
 
     def list(self, network=None, verbose=False):
         """
@@ -150,6 +155,8 @@ class view(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/set current", PARAMS=PARAMS, method="POST", verbose=verbose)
+        if verbose:
+            return response
 
     def update(self, network=None, verbose=False):
         """
@@ -164,3 +171,5 @@ class view(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/update", PARAMS=PARAMS, method="POST", verbose=verbose)
+        if verbose:
+            return response

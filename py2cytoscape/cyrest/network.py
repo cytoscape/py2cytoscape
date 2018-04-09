@@ -10,8 +10,6 @@ class network(object):
     def __init__(self, url):
         self.__url = url + 'commands/network'
 
-
-
     def add(self, edgeList=None, network=None, nodeList=None, verbose=False):
         """
         Adds nodes and edges to an existing network. The nodes and edges to be
@@ -41,7 +39,8 @@ class network(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edgeList","network","nodeList"],[edgeList,network,nodeList])
         response=api(url=self.__url+"/add", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
 
     def add_edge(self, isDirected=None,name=None,network=None,sourceName=None,targetName=None, verbose=False):
         """
@@ -71,7 +70,9 @@ class network(object):
         PARAMS=set_param(["isDirected","name","network","sourceName","targetName"],\
         [isDirected,name,network,sourceName,targetName])
         response=api(url=self.__url+"/add adge", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
 
     def add_node(self, name=None,network=None, verbose=False):
         """
@@ -193,7 +194,9 @@ class network(object):
         PARAMS=set_param(["column","listType","namespace","network","type"], \
         [column,listType,namespace,network,atype])
         response=api(url=self.__url+"/create attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
 
     def create_empty(self, name=None, renderers=None, RootNetworkList=None, verbose=False):
         """
@@ -212,7 +215,9 @@ class network(object):
         """
         PARAMS=set_param(["name","renderers","RootNetworkList"],[name,renderers,RootNetworkList])
         response=api(url=self.__url+"/create empty", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
 
     def delete(self, edgeList=None, network=None, nodeList=None, verbose=False):
         """
@@ -240,7 +245,9 @@ class network(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edgeList","network","nodeList"],[edgeList,network,nodeList])
         response=api(url=self.__url+"/delete", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
 
     def deselect(self, edgeList=None, network=None, nodeList=None, verbose=False):
         """
@@ -698,7 +705,9 @@ class network(object):
         PARAMS=set_param(["columnList","namespace","network","valueList"], \
         [columnList,namespace,network,valueList])
         response=api(url=self.__url+"/set attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
 
     def set_current(self, network=None, verbose=False):
         """
@@ -713,8 +722,9 @@ class network(object):
         """
         PARAMS=set_param(["network"], [network])
         response=api(url=self.__url+"/set current", PARAMS=PARAMS, method="POST", verbose=verbose)
-        #self.network_name=network
-
+        if verbose:
+            return response
+    
     def set_properties(self, network=None, propertyList=None, valueList=None, verbose=False):
         """
         Set network visual properties.
@@ -733,7 +743,9 @@ class network(object):
         PARAMS=set_param(["network","propertyList","valueList"], \
         [network,propertyList,valueList])
         response=api(url=self.__url+"/set properties", PARAMS=PARAMS, method="POST", verbose=verbose)
-
+        if verbose:
+            return response
+    
 
     def show(self, edgeList=None, network=None, nodeList=None, verbose=False):
         """
