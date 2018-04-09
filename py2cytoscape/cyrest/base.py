@@ -113,7 +113,8 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
             if len(res["errors"]) > 0:
                 for e in res["errors"]:
                     print(e)
-        res=res["data"]
+        if not verbose:
+            res=res["data"]
 
     elif (method=="HTML") or (method == "H") or (method=="HELP"):
         P=[]
