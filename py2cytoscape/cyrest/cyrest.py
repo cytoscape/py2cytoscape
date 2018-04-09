@@ -36,12 +36,12 @@ class cyclient(object):
         self.network=network(self.__url)
         self.node=node(self.__url)
         self.vizmap=vizmap(self.__url)
-        self.diffusion(self.__url)
-        self.edge(self.__url)
-        self.group(self.__url)
-        self.view(self.__url)
-        self.layout(self.__url)
-        self.table(self.__url)
+        self.diffusion=diffusion(self.__url)
+        self.edge=edge(self.__url)
+        self.group=group(self.__url)
+        self.view=view(self.__url)
+        self.layout=layout(self.__url)
+        self.table=table(self.__url)
 
     def status(self):
         """

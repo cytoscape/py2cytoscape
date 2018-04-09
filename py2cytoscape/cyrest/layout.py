@@ -1,4 +1,4 @@
-rom .base import *
+from .base import *
 
 class layout(object):
     """

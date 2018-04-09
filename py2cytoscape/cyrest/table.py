@@ -58,7 +58,7 @@ class table(object):
 		PARAMS=set_param(['keyColumn','keyColumnType','title'],[keyColumn,\
         keyColumnType,title])
 		response=api(url=self.__url+"/create table", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+		return response
 
 	def delete_column(self,column=None,table=None,verbose=None):
 		"""
@@ -127,8 +127,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['column','table'],[column,table])
 		response=api(url=self.__url+"/get column", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
-
+		return response
 
 	def get_row(self,keyValue=None,table=None,verbose=None):
 		"""
@@ -142,9 +141,9 @@ class table(object):
         :returns: values in each column of a row of a table
 
 		"""
-		PARAMS=set_param(['keyValue','table'],[keyValue,table])
+		PARAMS = set_param(['keyValue','table'],[keyValue,table])
 		response=api(url=self.__url+"/get row", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+		return response
 
 	def get_value(self,column=None,keyValue=None,table=None,verbose=None):
 		"""
@@ -162,7 +161,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['column','keyValue','table'],[column,keyValue,table])
 		response=api(url=self.__url+"/get value", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+		return response
 
 	def import_file(self,caseSensitiveNetworkCollectionKeys=None,\
     caseSensitiveNetworkKeys=None,dataTypeList=None,\
@@ -228,7 +227,7 @@ class table(object):
         keyColumnIndex,newTableName,startLoadRow,TargetNetworkCollection,\
         TargetNetworkList,WhereImportTable])
 		response=api(url=self.__url+"/import file", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+		return response
 
 	def import_url(self,caseSensitiveNetworkCollectionKeys=None,\
     caseSensitiveNetworkKeys=None,dataTypeList=None,\
@@ -295,7 +294,7 @@ class table(object):
         keyColumnIndex,newTableName,startLoadRow,TargetNetworkCollection,\
         TargetNetworkList,url,WhereImportTable])
 		response=api(url=self.__url+"/import url", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+		return response
 
 	def list(self,includePrivate=None,namespace=None,atype=None,verbose=None):
 		"""
@@ -312,7 +311,7 @@ class table(object):
 		PARAMS=set_param(['includePrivate','namespace','type'],\
         [includePrivate,namespace,atype])
 		response=api(url=self.__url+"/list", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+		return response
 
 	def list_columns(self,table=None,verbose=None):
 		"""
@@ -325,7 +324,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['table'],[table])
 		response=api(url=self.__url+"/list columns", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+		return response
 
 	def list_rows(self,rowList=None,table=None,verbose=None):
 		"""
@@ -377,9 +376,10 @@ class table(object):
 			ltant merged table. The choices are ''Network Collection'', ''Select
 			ed Networks'', or ''All Unassigned Tables''.
 		"""
-		PARAMS=set_param(['DataTypeTargetForNetworkCollection','dataTypeTargetForNetworkList','mergeType','SourceMergeColumns','SourceMergeKey','SourceTable','TargetKeyNetworkCollection','TargetMergeKey','TargetNetworkCollection','TargetNetworkList','UnassignedTable','WhereMergeTable'],[DataTypeTargetForNetworkCollection,dataTypeTargetForNetworkList,mergeType,SourceMergeColumns,SourceMergeKey,SourceTable,TargetKeyNetworkCollection,TargetMergeKey,TargetNetworkCollection,TargetNetworkList,UnassignedTable,WhereMergeTable])
+		PARAMS=set_param(['DataTypeTargetForNetworkCollection','dataTypeTargetForNetworkList','mergeType','SourceMergeColumns','SourceMergeKey','SourceTable','TargetKeyNetworkCollection','TargetMergeKey','TargetNetworkCollection','TargetNetworkList','UnassignedTable','WhereMergeTable'],\
+		[DataTypeTargetForNetworkCollection,dataTypeTargetForNetworkList,mergeType,SourceMergeColumns,SourceMergeKey,SourceTable,TargetKeyNetworkCollection,TargetMergeKey,TargetNetworkCollection,TargetNetworkList,UnassignedTable,WhereMergeTable])
 		response=api(url=self.__url+"/merge", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+		return response
 
 	def rename_column(self,columnName=None,newColumnName=None,table=None,verbose=None):
 		"""
@@ -391,8 +391,7 @@ class table(object):
 			efix SUID: is used, the table corresponding the SUID will be returne
 			d.
 		"""
-		PARAMS=set_param(['columnName','newColumnName','table'],\
-        [columnName,newColumnName,table])
+		PARAMS=set_param(['columnName','newColumnName','table'],[columnName,newColumnName,table])
 		response=api(url=self.__url+"/rename column", PARAMS=PARAMS, method="POST", verbose=verbose)
 
 
@@ -429,6 +428,5 @@ class table(object):
 			ed rows to. This should be a string value, which will be converted t
 			o the appropriate column type.
 		"""
-		PARAMS=set_param(['columnName','rowList','table','value'],\
-        [columnName,rowList,table,value])
+		PARAMS=set_param(['columnName','rowList','table','value'],[columnName,rowList,table,value])
 		response=api(url=self.__url+"/set values", PARAMS=PARAMS, method="POST", verbose=verbose)
