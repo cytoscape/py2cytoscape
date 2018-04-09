@@ -59,3 +59,11 @@ class cyclient(object):
         Creates a copy of the cyclient object.
         """
         return copy.deepcopy(self)
+
+    def version(self, verbose=False)
+        """
+        Checks Cytoscape version
+        """
+        response=api(url=self.__url+"version",method="POST", verbose=verbose)
+        for k in response.keys():
+            print k, r[k]
