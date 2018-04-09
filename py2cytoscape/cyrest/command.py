@@ -20,7 +20,8 @@ class command(object):
         """
         PARAMS={"variableName":variableName}
         response=api(url=self.__url+"/echo", PARAMS=PARAMS, verbose=verbose)
-        return response
+        if response:
+            return response
 
     def open_dialog(self, verbose=False):
         """
@@ -31,8 +32,9 @@ class command(object):
         :param verbose: print more
         """
         response=api(url=self.__url+"/open dialog", verbose=verbose)
-        if verbose:
+        if response:
             return response
+
 
     def pause(self, message=None, verbose=False):
         """
@@ -45,8 +47,9 @@ class command(object):
 
         PARAMS=set_param(["message"],[message])
         response=api(url=self.__url+"/pause", PARAMS=PARAMS, verbose=verbose)
-        if verbose:
+        if response:
             return response
+
     
     def quit(self,verbose=False):
         """
@@ -56,9 +59,9 @@ class command(object):
         :param verbose: print more
         """
         response=api(url=self.__url+"/quit", verbose=verbose)
-        if verbose:
+        if response:
             return response
-    
+
     def run(self,script_file,args=None,verbose=False):
         """
         The run command will execute a command script from the file pointed to
@@ -73,9 +76,9 @@ class command(object):
 
         PARAMS=set_param(["file","args"],[script_file,args])
         response=api(url=self.__url+"/run", PARAMS=PARAMS, verbose=verbose)
-        if verbose:
+        if response:
             return response
-    
+
     def sleep(self,duration,verbose=False):
         """
         The sleep command will pause processing for a period of time as specified
@@ -86,6 +89,7 @@ class command(object):
         """
         PARAMS={"duration":str(duration)}
         response=api(url=self.__url+"/sleep", PARAMS=PARAMS, verbose=verbose)
-        if verbose:
+        if response:
             return response
+
     

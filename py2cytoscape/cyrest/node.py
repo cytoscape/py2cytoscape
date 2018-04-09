@@ -33,7 +33,8 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["column","listType","namespace","network","type"],[column,listType,namespace,network,coltype])
         response=api(url=self.__url+"/create attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+        if response:
+            return response
 
     def get(self, network=None, node=None, verbose=False):
         """
@@ -53,7 +54,8 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network","node"],[network,node])
         response=api(url=self.__url+"/get", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+        if response:
+            return response
 
     def get_attribute(self, columnList=None, namespace=None, network=None, nodeList=None, verbose=False):
         """
@@ -82,7 +84,8 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["columnList", "namespace", "network","nodeList"],[columnList, namespace, network, nodeList])
         response=api(url=self.__url+"/get attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+        if response:
+            return response
 
     def get_properties(self, network=None, nodeList=None, propertyList=None, verbose=False):
         """
@@ -133,8 +136,9 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network", "nodeList", "propertyList"],[network, nodeList, propertyList])
         response=api(url=self.__url+"/get properties", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if verbose:
+        if response:
             return response
+
     
     def list(self, network=None, nodeList=None, verbose=False):
         """
@@ -158,7 +162,8 @@ class node(object):
         PARAMS=set_param(["network", "nodeList"],[network, nodeList])
         response=api(url=self.__url+"/list", PARAMS=PARAMS, method="POST", verbose=verbose)
 
-        return response
+        if response:
+            return response
 
     def list_attributes(self, namespace=None, network=None, verbose=False):
         """
@@ -178,7 +183,8 @@ class node(object):
         PARAMS=set_param(["namespace", "network"],[namespace, network])
         response=api(url=self.__url+"/list attributes", PARAMS=PARAMS, method="POST", verbose=verbose)
 
-        return response
+        if response:
+            return response
 
     def list_properties(self, network=None, verbose=False):
         """
@@ -195,7 +201,8 @@ class node(object):
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/list properties", PARAMS=PARAMS, method="POST", verbose=verbose)
 
-        return response
+        if response:
+            return response
 
     def rename(self, network=None, newName=None, node=None, verbose=False):
         """
@@ -212,8 +219,9 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network", "newName", "node"],[network, newName, node])
         response=api(url=self.__url+"/rename", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if verbose:
+        if response:
             return response
+
     
     def select_from_file(self, afile=None, verbose=False):
         """
@@ -225,8 +233,9 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["file"],[afile])
         response=api(url=self.__url+"/select from file", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if verbose:
+        if response:
             return response
+
     
     def set_attribute(self, columnList=None, namespace=None, network=None, nodeList=None, valueList=None, verbose=False):
         """
@@ -254,8 +263,9 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["columnList", "namespace", "network", "nodeList", "valueList"],[columnList, namespace, network, nodeList, valueList])
         response=api(url=self.__url+"/set attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if verbose:
+        if response:
             return response
+
     
     def set_properties(self, network=None, nodeList=None, propertyList=None, valueList=None, verbose=False):
         """
@@ -279,6 +289,7 @@ class node(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network", "nodeList", "propertyList", "valueList"],[network, nodeList, propertyList, valueList])
         response=api(url=self.__url+"/set properties", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if verbose:
+        if response:
             return response
+
     

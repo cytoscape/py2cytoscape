@@ -43,14 +43,14 @@ class cyclient(object):
         self.layout=layout(self.__url)
         self.table=table(self.__url)
 
-    def status(self):
+    def status(self, verbose=False):
         """
         Checks the status of your CyREST server.
         """
         try:
-            response=api(url=self.__url,method="GET")
+            response=api(url=self.__url, method="GET", verbose=verbose)
         except Exception as e:
-            print('Could not get status from CyREST: ' + str(e))
+            print('Could not get status from CyREST:\n\n' + str(e))
         else:
             print('CyREST online!')
 

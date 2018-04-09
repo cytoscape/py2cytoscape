@@ -35,17 +35,46 @@ def check_network(cyrest_network,network,verbose=False):
         print("Working on '%s' network." %str(network_name) )
     return network_name
 
-def checkresponse(r):
+def checkresponse(r,verbose=False):
     status=str(r.status_code)
     if status == "200":
-        print "response status 200"
-        sys.stdout.flush()
+        if verbose:
+            print "response status 200"
+            sys.stdout.flush()
+        res=None
     elif status == "201":
         print "response status 201"
         sys.stdout.flush()
+        res="error::"+str(r.status_code)
     else:
         print r, r.status_code
         sys.stdout.flush()
+        res="error::"+str(r.status_code)
+    return res
+
+def handle_status_codes(x,verbose=False):
+    if type(x) == str:
+        if "error::" in x:
+            res=int(x.lstrip("error::"))
+        else:
+            res=None
+    else:
+        res=None
+
+    if res or verbose:
+        if res:
+            res=res
+        else:
+            res=x
+    else:
+        res=None
+
+    if not res:
+        if x:
+            res=x
+
+    return res
+
 
 def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VERSION,method="POST",verbose=VERBOSE, url=None):
     """
@@ -93,28 +122,38 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
             print "'"+URL+"'"
             sys.stdout.flush()
         r = requests.get(url = URL)
-        if verbose:
-            checkresponse(r)
-        res=r
+
+        verbose_=checkresponse(r, verbose=verbose)
+        if (verbose) or (verbose_):
+            print "'"+URL+"'"
+            sys.stdout.flush()
+        if verbose_:
+            res=verbose_
+        else:
+            res=r
 
     elif (method == "POST") or (method == "P"):
         if verbose:
             print "'"+baseurl+"'"
             sys.stdout.flush()
         r = requests.post(url = baseurl, json = PARAMS)
-        if verbose:
-            checkresponse(r)
+        verbose_=checkresponse(r, verbose=verbose)
+        if (verbose) or (verbose_):
+            verbose=True
         res=r.content
-        if verbose:
+        if (verbose) or (verbose_):            
             print res
             sys.stdout.flush()
         res=json.loads(res)
-        if "errors" in res.keys():
-            if len(res["errors"]) > 0:
-                for e in res["errors"]:
-                    print(e)
+        #if "errors" in res.keys():
+        #    if len(res["errors"]) > 0:
+        #        verbose=True
+        #        for e in res["errors"]:
+        #            print(e)
         if not verbose:
             res=res["data"]
+        else:
+            res=verbose_
 
     elif (method=="HTML") or (method == "H") or (method=="HELP"):
         P=[]
@@ -134,14 +173,16 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
             print "'"+URL+"'"
             sys.stdout.flush()
         response = urllib2.urlopen(URL)
-        #print response
+
         res = response.read()
         res = res.split("\n")
         def clean(x):
             r=x.split("</p>")[0].split(">")[-1]
             return r
         res="\n".join([ clean(x) for x in res ])
-        print res
-        sys.stdout.flush()
+        #print res
+        #sys.stdout.flush()
+
+    res=handle_status_codes(res,verbose=verbose)    
 
     return res

@@ -32,9 +32,9 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["column","listType","namespace","network","type"],[column,listType,namespace,network,atype])
         response=api(url=self.__url+"/create attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if verbose:
+        if response:
             return response
-    
+
     def get(self,edge=None,network=None,sourceNode=None, targetNode=None, atype=None, verbose=False):
         """
         Returns the SUID of an edge that matches the passed parameters. If
@@ -66,7 +66,8 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edge","network","sourceNode","targetNode","type"],[edge,network,sourceNode,targetNode,atype])
         response=api(url=self.__url+"/add", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+        if response:
+            return response
 
     def get_attribute(self,columnList=None,edgeList=None,namespace=None, network=None, verbose=False):
         """
@@ -96,7 +97,8 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["columnList","edgeList","namespace","network"],[columnList,edgeList,namespace,network])
         response=api(url=self.__url+"/get attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+        if response:
+            return response
 
     def get_properties(self,edgeList=None,network=None,propertyList=None, verbose=False):
         """
@@ -136,7 +138,8 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edgeList","network","propertyList"],[edgeList,network,propertyList])
         response=api(url=self.__url+"/get properties", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+        if response:
+            return response
 
     def list(self, edgeList=None, network=None, verbose=False):
         """
@@ -159,7 +162,8 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edgeList","network"],[edgeList,network])
         response=api(url=self.__url+"/list", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+        if response:
+            return response
 
     def list_attributes(self,columnList=None,edgeList=None,namespace=None, network=None, verbose=False):
         """
@@ -196,7 +200,8 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["columnList","edgeList","namespace","network"],[columnList,edgeList,namespace,network])
         response=api(url=self.__url+"/list attributes", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+        if response:
+            return response
 
     def list_properties(self,columnList=None,edgeList=None,namespace=None, network=None, verbose=False):
         """
@@ -222,7 +227,8 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/list properties", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response
+        if response:
+            return response
 
     def rename(self, edge=None, network=None, newName=None, verbose=False):
         """
@@ -240,9 +246,9 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edge","network","newName"],[edge,network,newName])
         response=api(url=self.__url+"/rename", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if verbose:
+        if response:
             return response
-    
+
     def set_attribute(self, columnList=None, edgeList=None, namespace=None, network=None, valueList=None, verbose=False):
         """
         Sets the value of a specified column for the passed edge or set of edges.
@@ -271,9 +277,9 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["columnList","edgeList","namespace","network", "valueList"],[columnList, edgeList, namespace, network, valueList])
         response=api(url=self.__url+"/set attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if verbose:
+        if response:
             return response
-    
+
     def set_properties(self, edgeList=None, network=None, propertyList=None, valueList=None, verbose=False):
         """
         Sets the value of a specified property for the passed edge or set of edges.
@@ -296,6 +302,5 @@ class edge(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edgeList","network","propertyList","valueList"],[edgeList, network, propertyList, valueList])
         response=api(url=self.__url+"/set properties", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if verbose:
+        if response:
             return response
-    

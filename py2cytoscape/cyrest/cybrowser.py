@@ -24,9 +24,9 @@ class cybrowser(object):
 
         PARAMS=set_param(["id","text","title","url","debug"],[wid,text,title,url,debug])
         response=api(url=self.__url+"/dialog?",PARAMS=PARAMS, method="GET", verbose=verbose)
-        if verbose:
+        if response:
             return response
-    
+
     def hide(self, wid, verbose=False):
         """
         Hide and HTML browser in the Results Panel.
@@ -38,9 +38,9 @@ class cybrowser(object):
         PARAMS={"id":wid}
 
         response=api(url=self.__url+"/hide?",PARAMS=PARAMS, method="GET", verbose=verbose)
-        if verbose:
+        if response:
             return response
-    
+
     def show(self, wid=None, text=None, title=None, url=None, verbose=False):
         """
         Launch an HTML browser in the Results Panel.
@@ -58,9 +58,9 @@ class cybrowser(object):
                 PARAMS[p]=v
 
         response=api(url=self.__url+"/show?",PARAMS=PARAMS, method="GET", verbose=verbose)
-        if verbose:
+        if response:
             return response
-    
+ 
     def version(self, verbose=False):
         """
         Display the CyBrowser version.
@@ -68,6 +68,7 @@ class cybrowser(object):
         :param verbose: print more
         """
         response=api(url=self.__url+"/version",method="HTML", verbose=verbose)
-        if verbose:
+        if response:
             return response
+
     
