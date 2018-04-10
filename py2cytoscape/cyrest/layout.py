@@ -23,8 +23,7 @@ class layout(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/apply preferred", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
     
     def attribute_circle(self, EdgeAttribute=None, network=None, \
@@ -59,8 +58,7 @@ class layout(object):
         PARAMS=set_param(["EdgeAttribute","network","NodeAttribute","nodeList","singlePartition","spacing"],\
         [EdgeAttribute,network,NodeAttribute,nodeList,singlePartition,spacing])
         response=api(url=self.__url+"/attribute-circle", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
     
     def attributes_layout(self, EdgeAttribute=None, maxwidth=None, minrad=None, \
@@ -103,8 +101,7 @@ class layout(object):
         minrad, network, NodeAttribute,nodeList, radmult, \
         spacingx, spacingy])
         response=api(url=self.__url+"/attributes-layout", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 	def circular(self,EdgeAttribute=None,leftEdge=None,network=None,\
     NodeAttribute=None,nodeHorizontalSpacing=None,nodeList=None,\
@@ -146,8 +143,7 @@ class layout(object):
         nodeHorizontalSpacing,nodeList,nodeVerticalSpacing,rightMargin,\
         singlePartition,topEdge])
 		response=api(url=self.__url+"/circular", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 	def copycat(self,gridUnmapped=None,selectUnmapped=None,sourceColumn=None,\
     sourceNetwork=None,targetColumn=None,targetNetwork=None,verbose=None):
@@ -176,8 +172,7 @@ class layout(object):
         'sourceNetwork','targetColumn','targetNetwork'],[gridUnmapped,\
         selectUnmapped,sourceColumn,sourceNetwork,targetColumn,targetNetwork])
 		response=api(url=self.__url+"/copycat", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 	def cose(self,compoundGravityRange=None,compoundGravityStrength=None,\
     EdgeAttribute=None,gravityRange=None,gravityStrength=None,idealEdgeLength=None,\
@@ -233,8 +228,7 @@ class layout(object):
         network,NodeAttribute,nodeList,repulsionStrength,smartEdgeLengthCalc,\
         smartRepulsionRangeCalc,springStrength])
 		response=api(url=self.__url+"/cose", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 	def degree_circle(self,EdgeAttribute=None,network=None,NodeAttribute=None,\
     nodeList=None,singlePartition=None,verbose=None):
@@ -265,8 +259,7 @@ class layout(object):
         'singlePartition'],[EdgeAttribute,network,NodeAttribute,nodeList,\
         singlePartition])
 		response=api(url=self.__url+"/degree-circle", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
     
 	def force_directed(self,defaultEdgeWeight=None,defaultNodeMass=None,\
@@ -325,8 +318,7 @@ class layout(object):
         maxWeightCutoff,minWeightCutoff,network,NodeAttribute,nodeList,numIterations,\
         singlePartition,Type])
 		response=api(url=self.__url+"/force-directed", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 	def force_directed_cl(self,defaultEdgeWeight=None,defaultNodeMass=None,\
     defaultSpringCoefficient=None,defaultSpringLength=None,EdgeAttribute=None,\
@@ -382,8 +374,7 @@ class layout(object):
         maxWeightCutoff,minWeightCutoff,network,NodeAttribute,nodeList,\
         numIterations,numIterationsEdgeRepulsive,singlePartition,Type])
 		response=api(url=self.__url+"/force-directed-cl", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 
 	def fruchterman_rheingold(self,attraction_multiplier=None,conflict_avoidance=None,\
@@ -459,8 +450,7 @@ class layout(object):
         repulsion_multiplier,singlePartition,spread_factor,temperature,Type,\
         update_iterations])
 		response=api(url=self.__url+"/fruchterman-rheingold", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 
 	def genemania_force_directed(self,curveSteepness=None,defaultEdgeWeight=None,\
@@ -520,8 +510,7 @@ class layout(object):
         midpointEdges,minNodeMass,minWeightCutoff,network,NodeAttribute,nodeList,\
         numIterations,singlePartition,Type])
 		response=api(url=self.__url+"/genemania-force-directed", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if verbose:
-            return response
+		return response
     
 
 	def get_preferred(self,network=None,verbose=None):
@@ -535,8 +524,7 @@ class layout(object):
 		network=check_network(self,network,verbose=verbose)
 		PARAMS=set_param(['network'],[network])
 		response=api(url=self.__url+"/get preferred", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 	def grid(self,EdgeAttribute=None,network=None,NodeAttribute=None,\
     nodeHorizontalSpacing=None,nodeList=None,nodeVerticalSpacing=None,verbose=None):
@@ -570,8 +558,7 @@ class layout(object):
         [EdgeAttribute,network,NodeAttribute,nodeHorizontalSpacing,nodeList,\
         nodeVerticalSpacing])
 		response=api(url=self.__url+"/grid", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 
 	def hierarchical(self,bandGap=None,componentSpacing=None,EdgeAttribute=None,\
@@ -615,8 +602,7 @@ class layout(object):
         EdgeAttribute,leftEdge,network,NodeAttribute,nodeHorizontalSpacing,\
         nodeList,nodeVerticalSpacing,rightMargin,topEdge])
 		response=api(url=self.__url+"/hierarchical", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 
 	def isom(self,coolingFactor=None,EdgeAttribute=None,initialAdaptation=None,\
@@ -663,8 +649,7 @@ class layout(object):
         EdgeAttribute,initialAdaptation,maxEpoch,minAdaptation,minRadius,network,\
         NodeAttribute,nodeList,radius,radiusConstantTime,singlePartition,sizeFactor])
 		response=api(url=self.__url+"/isom", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 	def kamada_kawai(self,defaultEdgeWeight=None,EdgeAttribute=None,\
     m_anticollisionSpringStrength=None,m_averageIterationsPerNode=None,\
@@ -739,8 +724,7 @@ class layout(object):
         maxWeightCutoff,minWeightCutoff,network,NodeAttribute,nodeList,randomize,\
         singlePartition,Type,unweighted])
 		response=api(url=self.__url+"/kamada-kawai", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 
 	def set_preferred(self,preferredLayout=None,verbose=None):
@@ -753,8 +737,7 @@ class layout(object):
 		"""
 		PARAMS=set_param(['preferredLayout'],[preferredLayout])
 		response=api(url=self.__url+"/set preferred", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response
 
 
 	def stacked_node_layout(self,EdgeAttribute=None,network=None,NodeAttribute=None,\
@@ -787,5 +770,4 @@ class layout(object):
         'x_position','y_start_position'],[EdgeAttribute,network,NodeAttribute,\
         nodeList,x_position,y_start_position])
 		response=api(url=self.__url+"/stacked-node-layout", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+		return response

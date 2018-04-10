@@ -29,8 +29,7 @@ class view(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["layout","network"],[layout,network])
         response=api(url=self.__url+"/create", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def destroy(self, verbose=False):
         """
@@ -42,8 +41,7 @@ class view(object):
         """
         PARAMS={}
         response=api(url=self.__url+"/destroy", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def export(self, Height=None, options=None, OutputFile=None, Resolution=None,\
     Units=None, Width=None, Zoom=None, verbose=False):
@@ -84,8 +82,7 @@ class view(object):
         "Units","Width","Zoom"],\
         [Height,options,OutputFile,Resolution,Units,Width,Zoom ])
         response=api(url=self.__url+"/export", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def fit_content(self, verbose=False):
         """
@@ -96,8 +93,7 @@ class view(object):
         """
         PARAMS={}
         response=api(url=self.__url+"/fit content", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response 
+        return response 
 
     def fit_selected(self, verbose=False):
         """
@@ -109,8 +105,7 @@ class view(object):
         """
         PARAMS={}
         response=api(url=self.__url+"/fit selected", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
     
     def get_current(self, layout=None, network=None, verbose=False):
         """
@@ -122,8 +117,7 @@ class view(object):
         """
         PARAMS={}
         response=api(url=self.__url+"/get_current", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def list(self, network=None, verbose=False):
         """
@@ -142,8 +136,7 @@ class view(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/list", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def set_current(self, network=None, verbose=False):
         """
@@ -158,8 +151,7 @@ class view(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/set current", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def update(self, network=None, verbose=False):
         """
@@ -174,5 +166,4 @@ class view(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/update", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response

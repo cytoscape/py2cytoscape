@@ -35,6 +35,5 @@ class idmapper(object):
         """
         PARAMS=set_param(["only_use_one","source_column","species","target_selection"],[only_use_one,source_column,species,target_selection])
         response=api(url=self.__url+"/map column", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 

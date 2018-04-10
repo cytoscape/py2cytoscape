@@ -25,8 +25,7 @@ class diffusion(object):
 
         """
         response=api(url=self.__url+"/diffuse", method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def diffuse_advanced(self, heatColumnName=None, time=None, verbose=False):
         """
@@ -46,5 +45,4 @@ class diffusion(object):
         """
         PARAMS=set_param(["heatColumnName","time"],[heatColumnName,time])
         response=api(url=self.__url+"/diffuse_advanced", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response

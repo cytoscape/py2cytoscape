@@ -15,8 +15,7 @@ class commands(object):
         List all available command namespaces.
         """
         response=api(url=self.__url,method="HTML", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def namespace(self, namespace, verbose=False):
         """
@@ -26,8 +25,7 @@ class commands(object):
         :param verbose: print more
         """
         response=api(url=self.__url+"/"+namespace,method="HTML",verbose=verbose)
-        if response:
-            return response
+        return response
 
     def command(self, namespace, command, verbose=False):
         """
@@ -38,7 +36,6 @@ class commands(object):
         :param verbose: print more
         """
         response=api(url=self.__url+"/"+namespace+"/"+command,method="HTML",verbose=verbose)
-        if response:
-            return response
+        return response
 
     

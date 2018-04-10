@@ -23,8 +23,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['keyValue','table'],[keyValue,table])
 		response=api(url=self.__url+"/add row", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 	def create_column(self,columnName=None,listType=None,table=None,ntype=None,verbose=None):
 		"""
@@ -42,8 +41,7 @@ class table(object):
 		PARAMS=set_param(['columnName','listType','table','type'],[columnName,\
         listType,table,ntype])
 		response=api(url=self.__url+"/create column", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
     
 	def create_table(self,keyColumn=None,keyColumnType=None,title=None,verbose=None):
@@ -62,8 +60,7 @@ class table(object):
 		PARAMS=set_param(['keyColumn','keyColumnType','title'],[keyColumn,\
         keyColumnType,title])
 		response=api(url=self.__url+"/create table", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 	def delete_column(self,column=None,table=None,verbose=None):
 		"""
@@ -78,8 +75,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['column','table'],[column,table])
 		response=api(url=self.__url+"/delete column", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
     
 	def delete_row(self,keyValue=None,table=None,verbose=None):
@@ -94,8 +90,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['keyValue','table'],[keyValue,table])
 		response=api(url=self.__url+"/delete row", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
     
 	def destroy(self,table=None,verbose=None):
@@ -108,8 +103,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['table'],[table])
 		response=api(url=self.__url+"/destroy", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 
 	def export(self,options=None,OutputFile=None,table=None,verbose=None):
@@ -125,8 +119,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['options','OutputFile','table'],[options,OutputFile,table])
 		response=api(url=self.__url+"/export", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 
 	def get_column(self,column=None,table=None,verbose=None):
@@ -142,8 +135,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['column','table'],[column,table])
 		response=api(url=self.__url+"/get column", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 	def get_row(self,keyValue=None,table=None,verbose=None):
 		"""
@@ -159,8 +151,7 @@ class table(object):
 		"""
 		PARAMS = set_param(['keyValue','table'],[keyValue,table])
 		response=api(url=self.__url+"/get row", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 	def get_value(self,column=None,keyValue=None,table=None,verbose=None):
 		"""
@@ -178,8 +169,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['column','keyValue','table'],[column,keyValue,table])
 		response=api(url=self.__url+"/get value", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 
 	def import_file(self,caseSensitiveNetworkCollectionKeys=None,\
@@ -246,8 +236,7 @@ class table(object):
         keyColumnIndex,newTableName,startLoadRow,TargetNetworkCollection,\
         TargetNetworkList,WhereImportTable])
 		response=api(url=self.__url+"/import file", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 
 	def import_url(self,caseSensitiveNetworkCollectionKeys=None,\
@@ -315,8 +304,7 @@ class table(object):
         keyColumnIndex,newTableName,startLoadRow,TargetNetworkCollection,\
         TargetNetworkList,url,WhereImportTable])
 		response=api(url=self.__url+"/import url", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 
 	def list(self,includePrivate=None,namespace=None,atype=None,verbose=None):
@@ -334,8 +322,7 @@ class table(object):
 		PARAMS=set_param(['includePrivate','namespace','type'],\
         [includePrivate,namespace,atype])
 		response=api(url=self.__url+"/list", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 
 	def list_columns(self,table=None,verbose=None):
@@ -349,8 +336,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['table'],[table])
 		response=api(url=self.__url+"/list columns", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 
 	def list_rows(self,rowList=None,table=None,verbose=None):
@@ -369,8 +355,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['rowList','table'],[rowList,table])
 		response=api(url=self.__url+"/list rows", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
     
 	def merge(self,DataTypeTargetForNetworkCollection=None,\
@@ -408,8 +393,7 @@ class table(object):
 		PARAMS=set_param(['DataTypeTargetForNetworkCollection','dataTypeTargetForNetworkList','mergeType','SourceMergeColumns','SourceMergeKey','SourceTable','TargetKeyNetworkCollection','TargetMergeKey','TargetNetworkCollection','TargetNetworkList','UnassignedTable','WhereMergeTable'],\
 		[DataTypeTargetForNetworkCollection,dataTypeTargetForNetworkList,mergeType,SourceMergeColumns,SourceMergeKey,SourceTable,TargetKeyNetworkCollection,TargetMergeKey,TargetNetworkCollection,TargetNetworkList,UnassignedTable,WhereMergeTable])
 		response=api(url=self.__url+"/merge", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 
 
@@ -425,8 +409,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['columnName','newColumnName','table'],[columnName,newColumnName,table])
 		response=api(url=self.__url+"/rename column", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 
     
@@ -442,8 +425,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['table','title'],[table,title])
 		response=api(url=self.__url+"/set title", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 
     
@@ -468,8 +450,7 @@ class table(object):
 		"""
 		PARAMS=set_param(['columnName','rowList','table','value'],[columnName,rowList,table,value])
 		response=api(url=self.__url+"/set values", PARAMS=PARAMS, method="POST", verbose=verbose)
-		if response:
-			return response
+		return response
 
 
     

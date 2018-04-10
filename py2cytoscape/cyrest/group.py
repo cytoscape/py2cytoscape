@@ -39,8 +39,7 @@ class group(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edgeList","groupName","network","nodeList"],[edgeList,groupName,network,nodeList])
         response=api(url=self.__url+"/add", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def collapse(self, groupList=None, network=None, verbose=False):
         """
@@ -58,8 +57,7 @@ class group(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["groupList","network"],[groupList,network])
         response=api(url=self.__url+"/collapse", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def create(self, groupName=None, network=None, nodeList=None, verbose=False):
         """
@@ -85,8 +83,7 @@ class group(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["groupName","network","nodeList"],[groupName,network,nodeList])
         response=api(url=self.__url+"/create", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def expand(self, groupList=None, network=None, verbose=False):
         """
@@ -104,8 +101,7 @@ class group(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["groupList","network"],[groupList,network])
         response=api(url=self.__url+"/expand", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def get(self, network=None, node=None, verbose=False):
         """
@@ -121,8 +117,7 @@ class group(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network","node"],[network,node])
         response=api(url=self.__url+"/get", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def list(self, network=None, verbose=False):
         """
@@ -138,8 +133,7 @@ class group(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/list", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def remove(self, edgeList=None, groupName=None, network=None, nodeList=None, verbose=False):
         """
@@ -169,8 +163,7 @@ class group(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edgeList","groupName","network","nodeList"],[edgeList,groupName,network,nodeList])
         response=api(url=self.__url+"/remove", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
     def rename(self, groupName=None, network=None, newName=None, verbose=False):
         """
@@ -188,8 +181,7 @@ class group(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network","nodeList","newName"],[network,nodeList,newName])
         response=api(url=self.__url+"/rename", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
 
 
     def ungroup(self, network=None, nodeList=None, verbose=False):
@@ -211,5 +203,4 @@ class group(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network","nodeList"],[network,nodeList])
         response=api(url=self.__url+"/ungroup", PARAMS=PARAMS, method="POST", verbose=verbose)
-        if response:
-            return response
+        return response
