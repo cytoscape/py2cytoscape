@@ -404,10 +404,10 @@ class network(object):
 
 
     def import_file(self, dataTypeList=None, defaultInteraction=None, delimiters=None, \
-    delimitersForDataList=None, afile=None, firstRowAsColumnNames=None, \
-    indexColumnSourceInteraction=None, indexColumnTargetInteraction=None, indexColumnTypeInteraction=None, \
-    NetworkViewRendererList=None, RootNetworkList=None, startLoadRow=None,\
-    TargetColumnList=None, verbose=False):
+        delimitersForDataList=None, afile=None, firstRowAsColumnNames=None, \
+        indexColumnSourceInteraction=None, indexColumnTargetInteraction=None, indexColumnTypeInteraction=None, \
+        NetworkViewRendererList=None, RootNetworkList=None, startLoadRow=None,\
+        TargetColumnList=None, verbose=False):
         """
         Import a new network from a tabular formatted file type (e.g. csv, tsv,
         Excel, etc.). Use network load file to load network formatted files. This
@@ -467,10 +467,10 @@ class network(object):
         return response
 
     def import_url(self, dataTypeList=None, defaultInteraction=None, delimiters=None, \
-    delimitersForDataList=None, firstRowAsColumnNames=None, \
-    indexColumnSourceInteraction=None, indexColumnTargetInteraction=None, indexColumnTypeInteraction=None, \
-    NetworkViewRendererList=None, RootNetworkList=None, startLoadRow=None,\
-    TargetColumnList=None, url=None, verbose=False):
+        delimitersForDataList=None, firstRowAsColumnNames=None, \
+        indexColumnSourceInteraction=None, indexColumnTargetInteraction=None, indexColumnTypeInteraction=None, \
+        NetworkViewRendererList=None, RootNetworkList=None, startLoadRow=None,\
+        TargetColumnList=None, url=None, verbose=False):
         """
         Import a new network from a tabular formatted file type (e.g. csv, tsv,
         Excel, etc.). Use network load file to load network formatted files. This
@@ -633,7 +633,7 @@ class network(object):
         return response
 
     def select(self, adjacentEdges=None, edgeList=None, extendEdges=None, firstNeighbors=None, \
-    invert=None, network=None, nodeList=None, verbose=False):
+        invert=None, network=None, nodeList=None, verbose=False):
         """
         Select nodes and/or edges in a network. This command provides options to
         invert the selection, add first neighbors, add adjacent edges of selected

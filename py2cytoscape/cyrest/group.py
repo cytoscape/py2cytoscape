@@ -119,7 +119,7 @@ class group(object):
         response=api(url=self.__url+"/get", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
-    def list(self, network=None, verbose=False):
+    def glist(self, network=None, verbose=False):
         """
         Lists the SUIDs of all of the groups in a network.
 

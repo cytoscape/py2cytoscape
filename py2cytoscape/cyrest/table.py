@@ -9,8 +9,8 @@ class table(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/table'
-
-	def add_row(self,keyValue=None,table=None,verbose=None):
+		
+    def add_row(self,keyValue=None,table=None,verbose=None):
 		"""
         Appends an additional row of empty cells to the current table.
 
@@ -25,7 +25,7 @@ class table(object):
 		response=api(url=self.__url+"/add row", PARAMS=PARAMS, method="POST", verbose=verbose)
 		return response
 
-	def create_column(self,columnName=None,listType=None,table=None,ntype=None,verbose=None):
+    def create_column(self,columnName=None,listType=None,table=None,ntype=None,verbose=None):
 		"""
         Appends an additional column of attribute values to the current table.
 
@@ -44,7 +44,7 @@ class table(object):
 		return response
 
     
-	def create_table(self,keyColumn=None,keyColumnType=None,title=None,verbose=None):
+    def create_table(self,keyColumn=None,keyColumnType=None,title=None,verbose=None):
 		"""
         Adds a new table to the network.
 
@@ -62,7 +62,7 @@ class table(object):
 		response=api(url=self.__url+"/create table", PARAMS=PARAMS, method="POST", verbose=verbose)
 		return response
 
-	def delete_column(self,column=None,table=None,verbose=None):
+    def delete_column(self,column=None,table=None,verbose=None):
 		"""
         Remove a column from a table, specified by its name. Returns the name of
         the column removed.
@@ -78,7 +78,7 @@ class table(object):
 		return response
 
     
-	def delete_row(self,keyValue=None,table=None,verbose=None):
+    def delete_row(self,keyValue=None,table=None,verbose=None):
 		"""
         Deletes a row from a table.Requires the table name or SUID and the row key.
 
@@ -93,7 +93,7 @@ class table(object):
 		return response
 
     
-	def destroy(self,table=None,verbose=None):
+    def destroy(self,table=None,verbose=None):
 		"""
         Removes the specified table from the network.
 
@@ -106,7 +106,7 @@ class table(object):
 		return response
 
 
-	def export(self,options=None,OutputFile=None,table=None,verbose=None):
+    def export(self,options=None,OutputFile=None,table=None,verbose=None):
 		"""
         Creates a file with name and writes the table there.
 
@@ -122,7 +122,7 @@ class table(object):
 		return response
 
 
-	def get_column(self,column=None,table=None,verbose=None):
+    def get_column(self,column=None,table=None,verbose=None):
 		"""
         Get the information about a table column.
 
@@ -137,7 +137,7 @@ class table(object):
 		response=api(url=self.__url+"/get column", PARAMS=PARAMS, method="POST", verbose=verbose)
 		return response
 
-	def get_row(self,keyValue=None,table=None,verbose=None):
+    def get_row(self,keyValue=None,table=None,verbose=None):
 		"""
         Returns the values in each column of a row of a table.
 
@@ -153,7 +153,7 @@ class table(object):
 		response=api(url=self.__url+"/get row", PARAMS=PARAMS, method="POST", verbose=verbose)
 		return response
 
-	def get_value(self,column=None,keyValue=None,table=None,verbose=None):
+    def get_value(self,column=None,keyValue=None,table=None,verbose=None):
 		"""
         Returns the value from a cell as specified by row and column ids.
 
@@ -172,13 +172,13 @@ class table(object):
 		return response
 
 
-	def import_file(self,caseSensitiveNetworkCollectionKeys=None,\
-    caseSensitiveNetworkKeys=None,dataTypeList=None,\
-    DataTypeTargetForNetworkCollection=None,DataTypeTargetForNetworkList=None,\
-    delimiters=None,delimitersForDataList=None,afile=None,firstRowAsColumnNames=None,\
-    KeyColumnForMapping=None,KeyColumnForMappingNetworkList=None,keyColumnIndex=None,\
-    newTableName=None,startLoadRow=None,TargetNetworkCollection=None,\
-    TargetNetworkList=None,WhereImportTable=None,verbose=None):
+    def import_file(self,caseSensitiveNetworkCollectionKeys=None,\
+		caseSensitiveNetworkKeys=None,dataTypeList=None,\
+		DataTypeTargetForNetworkCollection=None,DataTypeTargetForNetworkList=None,\
+		delimiters=None,delimitersForDataList=None,afile=None,firstRowAsColumnNames=None,\
+		KeyColumnForMapping=None,KeyColumnForMappingNetworkList=None,keyColumnIndex=None,\
+		newTableName=None,startLoadRow=None,TargetNetworkCollection=None,\
+		TargetNetworkList=None,WhereImportTable=None,verbose=None):
 		"""
         This uses a long list of input parameters to specify the attributes of
         the table, the mapping keys, and the destination table for the input.
@@ -239,14 +239,14 @@ class table(object):
 		return response
 
 
-	def import_url(self,caseSensitiveNetworkCollectionKeys=None,\
-    caseSensitiveNetworkKeys=None,dataTypeList=None,\
-    DataTypeTargetForNetworkCollection=None,DataTypeTargetForNetworkList=None,\
-    delimiters=None,delimitersForDataList=None,firstRowAsColumnNames=None,\
-    KeyColumnForMapping=None,KeyColumnForMappingNetworkList=None,\
-    keyColumnIndex=None,newTableName=None,startLoadRow=None,\
-    TargetNetworkCollection=None,TargetNetworkList=None,url=None,\
-    WhereImportTable=None,verbose=None):
+    def import_url(self,caseSensitiveNetworkCollectionKeys=None,\
+		caseSensitiveNetworkKeys=None,dataTypeList=None,\
+		DataTypeTargetForNetworkCollection=None,DataTypeTargetForNetworkList=None,\
+		delimiters=None,delimitersForDataList=None,firstRowAsColumnNames=None,\
+		KeyColumnForMapping=None,KeyColumnForMappingNetworkList=None,\
+		keyColumnIndex=None,newTableName=None,startLoadRow=None,\
+		TargetNetworkCollection=None,TargetNetworkList=None,url=None,\
+		WhereImportTable=None,verbose=None):
 		"""
         Similar to Import Table this uses a long list of input parameters to
         specify the attributes of the table, the mapping keys, and the destination
@@ -307,7 +307,7 @@ class table(object):
 		return response
 
 
-	def list(self,includePrivate=None,namespace=None,atype=None,verbose=None):
+    def list(self,includePrivate=None,namespace=None,atype=None,verbose=None):
 		"""
         Returns a list of the table SUIDs associated with the passed network parameter.
 
@@ -325,7 +325,7 @@ class table(object):
 		return response
 
 
-	def list_columns(self,table=None,verbose=None):
+    def list_columns(self,table=None,verbose=None):
 		"""
         Returns the list of columns in the table.
 
@@ -339,7 +339,7 @@ class table(object):
 		return response
 
 
-	def list_rows(self,rowList=None,table=None,verbose=None):
+    def list_rows(self,rowList=None,table=None,verbose=None):
 		"""
         Returns the list of primary keys for each of the rows in the specified table.
 
@@ -358,11 +358,11 @@ class table(object):
 		return response
 
     
-	def merge(self,DataTypeTargetForNetworkCollection=None,\
-    dataTypeTargetForNetworkList=None,mergeType=None,SourceMergeColumns=None,\
-    SourceMergeKey=None,SourceTable=None,TargetKeyNetworkCollection=None,\
-    TargetMergeKey=None,TargetNetworkCollection=None,TargetNetworkList=None,\
-    UnassignedTable=None,WhereMergeTable=None,verbose=None):
+    def merge(self,DataTypeTargetForNetworkCollection=None,\
+		dataTypeTargetForNetworkList=None,mergeType=None,SourceMergeColumns=None,\
+		SourceMergeKey=None,SourceTable=None,TargetKeyNetworkCollection=None,\
+		TargetMergeKey=None,TargetNetworkCollection=None,TargetNetworkList=None,\
+		UnassignedTable=None,WhereMergeTable=None,verbose=None):
 		"""
         Merge tables together joining around a designated key column. Depending
         on the arguments, might merge into multiple local tables.
@@ -397,7 +397,7 @@ class table(object):
 
 
 
-	def rename_column(self,columnName=None,newColumnName=None,table=None,verbose=None):
+    def rename_column(self,columnName=None,newColumnName=None,table=None,verbose=None):
 		"""
         Changes the name of a specified column in the table.
 
@@ -413,7 +413,7 @@ class table(object):
 
 
     
-	def set_title(self,table=None,title=None,verbose=None):
+    def set_title(self,table=None,title=None,verbose=None):
 		"""
         Changes the visible identifier of a single table.
 
@@ -429,7 +429,7 @@ class table(object):
 
 
     
-	def set_values(self,columnName=None,rowList=None,table=None,value=None,verbose=None):
+    def set_values(self,columnName=None,rowList=None,table=None,value=None,verbose=None):
 		"""
         Set all the values in the specified list of rows with a single value.
 

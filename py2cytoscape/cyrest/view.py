@@ -44,7 +44,7 @@ class view(object):
         return response
 
     def export(self, Height=None, options=None, OutputFile=None, Resolution=None,\
-    Units=None, Width=None, Zoom=None, verbose=False):
+        Units=None, Width=None, Zoom=None, verbose=False):
         """
         Exports the current view to a graphics file and returns the path to the
             saved file. PNG and JPEG formats have options for scaling, while other

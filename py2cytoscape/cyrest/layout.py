@@ -23,7 +23,7 @@ class layout(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"],[network])
         response=api(url=self.__url+"/apply preferred", PARAMS=PARAMS, method="POST", verbose=verbose)
-		return response
+        return response
 
     
     def attribute_circle(self, EdgeAttribute=None, network=None, \
@@ -58,7 +58,7 @@ class layout(object):
         PARAMS=set_param(["EdgeAttribute","network","NodeAttribute","nodeList","singlePartition","spacing"],\
         [EdgeAttribute,network,NodeAttribute,nodeList,singlePartition,spacing])
         response=api(url=self.__url+"/attribute-circle", PARAMS=PARAMS, method="POST", verbose=verbose)
-		return response
+        return response
 
     
     def attributes_layout(self, EdgeAttribute=None, maxwidth=None, minrad=None, \
@@ -101,11 +101,11 @@ class layout(object):
         minrad, network, NodeAttribute,nodeList, radmult, \
         spacingx, spacingy])
         response=api(url=self.__url+"/attributes-layout", PARAMS=PARAMS, method="POST", verbose=verbose)
-		return response
+        return response
 
-	def circular(self,EdgeAttribute=None,leftEdge=None,network=None,\
-    NodeAttribute=None,nodeHorizontalSpacing=None,nodeList=None,\
-    nodeVerticalSpacing=None,rightMargin=None,singlePartition=None,topEdge=None,\
+    def circular(self,EdgeAttribute=None,leftEdge=None,network=None,\
+	NodeAttribute=None,nodeHorizontalSpacing=None,nodeList=None,\
+	nodeVerticalSpacing=None,rightMargin=None,singlePartition=None,topEdge=None,\
     verbose=None):
 		"""
         Execute the Circular Layout on a network
@@ -145,8 +145,8 @@ class layout(object):
 		response=api(url=self.__url+"/circular", PARAMS=PARAMS, method="POST", verbose=verbose)
 		return response
 
-	def copycat(self,gridUnmapped=None,selectUnmapped=None,sourceColumn=None,\
-    sourceNetwork=None,targetColumn=None,targetNetwork=None,verbose=None):
+    def copycat(self,gridUnmapped=None,selectUnmapped=None,sourceColumn=None,\
+    	sourceNetwork=None,targetColumn=None,targetNetwork=None,verbose=None):
 		"""
         Sets the coordinates for each node in the target network to the coordinates
         of a matching node in the source network.
@@ -174,11 +174,11 @@ class layout(object):
 		response=api(url=self.__url+"/copycat", PARAMS=PARAMS, method="POST", verbose=verbose)
 		return response
 
-	def cose(self,compoundGravityRange=None,compoundGravityStrength=None,\
-    EdgeAttribute=None,gravityRange=None,gravityStrength=None,idealEdgeLength=None,\
-    incremental=None,LayoutQuality=None,network=None,NodeAttribute=None,\
-    nodeList=None,repulsionStrength=None,smartEdgeLengthCalc=None,\
-    smartRepulsionRangeCalc=None,springStrength=None,verbose=None):
+    def cose(self,compoundGravityRange=None,compoundGravityStrength=None,\
+		EdgeAttribute=None,gravityRange=None,gravityStrength=None,idealEdgeLength=None,\
+		incremental=None,LayoutQuality=None,network=None,NodeAttribute=None,\
+		nodeList=None,repulsionStrength=None,smartEdgeLengthCalc=None,\
+		smartRepulsionRangeCalc=None,springStrength=None,verbose=None):
 		"""
         Execute the Compound Spring Embedder (CoSE) on a network
 
@@ -230,8 +230,8 @@ class layout(object):
 		response=api(url=self.__url+"/cose", PARAMS=PARAMS, method="POST", verbose=verbose)
 		return response
 
-	def degree_circle(self,EdgeAttribute=None,network=None,NodeAttribute=None,\
-    nodeList=None,singlePartition=None,verbose=None):
+    def degree_circle(self,EdgeAttribute=None,network=None,NodeAttribute=None,\
+    	nodeList=None,singlePartition=None,verbose=None):
 		"""
         Execute the Degree Sorted Circle Layout on a network.
 
@@ -262,11 +262,11 @@ class layout(object):
 		return response
 
     
-	def force_directed(self,defaultEdgeWeight=None,defaultNodeMass=None,\
-    defaultSpringCoefficient=None,defaultSpringLength=None,EdgeAttribute=None,\
-    isDeterministic=None,maxWeightCutoff=None,minWeightCutoff=None,network=None,\
-    NodeAttribute=None,nodeList=None,numIterations=None,singlePartition=None,\
-    Type=None,verbose=None):
+    def force_directed(self,defaultEdgeWeight=None,defaultNodeMass=None,\
+		defaultSpringCoefficient=None,defaultSpringLength=None,EdgeAttribute=None,\
+		isDeterministic=None,maxWeightCutoff=None,minWeightCutoff=None,network=None,\
+		NodeAttribute=None,nodeList=None,numIterations=None,singlePartition=None,\
+		Type=None,verbose=None):
 		"""
         Execute the Prefuse Force Directed Layout on a network
 
@@ -320,11 +320,11 @@ class layout(object):
 		response=api(url=self.__url+"/force-directed", PARAMS=PARAMS, method="POST", verbose=verbose)
 		return response
 
-	def force_directed_cl(self,defaultEdgeWeight=None,defaultNodeMass=None,\
-    defaultSpringCoefficient=None,defaultSpringLength=None,EdgeAttribute=None,\
-    fromScratch=None,isDeterministic=None,maxWeightCutoff=None,minWeightCutoff=None,\
-    network=None,NodeAttribute=None,nodeList=None,numIterations=None,\
-    numIterationsEdgeRepulsive=None,singlePartition=None,Type=None,verbose=None):
+    def force_directed_cl(self,defaultEdgeWeight=None,defaultNodeMass=None,\
+		defaultSpringCoefficient=None,defaultSpringLength=None,EdgeAttribute=None,\
+		fromScratch=None,isDeterministic=None,maxWeightCutoff=None,minWeightCutoff=None,\
+		network=None,NodeAttribute=None,nodeList=None,numIterations=None,\
+		numIterationsEdgeRepulsive=None,singlePartition=None,Type=None,verbose=None):
 		"""
         Execute the Prefuse Force Directed OpenCL Layout on a network.
 
@@ -377,12 +377,12 @@ class layout(object):
 		return response
 
 
-	def fruchterman_rheingold(self,attraction_multiplier=None,conflict_avoidance=None,\
-    defaultEdgeWeight=None,EdgeAttribute=None,gravity_multiplier=None,\
-    layout3D=None,max_distance_factor=None,maxWeightCutoff=None,minWeightCutoff=None,\
-    network=None,nIterations=None,NodeAttribute=None,nodeList=None,randomize=None,\
-    repulsion_multiplier=None,singlePartition=None,spread_factor=None,\
-    temperature=None,Type=None,update_iterations=None,verbose=None):
+    def fruchterman_rheingold(self,attraction_multiplier=None,conflict_avoidance=None,\
+		defaultEdgeWeight=None,EdgeAttribute=None,gravity_multiplier=None,\
+		layout3D=None,max_distance_factor=None,maxWeightCutoff=None,minWeightCutoff=None,\
+		network=None,nIterations=None,NodeAttribute=None,nodeList=None,randomize=None,\
+		repulsion_multiplier=None,singlePartition=None,spread_factor=None,\
+		temperature=None,Type=None,update_iterations=None,verbose=None):
 		"""
         Execute the Edge-weighted Force directed (BioLayout) on a network
 
@@ -453,12 +453,12 @@ class layout(object):
 		return response
 
 
-	def genemania_force_directed(self,curveSteepness=None,defaultEdgeWeight=None,\
-    defaultSpringCoefficient=None,defaultSpringLength=None,EdgeAttribute=None,\
-    ignoreHiddenElements=None,isDeterministic=None,maxNodeMass=None,\
-    maxWeightCutoff=None,midpointEdges=None,minNodeMass=None,minWeightCutoff=None,\
-    network=None,NodeAttribute=None,nodeList=None,numIterations=None,\
-    singlePartition=None,Type=None,verbose=None):
+    def genemania_force_directed(self,curveSteepness=None,defaultEdgeWeight=None,\
+		defaultSpringCoefficient=None,defaultSpringLength=None,EdgeAttribute=None,\
+		ignoreHiddenElements=None,isDeterministic=None,maxNodeMass=None,\
+		maxWeightCutoff=None,midpointEdges=None,minNodeMass=None,minWeightCutoff=None,\
+		network=None,NodeAttribute=None,nodeList=None,numIterations=None,\
+		singlePartition=None,Type=None,verbose=None):
 		"""
         Execute the GeneMANIA Force Directed Layout on a network.
 
@@ -513,7 +513,7 @@ class layout(object):
 		return response
     
 
-	def get_preferred(self,network=None,verbose=None):
+    def get_preferred(self,network=None,verbose=None):
 		"""
         Returns the name of the current preferred layout or empty string if not
         set. Default is grid.
@@ -526,8 +526,8 @@ class layout(object):
 		response=api(url=self.__url+"/get preferred", PARAMS=PARAMS, method="POST", verbose=verbose)
 		return response
 
-	def grid(self,EdgeAttribute=None,network=None,NodeAttribute=None,\
-    nodeHorizontalSpacing=None,nodeList=None,nodeVerticalSpacing=None,verbose=None):
+    def grid(self,EdgeAttribute=None,network=None,NodeAttribute=None,\
+		nodeHorizontalSpacing=None,nodeList=None,nodeVerticalSpacing=None,verbose=None):
 		"""
         Execute the Grid Layout on a network.
 
@@ -561,10 +561,10 @@ class layout(object):
 		return response
 
 
-	def hierarchical(self,bandGap=None,componentSpacing=None,EdgeAttribute=None,\
-    leftEdge=None,network=None,NodeAttribute=None,nodeHorizontalSpacing=None,\
-    nodeList=None,nodeVerticalSpacing=None,rightMargin=None,topEdge=None,\
-    verbose=None):
+    def hierarchical(self,bandGap=None,componentSpacing=None,EdgeAttribute=None,\
+		leftEdge=None,network=None,NodeAttribute=None,nodeHorizontalSpacing=None,\
+		nodeList=None,nodeVerticalSpacing=None,rightMargin=None,topEdge=None,\
+		verbose=None):
 		"""
         Execute the Hierarchical Layout on a network.
 
@@ -605,10 +605,10 @@ class layout(object):
 		return response
 
 
-	def isom(self,coolingFactor=None,EdgeAttribute=None,initialAdaptation=None,\
-    maxEpoch=None,minAdaptation=None,minRadius=None,network=None,NodeAttribute=None,\
-    nodeList=None,radius=None,radiusConstantTime=None,singlePartition=None,\
-    sizeFactor=None,verbose=None):
+    def isom(self,coolingFactor=None,EdgeAttribute=None,initialAdaptation=None,\
+		maxEpoch=None,minAdaptation=None,minRadius=None,network=None,NodeAttribute=None,\
+		nodeList=None,radius=None,radiusConstantTime=None,singlePartition=None,\
+		sizeFactor=None,verbose=None):
 		"""
         Execute the Inverted Self-Organizing Map Layout on a network.
 
@@ -651,14 +651,14 @@ class layout(object):
 		response=api(url=self.__url+"/isom", PARAMS=PARAMS, method="POST", verbose=verbose)
 		return response
 
-	def kamada_kawai(self,defaultEdgeWeight=None,EdgeAttribute=None,\
-    m_anticollisionSpringStrength=None,m_averageIterationsPerNode=None,\
-    m_disconnectedNodeDistanceSpringRestLength=None,\
-    m_disconnectedNodeDistanceSpringStrength=None,m_layoutPass=None,\
-    m_nodeDistanceRestLengthConstant=None,m_nodeDistanceStrengthConstant=None,\
-    maxWeightCutoff=None,minWeightCutoff=None,network=None,NodeAttribute=None,\
-    nodeList=None,randomize=None,singlePartition=None,Type=None,unweighted=None,\
-    verbose=None):
+    def kamada_kawai(self,defaultEdgeWeight=None,EdgeAttribute=None,\
+		m_anticollisionSpringStrength=None,m_averageIterationsPerNode=None,\
+		m_disconnectedNodeDistanceSpringRestLength=None,\
+		m_disconnectedNodeDistanceSpringStrength=None,m_layoutPass=None,\
+		m_nodeDistanceRestLengthConstant=None,m_nodeDistanceStrengthConstant=None,\
+		maxWeightCutoff=None,minWeightCutoff=None,network=None,NodeAttribute=None,\
+		nodeList=None,randomize=None,singlePartition=None,Type=None,unweighted=None,\
+		verbose=None):
 		"""
         Execute the Edge-weighted Spring Embedded Layout on a network.
 
@@ -727,7 +727,7 @@ class layout(object):
 		return response
 
 
-	def set_preferred(self,preferredLayout=None,verbose=None):
+    def set_preferred(self,preferredLayout=None,verbose=None):
 		"""
         Sets the preferred layout. Takes a specific name as defined in the API
         Default is grid.
@@ -740,8 +740,8 @@ class layout(object):
 		return response
 
 
-	def stacked_node_layout(self,EdgeAttribute=None,network=None,NodeAttribute=None,\
-    nodeList=None,x_position=None,y_start_position=None,verbose=None):
+    def stacked_node_layout(self,EdgeAttribute=None,network=None,NodeAttribute=None,\
+		nodeList=None,x_position=None,y_start_position=None,verbose=None):
 		"""
         Execute the Stacked Node Layout on a network.
 
