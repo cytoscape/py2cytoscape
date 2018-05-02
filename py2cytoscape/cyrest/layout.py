@@ -436,7 +436,6 @@ class layout(object):
 			zed value', 'normalized value']
 		:param update_iterations (string, optional): Number of iterations before up
 			dating display, in numeric value (0: update only at end)
-		:param }
 		"""
 		network=check_network(self,network,verbose=verbose)
 		PARAMS=set_param(['attraction_multiplier','conflict_avoidance',\
