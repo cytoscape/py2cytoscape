@@ -306,7 +306,7 @@ class network(object):
 
         :returns: { file }
         """
-        PARAMS=set_param(["options","OutputFile"],[netoptions,OutputFile])
+        PARAMS=set_param(["options","OutputFile"],[options,OutputFile])
         response=api(url=self.__url+"/export", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
@@ -616,7 +616,7 @@ class network(object):
         response=api(url=self.__url+"/load url", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
-    def rename(self, name=None, sourcenetwork=None, verbose=False):
+    def rename(self, name=None, sourceNetwork=None, verbose=False):
         """
         Rename an existing network. The SUID of the network is returned
 
@@ -628,6 +628,7 @@ class network(object):
 
         :returns: SUID of the network is returned
         """
+        sourceNetwork=check_network(self,sourceNetwork,verbose=verbose)
         PARAMS=set_param(["name","sourceNetwork"],[name,sourceNetwork])
         response=api(url=self.__url+"/rename", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response

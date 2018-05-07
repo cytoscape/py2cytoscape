@@ -1,6 +1,6 @@
 ## ***cyclient.network.rename***
 
-**`cyclient.network.rename(self, name=None, sourcenetwork=None, verbose=False)`**
+**`cyclient.network.rename(self, name=None, sourceNetwork=None, verbose=False)`**
 
 Rename an existing network. The SUID of the network is returned
 

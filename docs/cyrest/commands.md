@@ -11,7 +11,7 @@ ___
 
 ## ***cyclient.commands.list***
 
-**`cyclient.commands.list(self, verbose=False)`**
+**`cyclient.commands.list_namespaces(self, verbose=False)`**
 
 List all available command namespaces.
 

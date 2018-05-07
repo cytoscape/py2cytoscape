@@ -30,10 +30,10 @@ class vizmap(object):
             'Coverage Histogram:unique', 'Bridging Reads Histogram:best&unique',
             'No Histogram', 'default']
         :param verbose: print more
+        :returns: SUIDs of the affected views
 
         """
 
-        network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["styles"],[styles])
         response=api(url=self.__url+"/apply", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
@@ -66,7 +66,6 @@ class vizmap(object):
 
         """
 
-        network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["options","OutputFile", "styles"],[options,OutputFile,styles])
         response=api(url=self.__url+"/export", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
@@ -85,3 +84,216 @@ class vizmap(object):
         PARAMS=set_param(["afile"],[afile])
         response=api(url=self.__url+"/load file", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
+
+    def create_style(self,title=None,defaults=None,mappings=None,verbose=VERBOSE):
+        """
+        Creates a new visual style
+        
+        :param title: title of the visual style
+        :param defaults: a list of dictionaries for each visualProperty
+        :param mappings: a list of dictionaries for each visualProperty
+        :param host: cytoscape host address, default=cytoscape_host
+        :param port: cytoscape port, default=1234
+        
+        :returns: nothing
+        """ 
+        u=self.__url 
+        host=u.split("//")[1].split(":")[0]
+        port=u.split(":")[2].split("/")[0]
+        version=u.split(":")[2].split("/")[1]
+
+        if defaults:
+            defaults_=[]
+            for d in defaults:
+                if d:
+                    defaults_.append(d)
+            defaults=defaults_
+
+        if mappings:
+            mappings_=[]
+            for m in mappings:
+                if m:
+                    mappings_.append(m)
+            mappings=mappings_
+
+        try:
+            update_style(title=title,defaults=defaults,mappings=mappings,host=host,port=port)
+            print "Existing style was updated."
+            sys.stdout.flush()
+        except:
+            print "Creating new style."
+            sys.stdout.flush()
+            URL="http://"+str(host)+":"+str(port)+"/v1/styles"
+            PARAMS={"title":title,\
+                "defaults":defaults,\
+                "mappings":mappings}
+            r = requests.post(url = URL, json = PARAMS)
+            checkresponse(r)
+
+    def update_style(self, title=None,defaults=None,mappings=None, verbose=False):
+        """
+        Updates a visual style
+        
+        :param title: title of the visual style
+        :param defaults: a list of dictionaries for each visualProperty
+        :param mappings: a list of dictionaries for each visualProperty
+        
+        :returns: nothing
+        """
+        u=self.__url 
+        host=u.split("//")[1].split(":")[0]
+        port=u.split(":")[2].split("/")[0]
+        version=u.split(":")[2].split("/")[1]
+
+        if defaults: 
+            defaults_=[]    
+            for d in defaults:
+                if d:
+                    defaults_.append(d)
+            defaults=defaults_
+
+        if mappings:
+            mappings_=[]
+            for m in mappings:
+                if m:
+                    mappings_.append(m)
+            mappings=mappings_
+
+        URL="http://"+str(host)+":"+str(port)+"/v1/styles/"+str(title)
+        if verbose:
+            print URL
+            sys.stdout.flush()
+
+        response = urllib2.urlopen(URL)    
+        response = response.read()
+        response = json.loads(response)
+        
+        olddefaults=response["defaults"]
+        oldmappings=response["mappings"]
+
+        if mappings:
+            mappings_visual_properties=[ m["visualProperty"] for m in mappings ]
+            newmappings=[ m for m in oldmappings if m["visualProperty"] not in mappings_visual_properties ]
+            for m in mappings:
+                newmappings.append(m)
+        else:
+            newmappings=oldmappings
+
+        if defaults:
+            defaults_visual_properties=[ m["visualProperty"] for m in defaults ]
+            newdefaults=[ m for m in olddefaults if m["visualProperty"] not in defaults_visual_properties ]
+            for m in defaults:
+                newdefaults.append(m)
+        else:
+            newdefaults=olddefaults
+            
+        r=requests.delete(URL)
+        checkresponse(r)    
+
+        URL="http://"+str(host)+":"+str(port)+"/v1/styles"
+        PARAMS={"title":title,\
+            "defaults":newdefaults,\
+            "mappings":newmappings}
+        r = requests.post(url = URL, json = PARAMS)
+        checkresponse(r)
+
+    def mapVisualProperty(self, visualProperty=None,mappingType=None, mappingColumn=None,
+                        lower=None,center=None,upper=None,\
+                        discrete=None,\
+                        network="current",table="node",\
+                        namespace="default",verbose=False):
+        """"
+        Generates a dictionary for a given visual property
+        
+        :param visualProperty: visualProperty
+        :param mappingType: mappingType
+        :param mappingColumn: mappingColumn
+        :param lower: for "continuous" mappings a list of the form [value,rgb_string]
+        :param center: for "continuous" mappings a list of the form [value,rgb_string]
+        :param upper: for "continuous" mappings a list of the form [value,rgb_string]
+        :param discrete: for discrete mappings, a list of lists of the form [ list_of_keys, list_of_values ]
+		:param network (string, optional): Specifies a network by name, or by
+            SUID if the prefix SUID: is used. The keyword CURRENT, or a blank
+            value can also be used to specify the current network.
+        :param namespace (string, optional): Node, Edge, and Network objects support
+            the default, local, and hidden namespaces. Root networks also support the
+            shared namespace. Custom namespaces may be specified by Apps.        
+        :returns: a dictionary for the respective visual property
+        """
+        u=self.__url 
+        host=u.split("//")[1].split(":")[0]
+        port=u.split(":")[2].split("/")[0]
+        version=u.split(":")[2].split("/")[1]
+
+        if type(network) != int:
+            network=check_network(self,network,verbose=verbose)
+            PARAMS=set_param(["columnList","namespace","network"],["SUID",namespace,network])
+            networkID=api(namespace="network", command="get attribute",PARAMS=PARAMS, host=host,port=str(port),version=version)
+            PARAMS=set_param(["columnList","namespace","network"],["name",namespace,network])
+            networkname=api(namespace="network", command="get attribute",PARAMS=PARAMS, host=host,port=str(port),version=version)
+            network=networkID[0]["SUID"]
+            networkname=networkname[0]["name"]
+
+        URL="http://"+str(host)+":"+str(port)+"/v1/networks/"+str(network)+"/tables/"+namespace+table+"/columns/"
+        if verbose:
+            print URL 
+            sys.stdout.flush()
+        response = urllib2.urlopen(URL)
+        response = response.read()
+        response = json.loads(response)
+
+        mappingColumnType=None
+        for r in response:
+            if r["name"]==mappingColumn:
+                mappingColumnType=r["type"]
+                break
+        if not mappingColumnType:
+            print "For mappingType: "+mappingType+" it was not possible to find a  mappingColumnType."
+            sys.stdout.flush()
+            
+        PARAMS={"mappingType" : mappingType,\
+                "mappingColumn" : mappingColumn,
+                "mappingColumnType" : mappingColumnType,
+                "visualProperty" : visualProperty}
+        if mappingType == "continuous":
+            PARAMS["points"]=[{"value" : lower[0],\
+                            "lesser" : lower[1],\
+                            "equal" : lower[1],\
+                            "greater" : lower[1]},\
+                            {"value" : center[0],
+                            "lesser" : center[1],
+                            "equal" : center[1],
+                            "greater" : center[1] },\
+                            {"value" : upper[0],\
+                            "lesser" : upper[1],\
+                            "equal" : upper[1],\
+                            "greater" : upper[1]}]
+            
+        if discrete:
+            PARAMS["map"]=[]
+            for k,v in zip(discrete[0],discrete[1]):
+                PARAMS["map"].append({ "key":k,"value":v})
+        
+        if not mappingColumnType:
+            res=None
+        else:
+            res=PARAMS    
+
+        return res
+
+    def simple_defaults(self, defaults_dic):
+        """
+        Simplifies defaults.
+        
+        :param defaults_dic: a dictionary of the form { visualProperty_A:value_A, visualProperty_B:value_B, ..}
+        
+        :returns: a list of dictionaries with each item corresponding to a given key in defaults_dic
+        """
+        
+        defaults=[]
+        for d in defaults_dic.keys():
+            dic={}
+            dic["visualProperty"]=d
+            dic["value"]=defaults_dic[d]
+            defaults.append(dic)
+        return defaults

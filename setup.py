@@ -37,6 +37,12 @@ setup(
         'scipy' : (
             'scipy',
         ),
+        'wand' : (
+            'wand'
+        )
+        'parakimo' : (
+            'parakimo'
+        )
     },
     keywords=['data visualization', 'visualization', 'cytoscape',
               'bioinformatics', 'graph', 'network'],

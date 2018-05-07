@@ -10,7 +10,7 @@ class commands(object):
     def __init__(self, url):
         self.__url = url + 'commands'
 
-    def list(self, verbose=False):
+    def list_namespaces(self, verbose=False):
         """
         List all available command namespaces.
         """

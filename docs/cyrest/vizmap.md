@@ -66,3 +66,63 @@ Coverage Histogram:unique_0', 'default', 'default black', 'Directed',
 
 ___
 
+## ***cyclient.vizmap.create_style***
+
+**`cyclient.vizmap.create_style(self, title=None,mappings=None,verbose=VERBOSE)`**
+
+Creates a new visual style
+        
+* **`title` title of the visual style
+* **`defaults` a list of dictionaries for each visualProperty
+* **`mappings` a list of dictionaries for each visualProperty
+
+* **`returns` nothing
+___
+
+## ***cyclient.vizmap.update_style***
+
+**`cyclient.vizmap.update_style(self, title=None,mappings=None,verbose=VERBOSE)`**
+
+Updates a visual style
+        
+* **`title` title of the visual style
+* **`defaults` a list of dictionaries for each visualProperty
+* **`mappings` a list of dictionaries for each visualProperty
+        
+* **`returns` nothing
+___
+
+## ***cyclient.vizmap.mapVisualProperty***
+
+Generates a dictionary for a given visual property
+
+
+**`cyclient.vizmap.mapVisualProperty(self, visualProperty=None,mappingType,=None, mappingColumn= None, lower=None,center=None,upper=None, discrete=None, network="current",table="node",namespace="default",verbose=False)`**
+
+* **`visualProperty` visualProperty
+* **`mappingType` mappingType
+* **`mappingColumn` mappingColumn
+* **`lower` for "continuous" mappings a list of the form [value,rgb_string]
+* **`center` for "continuous" mappings a list of the form [value,rgb_string]
+* **`upper` for "continuous" mappings a list of the form [value,rgb_string]
+* **`discrete` for discrete mappings, a list of lists of the form [ list_of_keys, list_of_values ]
+* **`network (string, optional)` Specifies a network by name, or by
+    SUID if the prefix SUID: is used. The keyword CURRENT, or a blank
+    value can also be used to specify the current network.
+* **`namespace (string, optional)` Node, Edge, and Network objects support
+    the default, local, and hidden namespaces. Root networks also support the
+    shared namespace. Custom namespaces may be specified by Apps.
+
+* **`returns` a dictionary for the respective visual property
+___ 
+
+## ***cyclient.vizmap.simple_defaults***
+
+Simplifies defaults.
+
+**`simple_defaults(self, defaults_dic)`**
+
+* **`defaults_dic` a dictionary of the form { visualProperty_A:value_A, visualProperty_B:value_B, ..}
+
+* **`returns` a list of dictionaries with each item corresponding to a given key in defaults_dic
+___ 

@@ -1,4 +1,6 @@
 from .base import *
+import pandas as pd
+import sys
 
 class table(object):
     """
@@ -307,7 +309,7 @@ class table(object):
 		return response
 
 
-    def list(self,includePrivate=None,namespace=None,atype=None,verbose=None):
+    def list_tables(self,includePrivate=None,namespace=None,atype=None,verbose=None):
 		"""
         Returns a list of the table SUIDs associated with the passed network parameter.
 
@@ -452,5 +454,131 @@ class table(object):
 		response=api(url=self.__url+"/set values", PARAMS=PARAMS, method="POST", verbose=verbose)
 		return response
 
+    def getTable(self, columns=None, table=None, network = "current", namespace='default', verbose=VERBOSE):
+		"""
+		Gets tables from cytoscape.
 
-    
+		:param table: table to retrieve eg. node
+    	:param columns: columns to retrieve in list format
+		:param network (string, optional): Specifies a network by name, or by
+            SUID if the prefix SUID: is used. The keyword CURRENT, or a blank
+            value can also be used to specify the current network.
+        :param namespace (string, optional): Node, Edge, and Network objects support
+            the default, local, and hidden namespaces. Root networks also support the
+            shared namespace. Custom namespaces may be specified by Apps.
+
+		:returns: a pandas dataframe
+		"""
+
+		u=self.__url 
+		host=u.split("//")[1].split(":")[0]
+		port=u.split(":")[2].split("/")[0]
+		version=u.split(":")[2].split("/")[1]
+
+		if type(network) != int:
+			network=check_network(self,network,verbose=verbose)
+			PARAMS=set_param(["columnList","namespace","network"],["SUID",namespace,network])
+			network=api(namespace="network", command="get attribute",PARAMS=PARAMS, host=host,port=str(port),version=version)
+        	network=network[0]["SUID"]
+
+		df=pd.DataFrame()
+		def target(column):
+			URL="http://"+str(host)+":"+str(port)+"/v1/networks/"+str(network)+"/tables/"+namespace+table+"/columns/"+column
+			if verbose:
+				print "'"+URL+"'"
+				sys.stdout.flush()
+			response = urllib2.urlopen(URL)
+			response = response.read()
+			colA=json.loads(response)
+
+			col=pd.DataFrame()    
+			colHeader=colA["name"]
+			colValues=colA["values"]
+			col[colHeader]=colValues
+			return col
+
+		ncols=["name"]
+		for c in columns:
+			ncols.append(c.replace(" ","%20") )
+		for c in ncols:
+			try:
+				col=target(c)
+				df=pd.concat([df,col],axis=1)
+			except:
+				print "Could not find "+c
+				sys.stdout.flush()
+
+		df.index=df["name"].tolist()
+		df=df.drop(["name"],axis=1)
+		return df
+
+    def loadTableData(self, df, df_key='index',table="node", table_key_column = "name", \
+	network="current",namespace="default",verbose=False):
+		"""
+		Loads tables into cytoscape.
+
+		:param df: a pandas dataframe to load
+		:param df_key: key column in df, default="index"
+		:param table: target table, default="node"
+		:param table_key_column: table key column, default="name"
+		:param network (string, optional): Specifies a network by name, or by
+            SUID if the prefix SUID: is used. The keyword CURRENT, or a blank
+            value can also be used to specify the current network.
+        :param namespace (string, optional): Node, Edge, and Network objects support
+            the default, local, and hidden namespaces. Root networks also support the
+            shared namespace. Custom namespaces may be specified by Apps.
+		:param verbose: print more information
+
+		:returns: output of put request
+		"""
+
+		u=self.__url 
+		host=u.split("//")[1].split(":")[0]
+		port=u.split(":")[2].split("/")[0]
+		version=u.split(":")[2].split("/")[1]
+
+		if type(network) != int:
+			network=check_network(self,network,verbose=verbose)
+			
+			PARAMS=set_param(["columnList","namespace","network"],["SUID",namespace,network])
+			networkID=api(namespace="network", command="get attribute",PARAMS=PARAMS, host=host,port=str(port),version=version)
+			
+			PARAMS=set_param(["columnList","namespace","network"],["name",namespace,network])
+			networkname=api(namespace="network", command="get attribute",PARAMS=PARAMS, host=host,port=str(port),version=version)
+			        
+        	network=networkID[0]["SUID"]
+        	networkname=networkname[0]["name"]
+        
+		tmp=df.copy()
+		if df_key!="index":
+			tmp.index=tmp[df_key].tolist()
+			tmp=tmp.drop([df_key],axis=1)
+				
+		tablen=networkname+" default node"
+		
+		data=[]
+		
+		for c in tmp.columns.tolist():
+			tmpcol=tmp[[c]].dropna()
+			for r in tmpcol.index.tolist():
+				cell={}
+				cell[str(table_key_column)]=str(r) # {"name":"p53"}
+				val=tmpcol.loc[r,c]
+				cell[str(c)]=val
+				data.append(cell)
+		
+		
+		upload={"key":table_key_column,"dataKey":table_key_column,\
+				"data":data}
+		
+		
+		URL="http://"+str(host)+":"+str(port)+"/v1/networks/"+str(network)+"/tables/"+namespace+table  
+		if verbose:
+			print "'"+URL+"'"
+			sys.stdout.flush()
+		r = requests.put(url = URL, json = upload)
+		if verbose:
+			print r
+		checkresponse(r)
+		res=r.content
+		return res

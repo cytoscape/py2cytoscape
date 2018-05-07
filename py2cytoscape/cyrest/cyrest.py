@@ -29,6 +29,9 @@ class cyclient(object):
 
     def __init__(self, host=HOST, port=PORT, version=VERSION):
         self.__url = 'http://' + host + ':' + str(port) + '/' + version + '/'
+        #self.host=host
+        #self.port=port
+        #self.version=version
         self.commands=commands(self.__url)
         self.command=command(self.__url)
         self.cybrowser=cybrowser(self.__url)
@@ -68,4 +71,56 @@ class cyclient(object):
         response=json.loads(response)
         for k in response.keys():
             print k, response[k]
+
+    def result(self, filetype="PNG", saveas=None, verbose=False):
+        """
+        Checks the current network. 
+            
+        :param filetype: file type eg.PDF, PNG, CYS, CYJS; default="PNG" 
+        :param saveas: /path/to/non/tmp/file.prefix
+        :param host: cytoscape host address, default=cytoscape_host
+        :param port: cytoscape port, default=1234
+        :returns: an image
+        """
+        from wand.image import Image as WImage
+        from shutil import copyfile
+        import tempfile
+        from time import sleep
+        import os
+
+        sleep(1)
+        u=self.__url 
+        host=u.split("//")[1].split(":")[0]
+        port=u.split(":")[2].split("/")[0]
+        version=u.split(":")[2].split("/")[1]
+
+        def MAKETMP():
+            (fd, tmp_file) = tempfile.mkstemp()
+            tmp_dir=tempfile.gettempdir()
+            tmp_file=tmp_dir+tmp_file.split("/")[-1]
+            return tmp_file
+        
+        outfile=MAKETMP()
+        
+        extensions={"PNG":".png","PDF":".pdf","CYS":".cys","CYJS":".cyjs"}
+        ext=extensions[filetype]
+        
+        response=api("view","fit content",host=host,port=port, version=version, verbose=verbose)
+        sleep(2)
+        response=api("view", "export" , {"options":filetype,"OutputFile":outfile}, host=host,port=port,version=version,verbose=verbose)
+        if host!='localhost':
+            import paramiko
+            print "ssh keys for remote access required"
+            ssh = paramiko.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect(host)
+            ftp_client=ssh.open_sftp()
+            ftp_client.get(outfile+ext,outfile+ext)
+            ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("rm "+outfile+ext )
+            
+        img = WImage(filename=outfile+ext)
+        if saveas:
+            copyfile(outfile+ext,saveas)
+        os.remove(outfile+ext)
+        return img
         
