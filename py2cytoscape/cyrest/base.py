@@ -1,6 +1,9 @@
-import requests
-import urllib2
 import sys
+import requests
+if sys.version_info[0] == 2:
+    import urllib2
+elif sys.version_info[0] == 3:
+    import urllib as urllib2
 import json
 
 HOST = 'localhost'
@@ -39,15 +42,15 @@ def checkresponse(r,verbose=False):
     status=str(r.status_code)
     if status == "200":
         if verbose:
-            print "response status 200"
+            print("response status 200")
             sys.stdout.flush()
         res=None
     elif status == "201":
-        print "response status 201"
+        print("response status 201")
         sys.stdout.flush()
         res="error::"+str(r.status_code)
     else:
-        print r, r.status_code
+        print(r, r.status_code)
         sys.stdout.flush()
         res="error::"+str(r.status_code)
     return res
@@ -119,13 +122,13 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
         if len(P)>0:
             URL=URL+P
         if verbose:
-            print "'"+URL+"'"
+            print("'"+URL+"'")
             sys.stdout.flush()
         r = requests.get(url = URL)
 
         verbose_=checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
-            print "'"+URL+"'"
+            print("'"+URL+"'")
             sys.stdout.flush()
         if verbose_:
             res=verbose_
@@ -134,7 +137,7 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
 
     elif (method == "POST") or (method == "P"):
         if verbose:
-            print "'"+baseurl+"'"
+            print("'"+baseurl+"'")
             sys.stdout.flush()
         r = requests.post(url = baseurl, json = PARAMS)
         verbose_=checkresponse(r, verbose=verbose)
@@ -142,7 +145,7 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
             verbose=True
         res=r.content
         if (verbose) or (verbose_):            
-            print res
+            print(res)
             sys.stdout.flush()
         res=json.loads(res)
         #if "errors" in res.keys():
@@ -170,7 +173,7 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
         if len(P)>0:
             URL=URL+P
         if verbose:
-            print "'"+URL+"'"
+            print("'"+URL+"'")
             sys.stdout.flush()
         response = urllib2.urlopen(URL)
 

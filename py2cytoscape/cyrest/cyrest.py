@@ -70,7 +70,7 @@ class cyclient(object):
         response=api(url=self.__url+"version",method="H", verbose=verbose)
         response=json.loads(response)
         for k in response.keys():
-            print k, response[k]
+            print(k, response[k])
 
     def result(self, filetype="PNG", saveas=None, verbose=False):
         """
@@ -110,7 +110,7 @@ class cyclient(object):
         response=api("view", "export" , {"options":filetype,"OutputFile":outfile}, host=host,port=port,version=version,verbose=verbose)
         if host!='localhost':
             import paramiko
-            print "ssh keys for remote access required"
+            print("ssh keys for remote access required")
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(host)

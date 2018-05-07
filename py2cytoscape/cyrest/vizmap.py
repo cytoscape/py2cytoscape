@@ -118,10 +118,10 @@ class vizmap(object):
 
         try:
             update_style(title=title,defaults=defaults,mappings=mappings,host=host,port=port)
-            print "Existing style was updated."
+            print("Existing style was updated.")
             sys.stdout.flush()
         except:
-            print "Creating new style."
+            print("Creating new style.")
             sys.stdout.flush()
             URL="http://"+str(host)+":"+str(port)+"/v1/styles"
             PARAMS={"title":title,\
@@ -161,7 +161,7 @@ class vizmap(object):
 
         URL="http://"+str(host)+":"+str(port)+"/v1/styles/"+str(title)
         if verbose:
-            print URL
+            print(URL)
             sys.stdout.flush()
 
         response = urllib2.urlopen(URL)    
@@ -236,7 +236,7 @@ class vizmap(object):
 
         URL="http://"+str(host)+":"+str(port)+"/v1/networks/"+str(network)+"/tables/"+namespace+table+"/columns/"
         if verbose:
-            print URL 
+            print(URL)
             sys.stdout.flush()
         response = urllib2.urlopen(URL)
         response = response.read()
@@ -248,7 +248,7 @@ class vizmap(object):
                 mappingColumnType=r["type"]
                 break
         if not mappingColumnType:
-            print "For mappingType: "+mappingType+" it was not possible to find a  mappingColumnType."
+            print("For mappingType: "+mappingType+" it was not possible to find a  mappingColumnType.")
             sys.stdout.flush()
             
         PARAMS={"mappingType" : mappingType,\
