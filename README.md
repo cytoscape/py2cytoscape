@@ -20,7 +20,9 @@ Package documentation can be found on [https://py2cytoscape.readthedocs.io](http
 
 For contributing please check the [wiki](https://github.com/cytoscape/py2cytoscape/wiki).
 
-Full workflows can be found on the [cytoscape/cytoscape-automation](https://github.com/cytoscape/cytoscape-automation) repo.
+Full workflows can be found on the [cytoscape/cytoscape-automation](https://github.com/cytoscape/cytoscape-automation) repo. The following workflows include cyrest usage:
+
+* [advanced-cancer-networks-and-data](https://github.com/cytoscape/cytoscape-automation/blob/master/for-scripters/Python/advanced-cancer-networks-and-data.ipynb)
 
 ## Citing
 
