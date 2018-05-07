@@ -39,7 +39,7 @@ setup(
         ),
         'wand' : (
             'wand'
-        )
+        ),
         'parakimo' : (
             'parakimo'
         )
