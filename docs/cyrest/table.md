@@ -387,16 +387,16 @@ ___
 
 Gets tables from cytoscape.
 
-* **`table` table to retrieve eg. node
-* **`columns` columns to retrieve in list format
-* **`network (string, optional)` Specifies a network by name, or by
+* **`table`** table to retrieve eg. node
+* **`columns`** columns to retrieve in list format
+* **`network (string, optional)`** Specifies a network by name, or by
 SUID if the prefix SUID: is used. The keyword CURRENT, or a blank
 value can also be used to specify the current network.
-* **`namespace (string, optional)` Node, Edge, and Network objects support
+* **`namespace (string, optional)`** Node, Edge, and Network objects support
 the default, local, and hidden namespaces. Root networks also support the
 shared namespace. Custom namespaces may be specified by Apps.
 
-* **`returns: a pandas dataframe
+* **`returns`** a pandas dataframe
 ___
 
 ## ***cyclient.table.loadTableData***
@@ -405,16 +405,16 @@ ___
 
 Loads tables into cytoscape.
 
-* **`df` a pandas dataframe to load
-* **`df_key` key column in df, default="index"
-* **`table` target table, default="node"
-* **`table_key_column` table key column, default="name"
-* **`network (string, optional)` Specifies a network by name, or by
+* **`df`** a pandas dataframe to load
+* **`df_key`** key column in df, default="index"
+* **`table`** target table, default="node"
+* **`table_key_column`** table key column, default="name"
+* **`network (string, optional)`** Specifies a network by name, or by
 SUID if the prefix SUID: is used. The keyword CURRENT, or a blank
 value can also be used to specify the current network.
-* **`namespace (string, optional)` Node, Edge, and Network objects support
+* **`namespace (string, optional)`** Node, Edge, and Network objects support
 the default, local, and hidden namespaces. Root networks also support the
 shared namespace. Custom namespaces may be specified by Apps.
-* **`verbose` print more information
+* **`verbose`** print more information
 
-* **`returns` output of put request
+* **`returns`** output of put request
