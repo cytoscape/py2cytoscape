@@ -109,7 +109,7 @@ class network(object):
         """
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["network"], [network])
-        response=api(url=self.__url+"/add node", PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.__url+"/clone", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
     def connect_nodes(self, network=None, nodes=None, verbose=False):
