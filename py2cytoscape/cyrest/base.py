@@ -40,15 +40,11 @@ def check_network(cyrest_network,network,verbose=False):
 
 def checkresponse(r,verbose=False):
     status=str(r.status_code)
-    if status == "200":
+    if status in ["200","201"]:
         if verbose:
-            print("response status 200")
+            print("response status "+status)
             sys.stdout.flush()
         res=None
-    elif status == "201":
-        print("response status 201")
-        sys.stdout.flush()
-        res="error::"+str(r.status_code)
     else:
         print(r, r.status_code)
         sys.stdout.flush()
