@@ -64,7 +64,7 @@ class edge(object):
         """
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["edge","network","sourceNode","targetNode","type"],[edge,network,sourceNode,targetNode,atype])
-        response=api(url=self.__url+"/add", PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.__url+"/get", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
     def get_attribute(self,columnList=None,edgeList=None,namespace=None, network=None, verbose=False):
