@@ -8,7 +8,7 @@ class group(object):
     """
 
     def __init__(self, url):
-        self.__url = url + 'commands/edge'
+        self.__url = url + 'commands/group'
 
     def add(self, edgeList=None, groupName=None, network=None, nodeList=None, verbose=False):
         """
