@@ -75,6 +75,6 @@ Checks the current network.
 ```python
 >>> from py2cytoscape import cyrest
 >>> cytoscape=cyrest.cyclient()
->>> new=cytoscape.copy()
+>>> cytoscape.result()
 ```
 ___
