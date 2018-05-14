@@ -97,7 +97,7 @@ class cyclient(object):
         def MAKETMP():
             (fd, tmp_file) = tempfile.mkstemp()
             tmp_dir=tempfile.gettempdir()
-            tmp_file=tmp_dir+tmp_file.split("/")[-1]
+            tmp_file=tmp_dir+"/"+tmp_file.split("/")[-1]
             return tmp_file
         
         outfile=MAKETMP()
@@ -110,7 +110,7 @@ class cyclient(object):
         response=api("view", "export" , {"options":filetype,"OutputFile":outfile}, host=host,port=port,version=version,verbose=verbose)
         if host!='localhost':
             import paramiko
-            print("ssh keys for remote access required")
+            print("Looking to ssh keys for remote access.")
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(host)

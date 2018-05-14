@@ -1,9 +1,11 @@
 import sys
 import requests
-if sys.version_info[0] == 2:
+
+PYTHON_VERSION=sys.version_info[0]
+if PYTHON_VERSION == 2:
     import urllib2
-elif sys.version_info[0] == 3:
-    import urllib as urllib2
+elif PYTHON_VERSION == 3:
+    import urllib.request as urllib2
 import json
 
 HOST = 'localhost'
@@ -174,13 +176,13 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
         response = urllib2.urlopen(URL)
 
         res = response.read()
+        if PYTHON_VERSION == 3:
+            res=res.decode("utf-8")
         res = res.split("\n")
         def clean(x):
             r=x.split("</p>")[0].split(">")[-1]
             return r
         res="\n".join([ clean(x) for x in res ])
-        #print res
-        #sys.stdout.flush()
 
     res=handle_status_codes(res,verbose=verbose)    
 
