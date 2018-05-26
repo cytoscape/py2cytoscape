@@ -123,11 +123,11 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
             print("'"+URL+"'")
             sys.stdout.flush()
         r = requests.get(url = URL)
-
         verbose_=checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
             print("'"+URL+"'")
             sys.stdout.flush()
+
         if verbose_:
             res=verbose_
         else:
@@ -141,16 +141,12 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
         verbose_=checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
             verbose=True
-        res=r.content
-        if (verbose) or (verbose_):            
-            print(res)
+            print(r.content)
             sys.stdout.flush()
-        res=json.loads(res)
-        #if "errors" in res.keys():
-        #    if len(res["errors"]) > 0:
-        #        verbose=True
-        #        for e in res["errors"]:
-        #            print(e)
+        res=json.loads(r.content)
+        if "errors" in res.keys():
+            if len(res["errors"]) > 0:
+                raise ValueError(res["errors"][0]) 
         if not verbose:
             res=res["data"]
         else:
