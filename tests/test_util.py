@@ -349,9 +349,8 @@ class NetworkDataframeTests(unittest.TestCase):
         from py2cytoscape.util.util_dataframe import to_dataframe
         with open(self.cur_dir + '/data/galFiltered.json', 'r') as f:
             network = json.load(f)
-        print(network)
-        to_dataframe(network, edges_attr_cols=['SUID'])
-
+        df = to_dataframe(network, edges_attr_cols=['SUID'])
+        self.assertIn('SUID', df.columns)
 
 
 if __name__ == '__main__':
