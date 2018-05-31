@@ -339,5 +339,20 @@ class NetworkConversionTests(unittest.TestCase):
         self.assertEqual(target_edge['ebw'], edge0['data']['ebw'])
 
 
+class NetworkDataframeTests(unittest.TestCase):
+
+    def setUp(self):
+        self.cur_dir = os.path.dirname(os.path.realpath(__file__))
+        pass
+
+    def test_to_dateframe(self):
+        from py2cytoscape.util.util_dataframe import to_dataframe
+        with open(self.cur_dir + '/data/galFiltered.json', 'r') as f:
+            network = json.load(f)
+        print(network)
+        to_dataframe(network, edges_attr_cols=['SUID'])
+
+
+
 if __name__ == '__main__':
     unittest.main()
