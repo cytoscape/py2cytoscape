@@ -85,12 +85,12 @@ def to_dataframe(network,
             if extra_column in edge_data:
                 extra_values.append(edge_data[extra_column])
                 valid_extra_cols.add(extra_column)
-        row = (source, itr, target, *extra_values)
+        row = tuple([source, itr, target] + extra_values)
         network_array.append(row)
 
     return pd.DataFrame(
         network_array,
-        columns=['source', 'interaction', 'target', *sorted(valid_extra_cols)]
+        columns=['source', 'interaction', 'target'] + sorted(valid_extra_cols)
     )
 
 
