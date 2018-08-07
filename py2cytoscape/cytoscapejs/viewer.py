@@ -12,6 +12,8 @@ DEF_BACKGROUND_COLOR = '#FFFFFF'
 
 HTML_TEMPLATE_FILE = 'template.html'
 STYLE_FILE = 'default_style.json'
+STYLE_FILE=os.path.abspath(os.path.dirname(__file__)) + '/' + STYLE_FILE
+
 
 # Default network
 DEF_NODES = [
@@ -37,19 +39,30 @@ PRESET_LAYOUTS = {
 
 
 # Init styles
-style_file = open(os.path.abspath(os.path.dirname(__file__)) + '/' + STYLE_FILE, 'r')
-style_list = json.load(style_file)
-STYLES = {}
-for style in style_list:
-    STYLES[style['title']] = style['style']
+#style_file = open(os.path.abspath(os.path.dirname(__file__)) + '/' + STYLE_FILE, 'r')
+#style_list = json.load(style_file)
+#STYLES = {}
+#for style in style_list:
+#    STYLES[style['title']] = style['style']
 
+
+def set_styles(style_file=STYLE_FILE):
+    style_file = open(style_file, 'r')
+    style_list = json.load(style_file)
+    STYLES = {}
+    for style in style_list:
+        STYLES[style['title']] = style['style']
+    return STYLES
 
 def render(network,
            style=DEF_STYLE,
            layout_algorithm=DEF_LAYOUT,
            background=DEF_BACKGROUND_COLOR,
            height=DEF_HEIGHT,
-           width=DEF_WIDTH):
+           width=DEF_WIDTH,
+           style_file=STYLE_FILE,
+           def_nodes=DEF_NODES,
+           def_edges=DEF_EDGES):
     """Render network data with embedded Cytoscape.js widget.
 
     :param network: dict (required)
@@ -65,10 +78,17 @@ def render(network,
         Height of the widget.
     :param width: int
         Width of the widget.
+    :param style_file: a styles file. [default: 'default_style.json']
+    :param def_nodes: default: [
+    {'data': {'id': 'Network Data'}},
+    {'data': {'id': 'Empty'}} ]
+    :param def_edges: default: [ {'data': {'id': 'is', 'source': 'Network Data', 'target': 'Empty'}} ]
     """
 
     from jinja2 import Template
     from IPython.core.display import display, HTML
+
+    STYLES=set_styles(style_file)
 
     # Load style file if none available
     if isinstance(style, str):
@@ -76,8 +96,8 @@ def render(network,
         style = STYLES[style]
 
     if network is None:
-        nodes = DEF_NODES
-        edges = DEF_EDGES
+        nodes = def_nodes
+        edges = def_edges
     else:
         nodes = network['elements']['nodes']
         edges = network['elements']['edges']
@@ -102,12 +122,12 @@ def render(network,
 def get_layouts():
     return PRESET_LAYOUTS
 
-
-def get_style_names():
+def get_style_names(style_file=STYLE_FILE):
+    STYLES=set_styles(style_file)
     return list(STYLES.keys())
 
-
-def get_style(name):
+def get_style(name,style_file=STYLE_FILE):
+    STYLES=set_styles(style_file)
     if name in STYLES.keys():
         return STYLES[name]
     else:
