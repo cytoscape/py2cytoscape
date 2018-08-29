@@ -69,7 +69,7 @@ class network(object):
         network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["isDirected","name","network","sourceName","targetName"],\
         [isDirected,name,network,sourceName,targetName])
-        response=api(url=self.__url+"/add adge", PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.__url+"/add edge", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
     
