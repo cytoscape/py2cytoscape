@@ -1,14 +1,15 @@
 from .base import *
 
 class apply(object):
-	"""
-	cytoscape session interface as shown in CyREST's swagger documentation for 'layout'.
+    """
+    cytoscape session interface as shown in CyREST's swagger documentation for 'layout'.
 
-	:param url: an url of the type 'http://' + host + ':' + str(port) + '/' + version + '/'.
-	"""
+    :param url: an url of the type 'http://' + host + ':' + str(port) + '/' + version + '/'.
+    """
 
-	def __init__(self, url):
-		self.__url = url + 'commands/apply'
+    def __init__(self, url):
+        self.__url = url + 'commands/apply'
+
 
     def applyLayout(algorithmName, networkId, column, verbose=None):
         """

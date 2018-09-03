@@ -31,7 +31,7 @@ ___
 
 ## ***cyclient.networks.updateTable***
 
-**`cyclient.networks.updateTable(networkId, tableType, body, class, verbose=None)`**
+**`cyclient.networks.updateTable(networkId, tableType, body, class_, verbose=None)`**
 
 Updates the table specified by the `tableType` and `networkId` parameters.  New columns will be created if they do not exist in the target table.
 Current limitations:
@@ -41,7 +41,7 @@ Current limitations:
 * **`networkId`** SUID containing the table
 * **`tableType`** Type of table
 * **`body`** The data with which to update the table.
-* **`class`** None -- Not required, can be None
+* **`class_`** None -- Not required, can be None
 * **`verbose`** print more
 
 * **`returns`** default: successful operation

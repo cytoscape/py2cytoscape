@@ -314,7 +314,7 @@ class networks(object):
         return response
 
 
-    def updateTable(networkId, tableType, body, class, verbose=None):
+    def updateTable(networkId, tableType, body, class_, verbose=None):
         """
         Updates the table specified by the `tableType` and `networkId` parameters.  New columns will be created if they do not exist in the target table.
         
@@ -325,7 +325,7 @@ class networks(object):
         :param networkId: SUID containing the table
         :param tableType: Type of table
         :param body: The data with which to update the table.
-        :param class: None -- Not required, can be None
+        :param class_: None -- Not required, can be None
         :param verbose: print more
 
         :returns: default: successful operation
