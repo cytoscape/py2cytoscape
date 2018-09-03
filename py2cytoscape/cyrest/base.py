@@ -77,7 +77,7 @@ def handle_status_codes(x,verbose=False):
     return res
 
 
-def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VERSION,method="POST",verbose=VERBOSE, url=None):
+def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PORT), version=VERSION, method="POST", verbose=VERBOSE, url=None, parse_params=True):
     """
     General function for interacting with Cytoscape API.
 
@@ -107,22 +107,26 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
 
     if (method == "GET") or (method == "G"):
         P=[]
-        for p in PARAMS.keys():
-            v=str(PARAMS[p])
-            v=v.replace(" ","%20")
-            P.append(str(p)+"="+str(PARAMS[p]))
-        P="&".join(P)
-        if not url:
-            if namespace:
-                URL=baseurl+"?"
-        else:
-            URL=baseurl
-        if len(P)>0:
-            URL=URL+P
+        if parse_params:
+            for p in PARAMS.keys():
+                v=str(PARAMS[p])
+                v=v.replace(" ","%20")
+                P.append(str(p)+"="+str(PARAMS[p]))
+            P="&".join(P)
+            if not url:
+                if namespace:
+                    URL=baseurl+"?"
+            else:
+                URL=baseurl
+            if len(P)>0:
+                URL=URL+P
         if verbose:
             print("'"+URL+"'")
             sys.stdout.flush()
-        r = requests.get(url = URL)
+        if parse_params:
+            r = requests.get(url = URL)
+        else:
+            r = requests.get(url = URL, params=PARAMS)
         verbose_=checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
             print("'"+URL+"'")
@@ -132,6 +136,20 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
             res=verbose_
         else:
             res=r
+
+    if (method == "DELETE"):
+        URL=baseurl
+        if verbose:
+            print("'"+URL+"'")
+            sys.stdout.flush()
+        r = requests.delete(url = URL)
+        verbose_=checkresponse(r, verbose=verbose)
+        if (verbose) or (verbose_):
+            print("'"+URL+"'")
+            sys.stdout.flush()
+        res=json.loads(r.content)
+        if len(res["errors"]) > 0:
+            raise ValueError(res["errors"][0])         
 
     elif (method == "POST") or (method == "P"):
         if verbose:
@@ -148,9 +166,25 @@ def api(namespace=None,command="",PARAMS={},host=HOST,port=str(PORT),version=VER
             if len(res["errors"]) > 0:
                 raise ValueError(res["errors"][0]) 
         if not verbose:
-            res=res["data"]
+            if "data" in res.keys():
+                res=res["data"]
         else:
             res=verbose_
+
+    elif (method == "PUT"):
+        if verbose:
+            print("'"+baseurl+"'")
+            sys.stdout.flush()
+        r = requests.put(url = baseurl, data = None)
+        verbose_=checkresponse(r, verbose=verbose)
+        if (verbose) or (verbose_):
+            verbose=True
+            print(r.content)
+            sys.stdout.flush()
+        res=json.loads(r.content)
+        if "errors" in res.keys():
+            if len(res["errors"]) > 0:
+                raise ValueError(res["errors"][0])     
 
     elif (method=="HTML") or (method == "H") or (method=="HELP"):
         P=[]

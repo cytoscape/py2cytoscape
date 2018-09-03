@@ -72,3 +72,64 @@ commands, and arguments.
 
 ___
 
+## ***cyclient.session.createSessionFile***
+
+**`cyclient.session.createSessionFile(file, verbose=None)`**
+
+Saves the current session to a file. If successful, the session file location will be returned.
+
+* **`file`** Session file location as an absolute path
+* **`verbose`** print more
+
+* **`returns`** 200: successful operation
+
+___
+
+## ***cyclient.session.deleteSession***
+
+**`cyclient.session.deleteSession(verbose=None)`**
+
+This deletes the current session and initializes a new one. A message is returned to indicate the success of the deletion.
+
+* **`verbose`** print more
+
+* **`returns`** 200: successful operation
+
+___
+
+## ***cyclient.session.getSessionFromFile***
+
+**`cyclient.session.getSessionFromFile(file, verbose=None)`**
+
+Loads a session from a local file and returns the session file name
+
+* **`file`** Session file location as an absolute path
+* **`verbose`** print more
+
+* **`returns`** 200: successful operation
+
+___
+
+## ***cyclient.session.getSessionName***
+
+**`cyclient.session.getSessionName(verbose=None)`**
+
+Returns the file name for the current Cytoscape session.
+
+* **`verbose`** print more
+
+* **`returns`** 200: successful operation
+
+___
+
+## ***cyclient.session.runGarbageCollection***
+
+**`cyclient.session.runGarbageCollection(verbose=None)`**
+
+Manually call Java's System.gc() to free up unused memory. This process happens automatically, but may be useful to call explicitly for testing or evaluation purposes.
+
+* **`verbose`** print more
+
+* **`returns`** 204: Successful Garbage Collection
+
+___

@@ -13,6 +13,15 @@ from .group import *
 from .view import *
 from .layout import *
 from .table import *
+from .cyndex2 import *
+from .apply import *
+from .apps import *
+from .styles import *
+from .ui import *
+from .enrichmentmap import *
+from .collections import *
+from .networks import *
+
 
 import copy
 
@@ -45,6 +54,15 @@ class cyclient(object):
         self.view=view(self.__url)
         self.layout=layout(self.__url)
         self.table=table(self.__url)
+        self.cyndex2=cyndex2(self.__url)
+        self.apply=apply(self.__url)
+        self.styles=styles(self.__url)
+        self.ui=ui(self.__url)
+        self.enrichmentmap=enrichmentmap(self.__url)
+        self.collections=collections(self.__url)
+        self.apps=apps(self.__url)
+        self.networks=networks(self.__url)
+
 
     def status(self, verbose=False):
         """

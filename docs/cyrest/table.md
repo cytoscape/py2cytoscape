@@ -397,6 +397,7 @@ the default, local, and hidden namespaces. Root networks also support the
 shared namespace. Custom namespaces may be specified by Apps.
 
 * **`returns`** a pandas dataframe
+
 ___
 
 ## ***cyclient.table.loadTableData***
@@ -418,3 +419,17 @@ shared namespace. Custom namespaces may be specified by Apps.
 * **`verbose`** print more information
 
 * **`returns`** output of put request
+
+___
+
+## ***cyclient.table.getTableCount***
+
+**`cyclient.table.getTableCount(verbose=None)`**
+
+Returns the number of global tables.
+
+* **`verbose`** print more
+
+* **`returns`** 200: successful operation
+
+___

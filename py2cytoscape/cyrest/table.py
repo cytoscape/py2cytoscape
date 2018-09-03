@@ -139,6 +139,7 @@ class table(object):
         response=api(url=self.__url+"/get column", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
+
     def get_row(self,keyValue=None,table=None,verbose=None):
         """
         Returns the values in each column of a row of a table.
@@ -154,6 +155,7 @@ class table(object):
         PARAMS = set_param(['keyValue','table'],[keyValue,table])
         response=api(url=self.__url+"/get row", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
+
 
     def get_value(self,column=None,keyValue=None,table=None,verbose=None):
         """
@@ -584,3 +586,15 @@ class table(object):
         checkresponse(r)
         res=r.content
         return res
+
+    def getTableCount(verbose=None):
+        """
+        Returns the number of global tables.
+
+        :param verbose: print more
+
+        :returns: 200: successful operation
+        """
+
+        response=api(url=self.url+'tables/count', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        return response

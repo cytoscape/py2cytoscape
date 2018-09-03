@@ -4,17 +4,25 @@ pages:
   - Home: index.md
   - cyrest:
     - intro: cyrest/index.md
+    - apps: cyrest/apps.md
+    - apply: cyrest/apply.md
+    - collections: cyrest/collections.md
     - commands: cyrest/commands.md
     - command: cyrest/command.md
     - cybrowser: cyrest/cybrowser.md
+    - cyndex2: cyrest/cyndex2.md
     - diffusion: cyrest/diffusion.md
     - edge: cyrest/edge.md
+    - enrichmentmap: cyrest/enrichmentmap.md
     - group: cyrest/group.md
     - idmapper: cyrest/idmapper.md
     - layout: cyrest/layout.md
     - network: cyrest/network.md
+    - networks: cyrest/networks.md
     - node: cyrest/node.md
     - session: cyrest/session.md
+    - styles: cyrest/styles.md
     - table: cyrest/table.md
+    - ui: cyrest/ui.md
     - view: cyrest/view.md
     - vizmap: cyrest/vizmap.md

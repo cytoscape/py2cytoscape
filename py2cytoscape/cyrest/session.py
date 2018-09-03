@@ -67,4 +67,68 @@ class session(object):
         response=api(url=self.__url+"/save as", PARAMS=PARAMS, verbose=verbose)
         return response
 
-    
+    def createSessionFile(file, verbose=None):
+        """
+        Saves the current session to a file. If successful, the session file location will be returned.
+
+        :param file: Session file location as an absolute path
+        :param verbose: print more
+
+        :returns: 200: successful operation
+        """
+
+        PARAMS=set_param(['file'],[file])
+        response=api(url=self.url+'session', PARAMS=PARAMS, method="POST", verbose=verbose)
+        return response
+
+
+    def deleteSession(verbose=None):
+        """
+        This deletes the current session and initializes a new one. A message is returned to indicate the success of the deletion.
+
+        :param verbose: print more
+
+        :returns: 200: successful operation
+        """
+
+        response=api(url=self.url+'session', method="DELETE", verbose=verbose)
+        return response
+
+
+    def getSessionFromFile(file, verbose=None):
+        """
+        Loads a session from a local file and returns the session file name
+
+        :param file: Session file location as an absolute path
+        :param verbose: print more
+
+        :returns: 200: successful operation
+        """
+
+        response=api(url=self.url+'session', PARAMS={'file':file}, method="GET", verbose=verbose, parse_params=False)
+        return response
+
+
+    def getSessionName(verbose=None):
+        """
+        Returns the file name for the current Cytoscape session.
+
+        :param verbose: print more
+
+        :returns: 200: successful operation
+        """
+
+        response=api(url=self.url+'session/name', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        return response
+
+    def runGarbageCollection(verbose=None):
+        """
+        Manually call Java's System.gc() to free up unused memory. This process happens automatically, but may be useful to call explicitly for testing or evaluation purposes.
+
+        :param verbose: print more
+
+        :returns: 204: Successful Garbage Collection
+        """
+
+        response=api(url=self.url+'gc', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        return response
