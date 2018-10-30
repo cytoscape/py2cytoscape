@@ -6,19 +6,19 @@ Conversion utilities for igraph
 """
 
 try:
-   import igraph as ig
-except Exception as error:   
-   print(str(error))
-   print("py2cytoscape: Error importing igraph. You won't be able to import from igraph.")
-   ig = None
+    import igraph as ig
+except Exception as error:
+    print(str(error))
+    print("py2cytoscape: Error importing igraph. You won't be able to import from igraph.")
+    ig = None
 
 DEF_SCALING = 100.0
 
 
 def from_igraph(igraph_network, layout=None, scale=DEF_SCALING):
-   if ig == None:
-      raise ImportError('igraph not found')
-    
+    if ig is None:
+        raise ImportError('igraph not found')
+
     new_graph = {}
     network_data = {}
     elements = {}
