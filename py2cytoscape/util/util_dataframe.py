@@ -88,10 +88,7 @@ def to_dataframe(network,
         row = tuple([source, itr, target] + extra_values)
         network_array.append(row)
 
-    return pd.DataFrame(
-        network_array,
-        columns=['source', 'interaction', 'target'] + sorted(valid_extra_cols)
-    )
+    return pd.DataFrame( network_array, columns=['source', 'interaction', 'target'] + sorted(valid_extra_cols))
 
 
 def get_node(id):
