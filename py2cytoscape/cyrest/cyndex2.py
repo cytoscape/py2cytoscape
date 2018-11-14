@@ -62,7 +62,7 @@ class cyndex2(object):
         surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
-        response=api(url=surl+'/cyndex2/'+sv+'/networks/'+str(suid)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=surl+'/cyndex2/'+sv+'/networks/'+str(suid)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
@@ -78,7 +78,7 @@ class cyndex2(object):
         surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
-        response=api(url=surl+'/cyndex2/v1', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=surl+'/cyndex2/v1', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
@@ -129,7 +129,7 @@ class cyndex2(object):
         surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
-        response=api(url=surl+'/cyndex2/'+sv+'/networks/current', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=surl+'/cyndex2/'+sv+'/networks/current', method="GET", verbose=verbose, parse_params=False)
         return response
 
 

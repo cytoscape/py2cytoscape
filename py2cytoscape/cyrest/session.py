@@ -119,7 +119,7 @@ class session(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'session/name', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'session/name', method="GET", verbose=verbose, parse_params=False)
         return response
 
     def runGarbageCollection(self, verbose=None):
@@ -131,5 +131,5 @@ class session(object):
         :returns: 204: Successful Garbage Collection
         """
 
-        response=api(url=self.___url+'gc', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'gc', method="GET", verbose=verbose, parse_params=False)
         return response

@@ -25,7 +25,7 @@ class enrichmentmap(object):
         surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
-        response=api(url=surl+'/enrichmentmap/model/'+str(network)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=surl+'/enrichmentmap/model/'+str(network)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
@@ -42,7 +42,7 @@ class enrichmentmap(object):
         surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
-        response=api(url=surl+'/enrichmentmap/expressions/'+str(network)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=surl+'/enrichmentmap/expressions/'+str(network)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
@@ -60,5 +60,5 @@ class enrichmentmap(object):
         surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
-        response=api(url=surl+'/enrichmentmap/expressions/'+str(network)+'/'+str(node)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=surl+'/enrichmentmap/expressions/'+str(network)+'/'+str(node)+'', method="GET", verbose=verbose, parse_params=False)
         return response
