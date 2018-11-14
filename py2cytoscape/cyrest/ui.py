@@ -9,9 +9,10 @@ class ui(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/ui'
+        self.___url=url
 
 
-    def updatePanelStatus(body, verbose=None):
+    def updatePanelStatus(self, body, verbose=None):
         """
         Updates the status(es) of available CytoPanels.
 
@@ -21,11 +22,11 @@ class ui(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'ui/panels', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'ui/panels', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getAllPanelStatus(verbose=None):
+    def getAllPanelStatus(self, verbose=None):
         """
         Returns all CytoPanels and their statuses.
 
@@ -34,11 +35,11 @@ class ui(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'ui/panels', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'ui/panels', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getDesktop(verbose=None):
+    def getDesktop(self, verbose=None):
         """
         Returns the status of the Desktop
 
@@ -47,11 +48,11 @@ class ui(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'ui', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'ui', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getPanelStatus(panelName, verbose=None):
+    def getPanelStatus(self, panelName, verbose=None):
         """
         Returns the status of the CytoPanel specified by the `panelName` parameter.
 
@@ -61,11 +62,11 @@ class ui(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'ui/panels/'+str(panelName)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'ui/panels/'+str(panelName)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateLodState(verbose=None):
+    def updateLodState(self, verbose=None):
         """
         Switch between full graphics details <---> fast rendering mode.
         
@@ -76,6 +77,6 @@ class ui(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'ui/lod', method="PUT", verbose=verbose)
+        response=api(url=self.___url+'ui/lod', method="PUT", verbose=verbose)
         return response
 

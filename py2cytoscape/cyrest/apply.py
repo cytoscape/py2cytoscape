@@ -9,9 +9,10 @@ class apply(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/apply'
+        self.___url=url
 
 
-    def applyLayout(algorithmName, networkId, column, verbose=None):
+    def applyLayout(self, algorithmName, networkId, column, verbose=None):
         """
         Applies the Layout specified by the `algorithmName` parameter to the Network specified by the `networkId` parameter. If the Layout is has an option to use a Column, it can be specified by the `column` parameter.
 
@@ -23,11 +24,11 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'apply/layouts/'+str(algorithmName)+'/'+str(networkId)+'', PARAMS={'column':column}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'apply/layouts/'+str(algorithmName)+'/'+str(networkId)+'', PARAMS={'column':column}, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def fitContent(networkId, verbose=None):
+    def fitContent(self, networkId, verbose=None):
         """
         Fit the first available Network View for the Network specified by the `networkId` parameter to the current window.
 
@@ -37,11 +38,11 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'apply/fit/'+str(networkId)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'apply/fit/'+str(networkId)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getStyleNames(verbose=None):
+    def getStyleNames(self, verbose=None):
         """
         Returns a list of all Visual Style names. Style names may not be unique.
 
@@ -50,11 +51,11 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'apply/styles', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'apply/styles', method="H", verbose=verbose, parse_params=False)
         return response
 
 
-    def copyCurrentLayout(sourceViewSUID, targetViewSUID, body, verbose=None):
+    def copyCurrentLayout(self, sourceViewSUID, targetViewSUID, body, verbose=None):
         """
         Copy one network view layout onto another, setting the node location and view scale to match. This makes visually comparing networks simple.
 
@@ -66,11 +67,11 @@ class apply(object):
         :returns: 200: successful operation; 404: Network View does not exist
         """
 
-        response=api(url=self.url+'apply/layouts/copycat/'+str(sourceViewSUID)+'/'+str(targetViewSUID)+'', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'apply/layouts/copycat/'+str(sourceViewSUID)+'/'+str(targetViewSUID)+'', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def bundleEdge(networkId, verbose=None):
+    def bundleEdge(self, networkId, verbose=None):
         """
         Apply edge bundling to the Network specified by the `networkId` parameter. Edge bundling is executed with default parameters; at present, optional parameters are not supported.
 
@@ -80,11 +81,11 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'apply/edgebundling/'+str(networkId)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'apply/edgebundling/'+str(networkId)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def applyStyle(styleName, networkId, verbose=None):
+    def applyStyle(self, styleName, networkId, verbose=None):
         """
         Applies the Visual Style specified by the `styleName` parameter to the network specified by the `networkId` parameter.
 
@@ -95,11 +96,11 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'apply/styles/'+str(styleName)+'/'+str(networkId)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'apply/styles/'+str(styleName)+'/'+str(networkId)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateLayoutParameters(algorithmName, body, verbose=None):
+    def updateLayoutParameters(self, algorithmName, body, verbose=None):
         """
         Updates the Layout parameters for the Layout algorithm specified by the `algorithmName` parameter.
 
@@ -110,11 +111,11 @@ class apply(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'apply/layouts/'+str(algorithmName)+'/parameters', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'apply/layouts/'+str(algorithmName)+'/parameters', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getLayoutParameters(algorithmName, verbose=None):
+    def getLayoutParameters(self, algorithmName, verbose=None):
         """
         Returns all editable parameters for the Layout algorithm specified by the `algorithmName` parameter.
 
@@ -124,11 +125,11 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'apply/layouts/'+str(algorithmName)+'/parameters', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'apply/layouts/'+str(algorithmName)+'/parameters', method="H", verbose=verbose, parse_params=False)
         return response
+        
 
-
-    def getLayout(algorithmName, verbose=None):
+    def getLayout(self, algorithmName, verbose=None):
         """
         Returns all the details, including names, parameters, and compatible column types for the Layout algorithm specified by the `algorithmName` parameter.
 
@@ -138,11 +139,11 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'apply/layouts/'+str(algorithmName)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'apply/layouts/'+str(algorithmName)+'', method="H", verbose=verbose, parse_params=False)
         return response
 
 
-    def layoutList(verbose=None):
+    def layoutList(self, verbose=None):
         """
         Returns all available layouts as a list of layout names.
         
@@ -155,11 +156,11 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'apply/layouts', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'apply/layouts', method="H", verbose=verbose, parse_params=False)
         return response
 
 
-    def getCompatibleColumnDataTypes(algorithmName, verbose=None):
+    def getCompatibleColumnDataTypes(self, algorithmName, verbose=None):
         """
         Returns a list of all compatible column data types for the Layout algorithm specified by the `algorithmName` parameter.
 
@@ -169,6 +170,6 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'apply/layouts/'+str(algorithmName)+'/columntypes', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'apply/layouts/'+str(algorithmName)+'/columntypes', method="H", verbose=verbose, parse_params=False)
         return response
 

@@ -9,9 +9,10 @@ class networks(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/networks'
+        self.___url=url
 
 
-    def collapseGroup(networkId, groupNodeId, verbose=None):
+    def collapseGroup(self, networkId, groupNodeId, verbose=None):
         """
         Collapses the group specified by the `groupNodeId` and `networkId` parameters.
 
@@ -22,11 +23,11 @@ class networks(object):
         :returns: 204: Group collapsed; 500: Failed to collapse group
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/groups/'+str(groupNodeId)+'/collapse', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/groups/'+str(groupNodeId)+'/collapse', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def expandGroup(networkId, groupNodeId, verbose=None):
+    def expandGroup(self, networkId, groupNodeId, verbose=None):
         """
         Expands the group specified by the `groupNodeId` and `networkId` parameters.
 
@@ -37,11 +38,11 @@ class networks(object):
         :returns: 204: Group expanded; 500: Failed to expand group
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/groups/'+str(groupNodeId)+'/expand', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/groups/'+str(groupNodeId)+'/expand', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getNetworkViewCount(networkId, verbose=None):
+    def getNetworkViewCount(self, networkId, verbose=None):
         """
         Returns a count of the Network Views available for the Network specified by the `networkId` parameter.
         
@@ -53,11 +54,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/count', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/count', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getFirstImageAsPdf(networkId, h, verbose=None):
+    def getFirstImageAsPdf(self, networkId, h, verbose=None):
         """
         Returns a PDF of the first available Network View for the Network specified by the `networkId` parameter.
         
@@ -70,11 +71,11 @@ class networks(object):
         :returns: 200: PDF image stream.
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/first.pdf', PARAMS={'h':h}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/first.pdf', PARAMS={'h':h}, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateView(networkId, viewId, objectType, objectId, bypass, body, verbose=None):
+    def updateView(self, networkId, viewId, objectType, objectId, bypass, body, verbose=None):
         """
         Updates the Visual Properties in the object specified by the `objectId` and `objectType` parameters in the Network View specified by the `viewId` and `networkId` parameters.
         
@@ -115,11 +116,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getView(networkId, viewId, objectType, objectId, verbose=None):
+    def getView(self, networkId, viewId, objectType, objectId, verbose=None):
         """
         Gets a list of Visual Properties for the Object specified by the `objectId` and `objectType` parameters in the Network View specified by the `viewId` and `networkId` parameters.
         
@@ -134,11 +135,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getTableAsCsv(networkId, tableType, verbose=None):
+    def getTableAsCsv(self, networkId, tableType, verbose=None):
         """
         Returns a CSV representation of the table specified by the `networkId` and `tableType` parameters. All column names are included in the first row.
 
@@ -149,11 +150,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'.csv', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'.csv', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getNeighbours(networkId, nodeId, verbose=None):
+    def getNeighbours(self, networkId, nodeId, verbose=None):
         """
         Returns the neighbors of the node specified by the `nodeId` and `networkId` parameters as a list of SUIDs.
 
@@ -164,11 +165,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes/'+str(nodeId)+'/neighbors', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes/'+str(nodeId)+'/neighbors', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def putNetworkVisualPropBypass(networkId, viewId, visualProperty, body, verbose=None):
+    def putNetworkVisualPropBypass(self, networkId, viewId, visualProperty, body, verbose=None):
         """
         Bypasses the Visual Style of the Network with the Visual Property specificed by the `visualProperty`, `viewId`, and `networkId` parameters.
         
@@ -183,11 +184,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network/'+str(visualProperty)+'/bypass', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network/'+str(visualProperty)+'/bypass', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def deleteNetworkVisualProp(networkId, viewId, visualProperty, verbose=None):
+    def deleteNetworkVisualProp(self, networkId, viewId, visualProperty, verbose=None):
         """
         Deletes the bypass Visual Property specificed by the `visualProperty`, `viewId`, and `networkId` parameters. When this is done, the Visual Property will be defined by the Visual Style
         
@@ -201,11 +202,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network/'+str(visualProperty)+'/bypass', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network/'+str(visualProperty)+'/bypass', method="DELETE", verbose=verbose)
         return response
 
 
-    def getNetworkVisualPropBypass(networkId, viewId, visualProperty, verbose=None):
+    def getNetworkVisualPropBypass(self, networkId, viewId, visualProperty, verbose=None):
         """
         Gets the bypass Visual Property specified by the `visualProperty`, `viewId`, and `networkId` parameters.  The response is the Visual Property that is used in place of the definition provided by the Visual Style.
         
@@ -219,11 +220,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network/'+str(visualProperty)+'/bypass', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network/'+str(visualProperty)+'/bypass', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def setCurrentNetwork(body, verbose=None):
+    def setCurrentNetwork(self, body, verbose=None):
         """
         Sets the current network.
 
@@ -233,11 +234,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/currentNetwork', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/currentNetwork', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getCurrentNetwork(verbose=None):
+    def getCurrentNetwork(self, verbose=None):
         """
         Returns the current network.
 
@@ -246,11 +247,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/currentNetwork', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/currentNetwork', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getNetworkVisualProp(networkId, viewId, visualProperty, verbose=None):
+    def getNetworkVisualProp(self, networkId, viewId, visualProperty, verbose=None):
         """
         Gets the Network Visual Property specificed by the `visualProperty`, `viewId`, and `networkId` parameters.
         
@@ -264,11 +265,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network/'+str(visualProperty)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network/'+str(visualProperty)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def createNetworkFromSelected(networkId, title, verbose=None):
+    def createNetworkFromSelected(self, networkId, title, verbose=None):
         """
         Creates new sub-network from current selection, with the name specified by the `title` parameter.
         
@@ -282,11 +283,11 @@ class networks(object):
         """
 
         PARAMS=set_param(['networkId','title'],[networkId,title])
-        response=api(url=self.url+'networks/'+str(networkId)+'', PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'', PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
 
-    def deleteNetwork(networkId, verbose=None):
+    def deleteNetwork(self, networkId, verbose=None):
         """
         Deletes the network specified by the `networkId` parameter.
 
@@ -296,11 +297,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'', method="DELETE", verbose=verbose)
         return response
 
 
-    def getNetwork(networkId, verbose=None):
+    def getNetwork(self, networkId, verbose=None):
         """
         Returns the Network specified by the `networkId` parameter with all associated tables in [Cytoscape.js](http://manual.cytoscape.org/en/stable/Supported_Network_File_Formats.html#cytoscape-js-json) format
 
@@ -310,11 +311,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'', method="H", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateTable(networkId, tableType, body, class_, verbose=None):
+    def updateTable(self, networkId, tableType, body, class_, verbose=None):
         """
         Updates the table specified by the `tableType` and `networkId` parameters.  New columns will be created if they do not exist in the target table.
         
@@ -331,11 +332,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getTable(networkId, tableType, verbose=None):
+    def getTable(self, networkId, tableType, verbose=None):
         """
         Returns the table specified by the `networkId` and 'tableType' parameters.
 
@@ -346,11 +347,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'', method="H", verbose=verbose, parse_params=False)
         return response
 
 
-    def getSingleVisualPropertyValue(networkId, viewId, objectType, objectId, visualProperty, verbose=None):
+    def getSingleVisualPropertyValue(self, networkId, viewId, objectType, objectId, visualProperty, verbose=None):
         """
         Gets the Visual Property specificed by the `visualProperty` parameter for the node or edge specified by the `objectId` parameter in the Network View specified by the `viewId` and `networkId` parameters.
         
@@ -366,11 +367,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'/'+str(visualProperty)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'/'+str(visualProperty)+'', method="H", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateViews(networkId, viewId, objectType, bypass, body, verbose=None):
+    def updateViews(self, networkId, viewId, objectType, bypass, body, verbose=None):
         """
         Updates multiple node or edge Visual Properties as defined by the `objectType` parameter, in the Network View specified by the `viewId` and `networkId` parameters.
         
@@ -415,11 +416,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getViews(networkId, viewId, objectType, visualProperty, verbose=None):
+    def getViews(self, networkId, viewId, objectType, visualProperty, verbose=None):
         """
         Returns a list of all Visual Property values for the Visual Property specified by the `visualProperty` and `objectType` parameters, in the Network View specified by the `viewId` and `networkId` parameters.
         
@@ -434,11 +435,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'', PARAMS={'visualProperty':visualProperty}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'', PARAMS={'visualProperty':visualProperty}, method="H", verbose=verbose, parse_params=False)
         return response
 
 
-    def getTableAsTsv(networkId, tableType, verbose=None):
+    def getTableAsTsv(self, networkId, tableType, verbose=None):
         """
         Returns a TSV (tab delimited text) representation of the table specified by the `networkId` and `tableType` parameters. All column names are included in the first row.
 
@@ -449,11 +450,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'.tsv', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'.tsv', method="G", verbose=verbose, parse_params=False)
         return response
 
 
-    def getNetworkViewAsCx(networkId, viewId, verbose=None):
+    def getNetworkViewAsCx(self, networkId, viewId, verbose=None):
         """
         Returns the Network View specified by the `viewId` and `networkId` parameters in [CX format](http://manual.cytoscape.org/en/stable/Supported_Network_File_Formats.html#cytoscape-cx)
 
@@ -464,11 +465,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'.cx', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'.cx', method="G", verbose=verbose, parse_params=False)
         return response
 
 
-    def getImageAsPdf(networkId, viewId, verbose=None):
+    def getImageAsPdf(self, networkId, viewId, verbose=None):
         """
         Returns a PDF of the Network View specified by the `viewId` and `networkId` parameters.
         
@@ -481,11 +482,11 @@ class networks(object):
         :returns: 200: PDF image stream.
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'.pdf', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'.pdf', method="G", verbose=verbose, parse_params=False)
         return response
 
 
-    def getNetworkPointer(networkId, nodeId, verbose=None):
+    def getNetworkPointer(self, networkId, nodeId, verbose=None):
         """
         If the node specified by the `nodeId` and `networkId` parameters has an associated nested network, returns the SUID of the nested network.
 
@@ -496,11 +497,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes/'+str(nodeId)+'/pointer', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes/'+str(nodeId)+'/pointer', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getTables(networkId, verbose=None):
+    def getTables(self, networkId, verbose=None):
         """
         Returns every table in the network specified by the `networkId` parameter.
 
@@ -510,11 +511,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateColumnName(networkId, tableType, body, verbose=None):
+    def updateColumnName(self, networkId, tableType, body, verbose=None):
         """
         Renames an existing column in the table specified by the `tableType` and `networkId` parameters.
 
@@ -526,11 +527,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def createColumn(networkId, tableType, body, verbose=None):
+    def createColumn(self, networkId, tableType, body, verbose=None):
         """
         Creates a new, empty column in the table specified by the `tableType` parameter, in the network specified by the `networkId` parameter.
         
@@ -545,11 +546,11 @@ class networks(object):
         """
 
         PARAMS=set_param(['networkId','tableType','body'],[networkId,tableType,body])
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns', PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns', PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
 
-    def getColumnNames(networkId, tableType, verbose=None):
+    def getColumnNames(self, networkId, tableType, verbose=None):
         """
         Returns all the columns in the table specified by the `networkId` and `tableType` parameters.
 
@@ -560,11 +561,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getRow(networkId, tableType, primaryKey, verbose=None):
+    def getRow(self, networkId, tableType, primaryKey, verbose=None):
         """
         Gets a row matching the value specified by the `primaryKey` parameter from the table specified by the `tableType` and `networkId` parameters.
         
@@ -587,11 +588,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/rows/'+str(primaryKey)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/rows/'+str(primaryKey)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getEdgeDirected(networkId, edgeId, verbose=None):
+    def getEdgeDirected(self, networkId, edgeId, verbose=None):
         """
         Returns true if the edge specified by the `edgeId` and `networkId` parameters is directed.
 
@@ -602,11 +603,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/edges/'+str(edgeId)+'/isDirected', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/edges/'+str(edgeId)+'/isDirected', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getNetworkCount(verbose=None):
+    def getNetworkCount(self, verbose=None):
         """
         Returns the number of networks in current Cytoscape session.
 
@@ -615,11 +616,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/count', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/count', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getNetworkView(networkId, viewId, file, verbose=None):
+    def getNetworkView(self, networkId, viewId, file, verbose=None):
         """
         Gets the Network View specified by the `viewId` and `networkId` parameters.
         
@@ -653,11 +654,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'', PARAMS={'file':file}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'', PARAMS={'file':file}, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def putSingleVisualPropertyValueBypass(networkId, viewId, objectType, objectId, visualProperty, body, verbose=None):
+    def putSingleVisualPropertyValueBypass(self, networkId, viewId, objectType, objectId, visualProperty, body, verbose=None):
         """
         Bypasses the Visual Style of the object specified by the `objectId` and `objectType` parameters, in the Network View specified by the `viewId` and `networkId` parameters. The Visual Property included in the message body will be used instead of the definition provided by the Visual Style.
         
@@ -696,11 +697,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'/'+str(visualProperty)+'/bypass', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'/'+str(visualProperty)+'/bypass', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def deleteSingleVisualPropertyValueBypass(networkId, viewId, objectType, objectId, visualProperty, verbose=None):
+    def deleteSingleVisualPropertyValueBypass(self, networkId, viewId, objectType, objectId, visualProperty, verbose=None):
         """
         Deletes the bypass Visual Property specified by the `visualProperty` parameter from the object specified by the `objectId` and `objectType` parameters in the Network View Specified by the `viewId` and `networkId` parameters. When this is done, the Visual Property will be defined by the Visual Style
         
@@ -716,11 +717,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'/'+str(visualProperty)+'/bypass', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'/'+str(visualProperty)+'/bypass', method="DELETE", verbose=verbose)
         return response
 
 
-    def getSingleVisualPropertyValueBypass(networkId, viewId, objectType, objectId, visualProperty, verbose=None):
+    def getSingleVisualPropertyValueBypass(self, networkId, viewId, objectType, objectId, visualProperty, verbose=None):
         """
         Gets the bypass Visual Property specified by the `visualProperty` parameter from the object specified by the `objectId` and `objectType` parameters in the Network View Specified by the `viewId` and `networkId` parameters. The response is the Visual Property that is used in place of the definition provided by the Visual Style.
         
@@ -736,11 +737,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'/'+str(visualProperty)+'/bypass', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/'+str(objectType)+'/'+str(objectId)+'/'+str(visualProperty)+'/bypass', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def deleteNode(networkId, nodeId, verbose=None):
+    def deleteNode(self, networkId, nodeId, verbose=None):
         """
         Deletes the node specified by the `nodeId` and `networkId` parameters.
 
@@ -751,11 +752,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes/'+str(nodeId)+'', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes/'+str(nodeId)+'', method="DELETE", verbose=verbose)
         return response
 
 
-    def getNode(networkId, nodeId, verbose=None):
+    def getNode(self, networkId, nodeId, verbose=None):
         """
         Returns a node with its associated row data.
 
@@ -766,11 +767,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes/'+str(nodeId)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes/'+str(nodeId)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def createEdge(networkId, body, verbose=None):
+    def createEdge(self, networkId, body, verbose=None):
         """
         Add new edge(s) to the network.  Body should include an array of new node names.
         
@@ -784,11 +785,11 @@ class networks(object):
         """
 
         PARAMS=set_param(['networkId','body'],[networkId,body])
-        response=api(url=self.url+'networks/'+str(networkId)+'/edges', PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/edges', PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
 
-    def deleteAllEdges(networkId, verbose=None):
+    def deleteAllEdges(self, networkId, verbose=None):
         """
         Delete all the edges from the network specified by the `networkId` parameter.
 
@@ -798,11 +799,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/edges', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/edges', method="DELETE", verbose=verbose)
         return response
 
 
-    def getEdges(networkId, column, query, verbose=None):
+    def getEdges(self, networkId, column, query, verbose=None):
         """
         Returns a list of all edges in the network specified by the `networkId` parameter as SUIDs.
         
@@ -816,11 +817,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/edges', PARAMS={'column':column, 'query':query}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/edges', PARAMS={'column':column, 'query':query}, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def setSelectedEdges(networkId, body, verbose=None):
+    def setSelectedEdges(self, networkId, body, verbose=None):
         """
         Sets as selected the edges specified by the `suids` and `networkId` parameters.
         
@@ -833,11 +834,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/edges/selected', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/edges/selected', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getSelectedEdges(networkId, verbose=None):
+    def getSelectedEdges(self, networkId, verbose=None):
         """
         Gets the selected edges in the network specified by the `networkId` parameter. The results are presented as a list of SUIDs.
 
@@ -847,11 +848,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/edges/selected', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/edges/selected', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getFirstImageAsPng(networkId, h, verbose=None):
+    def getFirstImageAsPng(self, networkId, h, verbose=None):
         """
         Returns a PNG image of the first available Network View for the Network specified by the `networkId` parameter.
         
@@ -864,11 +865,11 @@ class networks(object):
         :returns: 200: PNG image stream.
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/first.png', PARAMS={'h':h}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/first.png', PARAMS={'h':h}, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getCell(networkId, tableType, primaryKey, columnName, verbose=None):
+    def getCell(self, networkId, tableType, primaryKey, columnName, verbose=None):
         """
         Return the value of a cell specified by the `primaryKey` and `columnName` parameters in the table specified by the `tableType` and `networkId` parameters.
         
@@ -883,11 +884,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/rows/'+str(primaryKey)+'/'+str(columnName)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/rows/'+str(primaryKey)+'/'+str(columnName)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def setSelectedNodes(networkId, body, verbose=None):
+    def setSelectedNodes(self, networkId, body, verbose=None):
         """
         Sets as selected the nodes specified by the `suids` and `networkId` parameters.
         
@@ -900,11 +901,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes/selected', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes/selected', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getSelectedNodes(networkId, verbose=None):
+    def getSelectedNodes(self, networkId, verbose=None):
         """
         Gets the selected nodes in the network specified by the `networkId` parameter. The results are presented as a list of SUIDs.
 
@@ -914,11 +915,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes/selected', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes/selected', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def deleteGroup(networkId, groupNodeId, verbose=None):
+    def deleteGroup(self, networkId, groupNodeId, verbose=None):
         """
         Deletes the group specified by the `groupNodeId` and `networkId` parameters. The nodes and edges that the group contained will remain present in the network, however the node used to identify the Group will be deleted.
 
@@ -929,11 +930,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/groups/'+str(groupNodeId)+'', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/groups/'+str(groupNodeId)+'', method="DELETE", verbose=verbose)
         return response
 
 
-    def getGroup(networkId, groupNodeId, verbose=None):
+    def getGroup(self, networkId, groupNodeId, verbose=None):
         """
         Returns the group specified by the `groupNodeId` and `networkId` parameters.
 
@@ -944,11 +945,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/groups/'+str(groupNodeId)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/groups/'+str(groupNodeId)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getEdgeCount(networkId, verbose=None):
+    def getEdgeCount(self, networkId, verbose=None):
         """
         Returns the number of edges in the network specified by the `networkId` parameter.
 
@@ -958,11 +959,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/edges/count', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/edges/count', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateColumnValues(networkId, tableType, columnName, default, body, verbose=None):
+    def updateColumnValues(self, networkId, tableType, columnName, default, body, verbose=None):
         """
         Sets the values for cells in the table specified by the `tableType` and `networkId` parameters.
         
@@ -980,11 +981,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns/'+str(columnName)+'', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns/'+str(columnName)+'', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def deleteColumn(networkId, tableType, columnName, verbose=None):
+    def deleteColumn(self, networkId, tableType, columnName, verbose=None):
         """
         Deletes the column specified by the `columnName` parameter from the table speficied by the `tableType` and `networkId` parameters.
 
@@ -996,11 +997,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns/'+str(columnName)+'', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns/'+str(columnName)+'', method="DELETE", verbose=verbose)
         return response
 
 
-    def getColumnValues(networkId, tableType, columnName, verbose=None):
+    def getColumnValues(self, networkId, tableType, columnName, verbose=None):
         """
         Returns all the values for the column specified by the `columnType` parameter, in the table specified by the `networkId` and `tableType` parameters.
 
@@ -1012,11 +1013,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns/'+str(columnName)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/columns/'+str(columnName)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def createNode(networkId, body, verbose=None):
+    def createNode(self, networkId, body, verbose=None):
         """
         Adds new nodes to the network specified by the `networkId` parameter. The `name` column will be populated by the contents of the message body.
 
@@ -1028,11 +1029,11 @@ class networks(object):
         """
 
         PARAMS=set_param(['networkId','body'],[networkId,body])
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes', PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes', PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
 
-    def deleteAllNodes(networkId, verbose=None):
+    def deleteAllNodes(self, networkId, verbose=None):
         """
         Delete all the nodes from the network specified by the `networkId` parameter.
 
@@ -1042,11 +1043,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes', method="DELETE", verbose=verbose)
         return response
 
 
-    def getNodes(networkId, column, query, verbose=None):
+    def getNodes(self, networkId, column, query, verbose=None):
         """
         Returns a list of all nodes in the network specified by the `networkId` parameter as SUIDs.
         
@@ -1060,11 +1061,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes', PARAMS={'column':column, 'query':query}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes', PARAMS={'column':column, 'query':query}, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def setCurrentNetworkView(body, verbose=None):
+    def setCurrentNetworkView(self, body, verbose=None):
         """
         Sets the current Network View.
 
@@ -1074,11 +1075,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/views/currentNetworkView', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/views/currentNetworkView', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getCurrentNetworkView(verbose=None):
+    def getCurrentNetworkView(self, verbose=None):
         """
         Returns the current Network View.
 
@@ -1087,11 +1088,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/views/currentNetworkView', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/views/currentNetworkView', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getGroupCount(networkId, verbose=None):
+    def getGroupCount(self, networkId, verbose=None):
         """
         Returns the number of groups in the network
 
@@ -1101,11 +1102,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/groups/count', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/groups/count', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def deleteEdge(networkId, edgeId, verbose=None):
+    def deleteEdge(self, networkId, edgeId, verbose=None):
         """
         Deletes the edge specified by the `edgeId` and `networkId` parameters.
 
@@ -1116,11 +1117,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/edges/'+str(edgeId)+'', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/edges/'+str(edgeId)+'', method="DELETE", verbose=verbose)
         return response
 
 
-    def getEdge(networkId, edgeId, verbose=None):
+    def getEdge(self, networkId, edgeId, verbose=None):
         """
         Returns an edge with its associated row data.
 
@@ -1131,11 +1132,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/edges/'+str(edgeId)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/edges/'+str(edgeId)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getRows(networkId, tableType, verbose=None):
+    def getRows(self, networkId, tableType, verbose=None):
         """
         Returns all rows from the table specified by `networkId` and `tableType` parameters. Returns a JSON representation of an array of rows.
         
@@ -1161,11 +1162,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/rows', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/tables/'+str(tableType)+'/rows', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getNodeCount(networkId, verbose=None):
+    def getNodeCount(self, networkId, verbose=None):
         """
         Returns the number of nodes in the network specified by the `networkId` parameter.
 
@@ -1175,11 +1176,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes/count', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes/count', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getNeighborsSelected(networkId, verbose=None):
+    def getNeighborsSelected(self, networkId, verbose=None):
         """
         Returns the neighbors of the nodes currently selected in the network specified by the `networkId` parameter as a list of SUIDs.
         
@@ -1191,11 +1192,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes/selected/neighbors', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes/selected/neighbors', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def deleteFirstNetworkView(networkId, verbose=None):
+    def deleteFirstNetworkView(self, networkId, verbose=None):
         """
         Deletes the first available Network View for the Network specified by the `networkId` parameter. Cytoscape can have multiple views per network model, but this feature is not exposed in the Cytoscape GUI. GUI access is limited to the first available view only.
 
@@ -1205,11 +1206,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/first', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/first', method="DELETE", verbose=verbose)
         return response
 
 
-    def getFirstNetworkView(networkId, file, verbose=None):
+    def getFirstNetworkView(self, networkId, file, verbose=None):
         """
         This returns the first view of the network. Cytoscape can have multiple views per network model, but this feature is not exposed in the Cytoscape GUI. GUI access is limited to the first available view only.
         
@@ -1242,11 +1243,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/first', PARAMS={'file':file}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/first', PARAMS={'file':file}, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getAdjEdges(networkId, nodeId, verbose=None):
+    def getAdjEdges(self, networkId, nodeId, verbose=None):
         """
         Returns a list of connected edges as SUIDs for the node specified by the `nodeId` and `networkId` parameters.
 
@@ -1257,11 +1258,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/nodes/'+str(nodeId)+'/adjEdges', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/nodes/'+str(nodeId)+'/adjEdges', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def createNetworkView(networkId, verbose=None):
+    def createNetworkView(self, networkId, verbose=None):
         """
         Creates a new Network View for the Network specified by the `networkId` parameter.
 
@@ -1272,11 +1273,11 @@ class networks(object):
         """
 
         PARAMS=set_param(['networkId'],[networkId])
-        response=api(url=self.url+'networks/'+str(networkId)+'/views', PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views', PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
 
-    def deleteAllNetworkViews(networkId, verbose=None):
+    def deleteAllNetworkViews(self, networkId, verbose=None):
         """
         Deletes all Network Views available in the Network specified by the `networkId` parameter. Cytoscape can have multiple views per network model, but this feature is not exposed in the Cytoscape GUI. GUI access is limited to the first available view only.
 
@@ -1286,11 +1287,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views', method="DELETE", verbose=verbose)
         return response
 
 
-    def getAllNetworkViews(networkId, verbose=None):
+    def getAllNetworkViews(self, networkId, verbose=None):
         """
         Returns an array of all network views belonging to the network specified by the `networkId` paramter. The response is a list of Network SUIDs.
 
@@ -1300,11 +1301,11 @@ class networks(object):
         :returns: 200: An array of Network View SUIDs
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getEdgeComponent(networkId, edgeId, type, verbose=None):
+    def getEdgeComponent(self, networkId, edgeId, type, verbose=None):
         """
         Returns the SUID of the source or target node of the edge specified by the `edgeId` and `networkId` parameters.
         
@@ -1330,11 +1331,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/edges/'+str(edgeId)+'/'+str(type)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/edges/'+str(edgeId)+'/'+str(type)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateNetworkView(networkId, viewId, bypass, body, verbose=None):
+    def updateNetworkView(self, networkId, viewId, bypass, body, verbose=None):
         """
         Updates the Visual Properties in the Network View specified by the `viewId` and `networkId` parameters.
         
@@ -1364,11 +1365,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getNetworkVisualProps(networkId, viewId, verbose=None):
+    def getNetworkVisualProps(self, networkId, viewId, verbose=None):
         """
         Returns a list of the Visual Properties for the Network View specified by the `viewId` and `networkId` parameters.
         
@@ -1381,11 +1382,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'/network', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def createGroup(networkId, body, verbose=None):
+    def createGroup(self, networkId, body, verbose=None):
         """
         Create a new group in the network specified by the parameter `networkId`. The contents are specified the message body.
 
@@ -1397,11 +1398,11 @@ class networks(object):
         """
 
         PARAMS=set_param(['networkId','body'],[networkId,body])
-        response=api(url=self.url+'networks/'+str(networkId)+'/groups', PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/groups', PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
 
-    def deleteAllGroups(networkId, verbose=None):
+    def deleteAllGroups(self, networkId, verbose=None):
         """
         Deletes all groups in the network specified by `networkId` parameter. The nodes and edges that the groups contained will remain present in the network, however the nodes used to identify the Groups will be deleted.
 
@@ -1411,11 +1412,11 @@ class networks(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/groups', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/groups', method="DELETE", verbose=verbose)
         return response
 
 
-    def getAllGroups(networkId, verbose=None):
+    def getAllGroups(self, networkId, verbose=None):
         """
         Returns a list of all the groups in the network specified by the `networkId` parameter.
 
@@ -1425,11 +1426,11 @@ class networks(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/groups', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/groups', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getImageAsSvg(networkId, viewId, h, verbose=None):
+    def getImageAsSvg(self, networkId, viewId, h, verbose=None):
         """
         Returns an SVG image of the Network View specified by the `viewId` and `networkId` parameters.
         
@@ -1443,11 +1444,11 @@ class networks(object):
         :returns: 200: SVG image stream.
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'.svg', PARAMS={'h':h}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'.svg', PARAMS={'h':h}, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getImageAsPng(networkId, viewId, h, verbose=None):
+    def getImageAsPng(self, networkId, viewId, h, verbose=None):
         """
         Returns a PNG image of the Network View specified by the `viewId` and `networkId` parameters.
         
@@ -1461,11 +1462,11 @@ class networks(object):
         :returns: 200: PNG image stream.
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/'+str(viewId)+'.png', PARAMS={'h':h}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/'+str(viewId)+'.png', PARAMS={'h':h}, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getFirstImageAsSvg(networkId, h, verbose=None):
+    def getFirstImageAsSvg(self, networkId, h, verbose=None):
         """
         Returns an SVG image of the first available Network View for the Network specified by the `networkId` parameter.
         
@@ -1478,6 +1479,6 @@ class networks(object):
         :returns: 200: SVG image stream.
         """
 
-        response=api(url=self.url+'networks/'+str(networkId)+'/views/first.svg', PARAMS={'h':h}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'networks/'+str(networkId)+'/views/first.svg', PARAMS={'h':h}, method="GET", verbose=verbose, parse_params=False)
         return response
 

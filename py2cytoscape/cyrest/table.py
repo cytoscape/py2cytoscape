@@ -596,5 +596,5 @@ class table(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'tables/count', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.url+'tables/count', method="GET", verbose=verbose, parse_params=False)
         return response

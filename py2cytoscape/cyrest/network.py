@@ -130,7 +130,7 @@ class network(object):
         :returns: [ list of generated edges ]
         """
         network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["name","network"],[name,network])
+        PARAMS=set_param(["nodes","network"],[nodes,network])
         response=api(url=self.__url+"/connect nodes", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
@@ -398,7 +398,7 @@ class network(object):
         :returns: [ list of SUIDs of the hidden nodes and/or edges ]
         """
         network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network","propertyList"],[network,propertyList])
+        PARAMS=set_param(["network","edgeList","nodeList"],[network,edgeList,nodeList])
         response=api(url=self.__url+"/hide", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
@@ -597,7 +597,7 @@ class network(object):
         response=api(url=self.__url+"/load file", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
-    def load_url(self, afile=None, verbose=False):
+    def load_url(self, url=None, verbose=False):
         """
         Load a new network from a URL that points to a network file type (e.g.
         SIF, XGMML, etc.). Use network import url to load networks from Excel or

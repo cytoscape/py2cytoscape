@@ -9,6 +9,7 @@ class session(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/session'
+        self.___url=url
 
     def new(self, verbose=False):
         """
@@ -67,7 +68,7 @@ class session(object):
         response=api(url=self.__url+"/save as", PARAMS=PARAMS, verbose=verbose)
         return response
 
-    def createSessionFile(file, verbose=None):
+    def createSessionFile(self, file, verbose=None):
         """
         Saves the current session to a file. If successful, the session file location will be returned.
 
@@ -78,11 +79,11 @@ class session(object):
         """
 
         PARAMS=set_param(['file'],[file])
-        response=api(url=self.url+'session', PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.___url+'session', PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
 
-    def deleteSession(verbose=None):
+    def deleteSession(self, verbose=None):
         """
         This deletes the current session and initializes a new one. A message is returned to indicate the success of the deletion.
 
@@ -91,11 +92,11 @@ class session(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'session', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'session', method="DELETE", verbose=verbose)
         return response
 
 
-    def getSessionFromFile(file, verbose=None):
+    def getSessionFromFile(self, file, verbose=None):
         """
         Loads a session from a local file and returns the session file name
 
@@ -105,11 +106,11 @@ class session(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'session', PARAMS={'file':file}, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'session', PARAMS={'file':file}, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getSessionName(verbose=None):
+    def getSessionName(self, verbose=None):
         """
         Returns the file name for the current Cytoscape session.
 
@@ -118,10 +119,10 @@ class session(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'session/name', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'session/name', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
         return response
 
-    def runGarbageCollection(verbose=None):
+    def runGarbageCollection(self, verbose=None):
         """
         Manually call Java's System.gc() to free up unused memory. This process happens automatically, but may be useful to call explicitly for testing or evaluation purposes.
 
@@ -130,5 +131,5 @@ class session(object):
         :returns: 204: Successful Garbage Collection
         """
 
-        response=api(url=self.url+'gc', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'gc', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
         return response

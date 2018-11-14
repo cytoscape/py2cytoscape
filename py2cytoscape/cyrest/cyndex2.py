@@ -9,9 +9,10 @@ class cyndex2(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/cyndex2'
+        self.___url=url
 
 
-    def updateNetworkInNdex(suid, body, verbose=None):
+    def updateNetworkInNdex(self, suid, body, verbose=None):
         """
         Update an NDEx network.
 
@@ -22,14 +23,14 @@ class cyndex2(object):
         :returns: 200: successful operation; 404: Network does not exist
         """
 
-        surl=self.url
+        surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
         response=api(url=surl+'/cyndex2/'+sv+'/networks/'+str(suid)+'', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def saveNetworkToNdex(suid, body, verbose=None):
+    def saveNetworkToNdex(self, suid, body, verbose=None):
         """
         Save a network/collection to NDEx
 
@@ -40,7 +41,7 @@ class cyndex2(object):
         :returns: 200: successful operation; 404: Network does not exist
         """
 
-        surl=self.url
+        surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
         PARAMS=set_param(['suid','body'],[suid,body])
@@ -48,7 +49,7 @@ class cyndex2(object):
         return response
 
 
-    def getNetworkSummary(suid, verbose=None):
+    def getNetworkSummary(self, suid, verbose=None):
         """
         Returns summary of collection containing the specified network.
 
@@ -58,14 +59,14 @@ class cyndex2(object):
         :returns: 200: successful operation
         """
 
-        surl=self.url
+        surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
         response=api(url=surl+'/cyndex2/'+sv+'/networks/'+str(suid)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getAppInfo(verbose=None):
+    def getAppInfo(self, verbose=None):
         """
         App version and other basic information will be provided.
 
@@ -74,14 +75,14 @@ class cyndex2(object):
         :returns: 200: successful operation
         """
 
-        surl=self.url
+        surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
         response=api(url=surl+'/cyndex2/v1', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateCurrentNetworkInNdex(body, verbose=None):
+    def updateCurrentNetworkInNdex(self, body, verbose=None):
         """
         Update current network's record in NDEx
 
@@ -91,14 +92,14 @@ class cyndex2(object):
         :returns: 200: successful operation; 404: Network does not exist
         """
 
-        surl=self.url
+        surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
         response=api(url=surl+'/cyndex2/'+sv+'/networks/current', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def saveCurrentNetworkToNdex(body, verbose=None):
+    def saveCurrentNetworkToNdex(self, body, verbose=None):
         """
         Save current network/collection to NDEx
 
@@ -108,7 +109,7 @@ class cyndex2(object):
         :returns: 200: successful operation; 404: Current network does not exist
         """
 
-        surl=self.url
+        surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
         PARAMS=set_param(['body'],[body])
@@ -116,7 +117,7 @@ class cyndex2(object):
         return response
 
 
-    def getCurrentNetworkSummary(verbose=None):
+    def getCurrentNetworkSummary(self, verbose=None):
         """
         Returns summary of collection contains current network.
 
@@ -125,14 +126,14 @@ class cyndex2(object):
         :returns: 200: successful operation
         """
 
-        surl=self.url
+        surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
         response=api(url=surl+'/cyndex2/'+sv+'/networks/current', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def createNetworkFromNdex(body, verbose=None):
+    def createNetworkFromNdex(self, body, verbose=None):
         """
         Import network(s) from NDEx.
 
@@ -142,7 +143,7 @@ class cyndex2(object):
         :returns: 200: successful operation; 404: Network does not exist
         """
 
-        surl=self.url
+        surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
         PARAMS=set_param(['body'],[body])

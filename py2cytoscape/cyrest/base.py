@@ -120,6 +120,8 @@ def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PO
                 URL=baseurl
             if len(P)>0:
                 URL=URL+P
+        else:
+            URL=baseurl
         if verbose:
             print("'"+URL+"'")
             sys.stdout.flush()
@@ -161,6 +163,7 @@ def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PO
             verbose=True
             print(r.content)
             sys.stdout.flush()
+            
         res=json.loads(r.content)
         if "errors" in res.keys():
             if len(res["errors"]) > 0:
@@ -187,12 +190,14 @@ def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PO
                 raise ValueError(res["errors"][0])     
 
     elif (method=="HTML") or (method == "H") or (method=="HELP"):
-        P=[]
-        for p in PARAMS.keys():
-            v=str(PARAMS[p])
-            v=v.replace(" ","%20")
-            P.append(str(p)+"="+str(PARAMS[p]))
-        P="&".join(P)
+        
+        if type(PARAMS) == type({}):
+            P=[]
+            for p in PARAMS.keys():
+                v=str(PARAMS[p])
+                v=v.replace(" ","%20")
+                P.append(str(p)+"="+str(PARAMS[p]))
+            P="&".join(P)
         if not url:
             if namespace:
                 URL=baseurl+"?"

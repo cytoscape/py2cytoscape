@@ -9,9 +9,10 @@ class collections(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/collections'
+        self.___url=url
 
 
-    def getCollectionCount(verbose=None):
+    def getCollectionCount(self, verbose=None):
         """
         Returns a count of all root networks.
 
@@ -20,5 +21,5 @@ class collections(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'collections/count', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'collections/count', method="H", verbose=verbose, parse_params=False)
         return response

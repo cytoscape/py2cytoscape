@@ -9,9 +9,10 @@ class enrichmentmap(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/enrichmentmap'
+        self.___url=url
 
 
-    def getModelData(network, verbose=None):
+    def getModelData(self, network, verbose=None):
         """
         
 
@@ -21,14 +22,14 @@ class enrichmentmap(object):
         :returns: 200: successful operation
         """
 
-        surl=self.url
+        surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
         response=api(url=surl+'/enrichmentmap/model/'+str(network)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getExpressionDataForNetwork(network, verbose=None):
+    def getExpressionDataForNetwork(self, network, verbose=None):
         """
         
 
@@ -38,14 +39,14 @@ class enrichmentmap(object):
         :returns: 200: successful operation
         """
 
-        surl=self.url
+        surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
         response=api(url=surl+'/enrichmentmap/expressions/'+str(network)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getExpressionDataForNode(network, node, verbose=None):
+    def getExpressionDataForNode(self, network, node, verbose=None):
         """
         
 
@@ -56,7 +57,7 @@ class enrichmentmap(object):
         :returns: 200: successful operation
         """
 
-        surl=self.url
+        surl=self.___url
         sv=surl.split('/')[-1]
         surl=surl.rstrip(sv+'/')
         response=api(url=surl+'/enrichmentmap/expressions/'+str(network)+'/'+str(node)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)

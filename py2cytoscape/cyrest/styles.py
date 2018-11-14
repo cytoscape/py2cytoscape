@@ -9,9 +9,10 @@ class styles(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/styles'
+        self.___url= url
 
 
-    def updateDefaults(name, body, verbose=None):
+    def updateDefaults(self, name, body, verbose=None):
         """
         Updates the default values for the Visual Properties in the Visual Style specified by the `name` parameter.
         
@@ -24,11 +25,11 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'/defaults', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'styles/'+str(name)+'/defaults', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getDefaults(name, verbose=None):
+    def getDefaults(self, name, verbose=None):
         """
         Returns a list of all the default values for the Visual Style specified by the `name` parameter.
 
@@ -38,11 +39,11 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'/defaults', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles/'+str(name)+'/defaults', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getSingleVisualProperty(visualProperty, verbose=None):
+    def getSingleVisualProperty(self, visualProperty, verbose=None):
         """
         Return the Visual Property specified by the `visualProperty` parameter.
         
@@ -54,11 +55,11 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles/visualproperties/'+str(visualProperty)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles/visualproperties/'+str(visualProperty)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def createStyle(body, verbose=None):
+    def createStyle(self, body, verbose=None):
         """
         Creates a new Visual Style using the message body.
         
@@ -71,11 +72,11 @@ class styles(object):
         """
 
         PARAMS=set_param(['body'],[body])
-        response=api(url=self.url+'styles', PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.___url+'styles', PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
 
-    def deleteAllStyles(verbose=None):
+    def deleteAllStyles(self, verbose=None):
         """
         Deletes all vision styles except for default style
 
@@ -84,11 +85,11 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'styles', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'styles', method="DELETE", verbose=verbose)
         return response
 
 
-    def getStyleNames(verbose=None):
+    def getStyleNames(self, verbose=None):
         """
         Returns a list of all the Visual Style names in the current session.
 
@@ -97,11 +98,11 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateDependencies(name, body, verbose=None):
+    def updateDependencies(self, name, body, verbose=None):
         """
         Sets the value of Visual Property dependencies to the values in the message body.
 
@@ -112,11 +113,11 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'/dependencies', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'styles/'+str(name)+'/dependencies', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getAllDependencies(name, verbose=None):
+    def getAllDependencies(self, name, verbose=None):
         """
         Returns the status of all the Visual Property Dependencies.
 
@@ -126,11 +127,11 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'/dependencies', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles/'+str(name)+'/dependencies', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getStyle(name, verbose=None):
+    def getStyle(self, name, verbose=None):
         """
         Visual Style in [Cytoscape.js CSS](http://js.cytoscape.org/#style) format.
 
@@ -140,11 +141,11 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'.json', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles/'+str(name)+'.json', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getStyleCount(verbose=None):
+    def getStyleCount(self, verbose=None):
         """
         Returns the number of Visual Styles available in the current session
 
@@ -153,11 +154,11 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles/count', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles/count', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def deleteMapping(name, vpName, verbose=None):
+    def deleteMapping(self, name, vpName, verbose=None):
         """
         Deletes the Visual Property mapping specified by the `vpName` and `name` parameters.
 
@@ -168,11 +169,11 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'/mappings/'+str(vpName)+'', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'styles/'+str(name)+'/mappings/'+str(vpName)+'', method="DELETE", verbose=verbose)
         return response
 
 
-    def getRangeValues(vp, verbose=None):
+    def getRangeValues(self, vp, verbose=None):
         """
         Returns a list of all available values for the Visual Property specified by the `vp` parameter.
         
@@ -186,11 +187,11 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles/visualproperties/'+str(vp)+'/values', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles/visualproperties/'+str(vp)+'/values', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateStyleName(name, body, verbose=None):
+    def updateStyleName(self, name, body, verbose=None):
         """
         Updates the name of the Visual Style specified by the `name` parameter.
 
@@ -201,11 +202,11 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'styles/'+str(name)+'', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def deleteStyle(name, verbose=None):
+    def deleteStyle(self, name, verbose=None):
         """
         Deletes the Visual Style specified by the `name` parameter.
 
@@ -215,11 +216,11 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'', method="DELETE", verbose=verbose)
+        response=api(url=self.___url+'styles/'+str(name)+'', method="DELETE", verbose=verbose)
         return response
 
 
-    def getStyleFull(name, verbose=None):
+    def getStyleFull(self, name, verbose=None):
         """
         Returns the Visual Style specified by the `name` parameter.
 
@@ -229,11 +230,11 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles/'+str(name)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def createMappings(name, body, verbose=None):
+    def createMappings(self, name, body, verbose=None):
         """
         Create a new Visual Mapping function and add it to the Visual Style specified by the `name` parameter. Existing mappings in the Visual Style will be overidden by the new mappings created.
         
@@ -293,11 +294,11 @@ class styles(object):
         """
 
         PARAMS=set_param(['name','body'],[name,body])
-        response=api(url=self.url+'styles/'+str(name)+'/mappings', PARAMS=PARAMS, method="POST", verbose=verbose)
+        response=api(url=self.___url+'styles/'+str(name)+'/mappings', PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
 
-    def getMappings(name, verbose=None):
+    def getMappings(self, name, verbose=None):
         """
         Returns a list of all Visual Mappings used in the Visual Style specified by the `name` parameter.
         
@@ -355,11 +356,11 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'/mappings', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles/'+str(name)+'/mappings', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getVisualProperties(verbose=None):
+    def getVisualProperties(self, verbose=None):
         """
         Get all available Visual Properties.
         
@@ -370,11 +371,11 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles/visualproperties', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles/visualproperties', method="H", verbose=verbose, parse_params=False)
         return response
 
 
-    def updateMapping(name, vp, body, verbose=None):
+    def updateMapping(self, name, vp, body, verbose=None):
         """
         Update the visual mapping specified by the `name` and `vp` parameters.
         
@@ -434,11 +435,11 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'/mappings/'+str(vp)+'', method="PUT", body=body, verbose=verbose)
+        response=api(url=self.___url+'styles/'+str(name)+'/mappings/'+str(vp)+'', method="PUT", body=body, verbose=verbose)
         return response
 
 
-    def getMapping(name, vp, verbose=None):
+    def getMapping(self, name, vp, verbose=None):
         """
         Returns the Visual Mapping assigned to the Visual Property specified by the `name` and `vp` parameters.
         
@@ -497,11 +498,11 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'/mappings/'+str(vp)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles/'+str(name)+'/mappings/'+str(vp)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
-    def getDefaultValue(name, vp, verbose=None):
+    def getDefaultValue(self, name, vp, verbose=None):
         """
         Returns the default value for the Visual Property specified by the `name` and `vp` parameters.
         
@@ -514,7 +515,7 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.url+'styles/'+str(name)+'/defaults/'+str(vp)+'', PARAMS=None, method="GET", verbose=verbose, parse_params=False)
+        response=api(url=self.___url+'styles/'+str(name)+'/defaults/'+str(vp)+'', method="GET", verbose=verbose, parse_params=False)
         return response
 
 
