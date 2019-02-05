@@ -75,7 +75,7 @@ ___
 
 ## ***cyclient.view.export***
 
-**`cyclient.view.export(self, Height=None, options=None, OutputFile=None, Resolution=None,    Units=None, Width=None, Zoom=None, verbose=False)`**
+**`cyclient.view.export(self, Height=None, options=None, OutputFile=None, Resolution=None, Units=None, Width=None, Zoom=None, view="current", verbose=False)`**
 
 Exports the current view to a graphics file and returns the path to the
 saved file. PNG and JPEG formats have options for scaling, while other
@@ -105,6 +105,9 @@ only for bitmap formats, such as PNG and JPEG.
 * **`Zoom (string, optional)`** The zoom value to proportionally scale
 the image. The default value is 100.0. Valid only for bitmap formats,
 such as PNG and JPEG
+* **`view (string, optional)`** Specifies a network view by name, or by 
+SUID if the prefix SUID: is used. The keyword CURRENT, or a blank value 
+can also be used to specify the current network view.
 * **`verbose`** print more
 
 * **`returns`** path to the saved file
