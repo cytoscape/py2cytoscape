@@ -43,7 +43,7 @@ class view(object):
         response=api(url=self.__url+"/destroy", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
-    def export(self, options=None, OutputFile=None, Resolution=None,\
+    def export(self, options=None, outputFile=None, Resolution=None,\
         Units=None, Width=None, Zoom=None, view="current", verbose=False):
         """
         Exports the current view to a graphics file and returns the path to the
@@ -78,9 +78,9 @@ class view(object):
 
         :returns: path to the saved file
         """
-        PARAMS=set_param(["Height","options","OutputFile","Resolution",\
+        PARAMS=set_param(["Height","options","outputFile","Resolution",\
         "Units","Width","Zoom","view"],\
-        [Height,options,OutputFile,Resolution,Units,Width,Zoom,view ])
+        [Height,options,outputFile,Resolution,Units,Width,Zoom,view ])
         response=api(url=self.__url+"/export", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 

@@ -125,7 +125,7 @@ class cyclient(object):
         
         response=api("view","fit content",host=host,port=port, version=version, verbose=verbose)
         sleep(2)
-        response=api("view", "export" , {"options":filetype,"OutputFile":outfile}, host=host,port=port,version=version,verbose=verbose)
+        response=api("view", "export" , {"options":filetype,"outputFile":outfile, "view":"current"}, host=host,port=port,version=version,verbose=verbose)
         if host!='localhost':
             import paramiko
             print("Looking to ssh keys for remote access.")
