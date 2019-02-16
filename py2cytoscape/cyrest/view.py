@@ -43,7 +43,7 @@ class view(object):
         response=api(url=self.__url+"/destroy", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
-    def export(self, options=None, outputFile=None, Resolution=None,\
+    def export(self, Height=None, options=None, outputFile=None, Resolution=None,\
         Units=None, Width=None, Zoom=None, view="current", verbose=False):
         """
         Exports the current view to a graphics file and returns the path to the
