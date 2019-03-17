@@ -14,6 +14,31 @@ pip install py2cytoscape
 pip install git+https://github.com/cytoscape/py2cytoscape.git
 ```
 
+### Dependencies: igraph
+
+```
+git clone https://github.com/igraph/python-igraph/
+cd python-igraph
+
+git clone https://github.com/igraph/igraph igraphcore
+cd igraphcore
+./bootstrap.sh
+mkdir _build && cd _build
+../configure --prefix=$PWD/../_install
+make
+make install
+cd ../../
+
+CPPFLAGS="-I$PWD/igraphcore/_install/include/igraph ${CPPFLAGS}"
+export CPPFLAGS
+LDFLAGS="-L$PWD/igraphcore/_install/lib ${LDFLAGS}"
+export LDFLAGS
+PKG_CONFIG_PATH=igraphcore/_install/lib/pkgconfig/
+export PKG_CONFIG_PATH
+
+python3 setup.py install --user
+```
+
 ## Documentation
 
 Package documentation can be found on [https://py2cytoscape.readthedocs.io](https://py2cytoscape.readthedocs.io).
