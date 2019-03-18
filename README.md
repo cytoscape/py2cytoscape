@@ -5,13 +5,13 @@
 ### Latest stable release
 
 ```shell
-pip install py2cytoscape
+pip3 install py2cytoscape
 ```
 
 ### Development version
 
 ```shell
-pip install git+https://github.com/cytoscape/py2cytoscape.git
+pip3 install git+https://github.com/cytoscape/py2cytoscape.git
 ```
 
 ### Dependencies: igraph
