@@ -1,6 +1,8 @@
 import sys
 import requests
 
+from json import JSONDecodeError
+
 HOST = 'localhost'
 IP=HOST # temporary
 PORT = 1234
@@ -34,8 +36,8 @@ def check_network(cyrest_network,network,verbose=False):
     return network_name
 
 def checkresponse(r,verbose=False):
-    status=str(r.status_code)
-    if status in ["200","201"]:
+    status=r.status_code
+    if 200 <= status < 300:
         if verbose:
             print("response status "+status)
             sys.stdout.flush()
@@ -99,29 +101,11 @@ def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PO
             baseurl="http://"+str(host)+":"+str(port)+"/"+str(version)+"/commands"
 
     if (method == "GET") or (method == "G"):
-        P=[]
-        if parse_params:
-            for p in PARAMS.keys():
-                v=str(PARAMS[p])
-                v=v.replace(" ","%20")
-                P.append(str(p)+"="+str(PARAMS[p]))
-            P="&".join(P)
-            if not url:
-                if namespace:
-                    URL=baseurl+"?"
-            else:
-                URL=baseurl
-            if len(P)>0:
-                URL=URL+P
-        else:
-            URL=baseurl
+        URL=baseurl
         if verbose:
             print("'"+URL+"'")
             sys.stdout.flush()
-        if parse_params:
-            r = requests.get(url = URL)
-        else:
-            r = requests.get(url = URL, params=PARAMS)
+        r = requests.get(url = URL, params=PARAMS)
         verbose_=checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
             print("'"+URL+"'")
@@ -171,16 +155,24 @@ def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PO
         if verbose:
             print("'"+baseurl+"'")
             sys.stdout.flush()
-        r = requests.put(url = baseurl, data = None)
+        r = requests.put(url = baseurl, json = body)
+
         verbose_=checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
             verbose=True
             print(r.content)
             sys.stdout.flush()
-        res=r.json()
-        if "errors" in res.keys():
-            if len(res["errors"]) > 0:
-                raise ValueError(res["errors"][0])
+
+        try:
+            res=r.json()
+            if "errors" in res.keys():
+                if len(res["errors"]) > 0:
+                    raise ValueError(res["errors"][0])
+        except JSONDecodeError:
+            if not r.text:
+                res = {}
+            else:
+                raise
 
     elif (method=="HTML") or (method == "H") or (method=="HELP"):
         URL = baseurl
