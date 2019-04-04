@@ -1,13 +1,6 @@
 import sys
 import requests
 
-PYTHON_VERSION=sys.version_info[0]
-if PYTHON_VERSION == 2:
-    import urllib2
-elif PYTHON_VERSION == 3:
-    import urllib.request as urllib2
-import json
-
 HOST = 'localhost'
 IP=HOST # temporary
 PORT = 1234
@@ -149,9 +142,9 @@ def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PO
         if (verbose) or (verbose_):
             print("'"+URL+"'")
             sys.stdout.flush()
-        res=json.loads(r.content)
+        res=r.json()
         if len(res["errors"]) > 0:
-            raise ValueError(res["errors"][0])         
+            raise ValueError(res["errors"][0])
 
     elif (method == "POST") or (method == "P"):
         if verbose:
@@ -163,11 +156,11 @@ def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PO
             verbose=True
             print(r.content)
             sys.stdout.flush()
-            
-        res=json.loads(r.content)
+
+        res=r.json()
         if "errors" in res.keys():
             if len(res["errors"]) > 0:
-                raise ValueError(res["errors"][0]) 
+                raise ValueError(res["errors"][0])
         if not verbose:
             if "data" in res.keys():
                 res=res["data"]
@@ -184,41 +177,24 @@ def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PO
             verbose=True
             print(r.content)
             sys.stdout.flush()
-        res=json.loads(r.content)
+        res=r.json()
         if "errors" in res.keys():
             if len(res["errors"]) > 0:
-                raise ValueError(res["errors"][0])     
+                raise ValueError(res["errors"][0])
 
     elif (method=="HTML") or (method == "H") or (method=="HELP"):
-        
-        if type(PARAMS) == type({}):
-            P=[]
-            for p in PARAMS.keys():
-                v=str(PARAMS[p])
-                v=v.replace(" ","%20")
-                P.append(str(p)+"="+str(PARAMS[p]))
-            P="&".join(P)
-        if not url:
-            if namespace:
-                URL=baseurl+"?"
-        else:
-            URL=baseurl
-        if len(P)>0:
-            URL=URL+P
+        URL = baseurl
         if verbose:
             print("'"+URL+"'")
             sys.stdout.flush()
-        response = urllib2.urlopen(URL)
+        response = requests.get(URL, params=PARAMS)
 
-        res = response.read()
-        if PYTHON_VERSION == 3:
-            res=res.decode("utf-8")
-        res = res.split("\n")
+        res = response.text.split("\n")
         def clean(x):
             r=x.split("</p>")[0].split(">")[-1]
             return r
         res="\n".join([ clean(x) for x in res ])
 
-    res=handle_status_codes(res,verbose=verbose)    
+    res=handle_status_codes(res,verbose=verbose)
 
     return res
