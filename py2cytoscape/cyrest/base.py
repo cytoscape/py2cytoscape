@@ -24,11 +24,11 @@ BASE_URL_NETWORK = BASE_URL + 'networks'
 def set_param(parameters,values):
     return dict(zip(parameters,values))
 
-def check_network(cyrest_network,network,verbose=False):
-    if not network:
+def check_network(cyrest_network,network=None,verbose=False):
+    if network is None:
         try:
             network_name=cyrest_network.network_name
-        except:
+        except AttributeError:
             network_name='CURRENT'
     else:
         network_name=network
