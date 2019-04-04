@@ -70,14 +70,14 @@ class CyNetwork(object):
         """
         return self.session.get(self.__url + 'nodes').json()
 
-    def get_edges(self, format='suid'):
-        if format is 'suid':
+    def get_edges(self, fmt='suid'):
+        if fmt == 'suid':
             return self.session.get(self.__url + 'edges').json()
-        elif format is 'edgelist':
+        elif fmt == 'edgelist':
             # TODO: implement this
             pass
         else:
-            raise ValueError(format + ' is not supported for edge format.')
+            raise ValueError(fmt + ' is not supported for edge format.')
 
     def add_node(self, node_name, dataframe=False):
         """ Add a single node to the network. """
@@ -142,25 +142,25 @@ class CyNetwork(object):
         url = self.__url + 'edges/' + str(id)
         self.session.delete(url)
 
-    def __get_table(self, type, format=None):
+    def __get_table(self, type, fmt=None):
         url = self.__url + 'tables/default' + type
-        if format is None or format is 'dataframe':
+        if fmt is None or fmt == 'dataframe':
             return pd.DataFrame(self.session.get(url).json()['rows'])
-        elif format is 'csv' or format is 'tsv':
-            return self.session.get(url + '.' + format).content
-        elif format is 'cytoscapejs':
+        elif fmt == 'csv' or fmt == 'tsv':
+            return self.session.get(url + '.' + fmt).content
+        elif fmt == 'cytoscapejs':
             return self.session.get(url).json()['rows']
         else:
-            raise ValueError('Unsupported format: ' + format)
+            raise ValueError('Unsupported format: ' + fmt)
 
-    def get_node_table(self, format=None):
-        return self.__get_table('node', format)
+    def get_node_table(self, fmt=None):
+        return self.__get_table('node', fmt)
 
-    def get_edge_table(self, format=None):
-        return self.__get_table('edge', format)
+    def get_edge_table(self, fmt=None):
+        return self.__get_table('edge', fmt)
 
-    def get_network_table(self, format=None):
-        return self.__get_table('network', format)
+    def get_network_table(self, fmt=None):
+        return self.__get_table('network', fmt)
 
     def __get_columns(self, type=None):
         url = self.__url + 'tables/default' + type + '/columns'
@@ -322,7 +322,7 @@ class CyNetwork(object):
         url = self.__url + 'views/first.pdf'
         return self.session.get(url).content
 
-    def get_first_view(self, format='json'):
+    def get_first_view(self, fmt='json'):
         """
         Get a first view model as dict
         :return:
@@ -330,11 +330,11 @@ class CyNetwork(object):
         url = self.__url + 'views/first'
         return self.session.get(url).json()
 
-    def get_view(self, view_id, format='json'):
-        if format is 'json':
+    def get_view(self, view_id, fmt='json'):
+        if fmt == 'json':
             url = self.__url + 'views/' + str(view_id)
             return self.session.get(url).json()
-        elif format is 'view':
+        elif fmt == 'view':
             return self.__get_view_object(view_id)
         else:
             return None
@@ -357,5 +357,4 @@ class CyNetwork(object):
 
     def __ne__(self, other):
         return not self.__eq__(other)
-        
-    
+
