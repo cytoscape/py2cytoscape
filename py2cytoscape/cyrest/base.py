@@ -17,11 +17,7 @@ SUID_LIST = 'suid'
 BASE_URL_NETWORK = BASE_URL + 'networks'
 
 def set_param(parameters,values):
-    PARAMS={}
-    for p,v in zip(parameters,values):
-        if v:
-            PARAMS[p]=v
-    return PARAMS
+    return dict(zip(parameters,values))
 
 def check_network(cyrest_network,network,verbose=False):
     if not network:
