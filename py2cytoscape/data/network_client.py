@@ -154,13 +154,13 @@ class NetworkClient(object):
             edge_attr_cols=extra_columns)
         return self.create(collection=collection, data=cyjs)
 
-    def get_all(self, format=SUID_LIST):
-        if format is SUID_LIST:
+    def get_all(self, fmt=SUID_LIST):
+        if fmt == SUID_LIST:
             result = self.session.get(self.__url)
-        elif format is JSON:
+        elif fmt == JSON:
             result = self.session.get(self.__url + '.json')
         else:
-            raise ValueError('Unsupported format type: ' + format)
+            raise ValueError('Unsupported format type: ' + fmt)
 
         return result.json()
 
