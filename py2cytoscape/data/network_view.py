@@ -120,10 +120,10 @@ class CyNetworkView(object):
         # view_df depends on view_dict.
         view_dict = self.__get_view_dict(views)
         view_df = pd.DataFrame(view_dict)
-        
+
         # Transpose the DataFrame to make the visual properties as columns
         view_df = view_df.T
-        
+
         view_df.index.name = 'SUID'
         return view_df
 
@@ -169,18 +169,19 @@ class CyNetworkView(object):
                            data=json.dumps(new_value),
                            headers=HEADERS)
         check_response(res)
-        
+
 
     def __update_views(self, visual_property, values,
                        object_type=None, key_type='suid'):
-        if key_type is 'name':
+        if key_type == 'name':
             name2suid = NetworkUtil.name2suid(self.__network)
 
         body = []
         for key in values.keys():
-            if key_type is 'name':
-                suid = name2suid[key]
-                if suid is None:
+            if key_type == 'name':
+                try:
+                    suid = name2suid[key]
+                except KeyError:
                     continue
             else:
                 suid = key
@@ -227,8 +228,8 @@ class CyNetworkView(object):
                            headers=HEADERS)
 
         check_response(res)
-        
-        
+
+
 
     def __create_new_values_from_row(self, columns, row):
         views = []
