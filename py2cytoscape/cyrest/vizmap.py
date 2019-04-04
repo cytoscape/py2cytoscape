@@ -71,7 +71,7 @@ class vizmap(object):
         return response
 
 
-    def load_file(self, afile=None, verbose=False):
+    def load_file(self, style_xml, verbose=False):
         """
         Loads styles from a vizmap (XML or properties) file and returns the names of the loaded styles.
 
@@ -79,25 +79,23 @@ class vizmap(object):
         :param verbose: print more
 
         """
-
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["afile"],[afile])
+        PARAMS=set_param(["file"], [style_xml])
         response=api(url=self.__url+"/load file", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
 
     def create_style(self,title=None,defaults=None,mappings=None,verbose=VERBOSE):
         """
         Creates a new visual style
-        
+
         :param title: title of the visual style
         :param defaults: a list of dictionaries for each visualProperty
         :param mappings: a list of dictionaries for each visualProperty
         :param host: cytoscape host address, default=cytoscape_host
         :param port: cytoscape port, default=1234
-        
+
         :returns: nothing
-        """ 
-        u=self.__url 
+        """
+        u=self.__url
         host=u.split("//")[1].split(":")[0]
         port=u.split(":")[2].split("/")[0]
         version=u.split(":")[2].split("/")[1]
@@ -133,20 +131,20 @@ class vizmap(object):
     def update_style(self, title=None,defaults=None,mappings=None, verbose=False):
         """
         Updates a visual style
-        
+
         :param title: title of the visual style
         :param defaults: a list of dictionaries for each visualProperty
         :param mappings: a list of dictionaries for each visualProperty
-        
+
         :returns: nothing
         """
-        u=self.__url 
+        u=self.__url
         host=u.split("//")[1].split(":")[0]
         port=u.split(":")[2].split("/")[0]
         version=u.split(":")[2].split("/")[1]
 
-        if defaults: 
-            defaults_=[]    
+        if defaults:
+            defaults_=[]
             for d in defaults:
                 if d:
                     defaults_.append(d)
@@ -164,10 +162,8 @@ class vizmap(object):
             print(URL)
             sys.stdout.flush()
 
-        response = urllib2.urlopen(URL)    
-        response = response.read()
-        response = json.loads(response)
-        
+        response = requests.get(URL).json()
+
         olddefaults=response["defaults"]
         oldmappings=response["mappings"]
 
@@ -186,9 +182,9 @@ class vizmap(object):
                 newdefaults.append(m)
         else:
             newdefaults=olddefaults
-            
+
         r=requests.delete(URL)
-        checkresponse(r)    
+        checkresponse(r)
 
         URL="http://"+str(host)+":"+str(port)+"/v1/styles"
         PARAMS={"title":title,\
@@ -204,7 +200,7 @@ class vizmap(object):
                         namespace="default",verbose=False):
         """"
         Generates a dictionary for a given visual property
-        
+
         :param visualProperty: visualProperty
         :param mappingType: mappingType
         :param mappingColumn: mappingColumn
@@ -217,10 +213,10 @@ class vizmap(object):
             value can also be used to specify the current network.
         :param namespace (string, optional): Node, Edge, and Network objects support
             the default, local, and hidden namespaces. Root networks also support the
-            shared namespace. Custom namespaces may be specified by Apps.        
+            shared namespace. Custom namespaces may be specified by Apps.
         :returns: a dictionary for the respective visual property
         """
-        u=self.__url 
+        u=self.__url
         host=u.split("//")[1].split(":")[0]
         port=u.split(":")[2].split("/")[0]
         version=u.split(":")[2].split("/")[1]
@@ -238,9 +234,7 @@ class vizmap(object):
         if verbose:
             print(URL)
             sys.stdout.flush()
-        response = urllib2.urlopen(URL)
-        response = response.read()
-        response = json.loads(response)
+        response = requests.get(URL).json()
 
         mappingColumnType=None
         for r in response:
@@ -250,7 +244,7 @@ class vizmap(object):
         if not mappingColumnType:
             print("For mappingType: "+mappingType+" it was not possible to find a  mappingColumnType.")
             sys.stdout.flush()
-            
+
         PARAMS={"mappingType" : mappingType,\
                 "mappingColumn" : mappingColumn,
                 "mappingColumnType" : mappingColumnType,
@@ -268,28 +262,28 @@ class vizmap(object):
                             "lesser" : upper[1],\
                             "equal" : upper[1],\
                             "greater" : upper[1]}]
-            
+
         if discrete:
             PARAMS["map"]=[]
             for k,v in zip(discrete[0],discrete[1]):
                 PARAMS["map"].append({ "key":k,"value":v})
-        
+
         if not mappingColumnType:
             res=None
         else:
-            res=PARAMS    
+            res=PARAMS
 
         return res
 
     def simple_defaults(self, defaults_dic):
         """
         Simplifies defaults.
-        
+
         :param defaults_dic: a dictionary of the form { visualProperty_A:value_A, visualProperty_B:value_B, ..}
-        
+
         :returns: a list of dictionaries with each item corresponding to a given key in defaults_dic
         """
-        
+
         defaults=[]
         for d in defaults_dic.keys():
             dic={}
