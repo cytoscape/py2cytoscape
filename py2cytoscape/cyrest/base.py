@@ -23,9 +23,6 @@ def set_param(parameters,values):
             PARAMS[p]=v
     return PARAMS
 
-def set_param(parameters,values):
-    return dict(zip(parameters,values))
-
 def check_network(cyrest_network,network=None,verbose=False):
     if network is None:
         try:
