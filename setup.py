@@ -15,13 +15,15 @@ from setuptools import setup, find_packages
 
 setup(
     name='py2cytoscape',
-    version='0.7.0',
+    version='0.7.1',
     description='Utilities to use Cytoscape and Cytoscape.js from Python',
     long_description='Collection of tools for using Cytoscape and '
                      'cytoscape.js from Python.  From v0.4.0, '
                      'it includes wrapper for cyREST REST API.',
     author='Keiichiro Ono',
     author_email='kono@ucsd.edu',
+	maintainer='Jorge Boucas',
+	maintainer_email='jorge.boucas@age.mpg.de',
     url='https://github.com/idekerlab/py2cytoscape',
     license='MIT License',
     install_requires=[
