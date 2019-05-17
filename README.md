@@ -52,3 +52,6 @@ Full workflows can be found on the [cytoscape/cytoscape-automation](https://gith
 ## Citing
 
 Ono, K. et al. (2015) CyREST: Turbocharging Cytoscape Access for External Tools via a RESTful API. *F1000Res*, **4**, 478
+
+```Note to repository maintainers: Please *DO NOT* move this page ... the Cytoscape Automation paper refers directly to it.```
+
