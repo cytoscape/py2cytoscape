@@ -22,7 +22,7 @@ from .enrichmentmap import *
 from .collections import *
 from .networks import *
 
-
+import json
 import copy
 
 class cyclient(object):
