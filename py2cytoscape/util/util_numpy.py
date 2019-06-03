@@ -35,6 +35,7 @@ def from_ndarray(data, name=None, labels=None, directed=False, weighted=False):
 
     return g
 
+
 def __get_nodes(labels, size):
 
     nodes = []
@@ -108,5 +109,3 @@ def __get_weighted_edges(matrix):
         row_idx += 1
     return edges
     pass
-
-

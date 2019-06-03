@@ -1,5 +1,6 @@
 from .base import *
 
+
 class view(object):
     """
     cytoscape session interface as shown in CyREST's swagger documentation for 'view'.
@@ -26,9 +27,9 @@ class view(object):
         :returns: eg. 2123
 
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["layout","network"],[layout,network])
-        response=api(url=self.__url+"/create", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["layout", "network"], [layout, network])
+        response = api(url=self.__url + "/create", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def destroy(self, verbose=False):
@@ -39,12 +40,12 @@ class view(object):
 
         :returns: eg. [ 2155 ]
         """
-        PARAMS={}
-        response=api(url=self.__url+"/destroy", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = {}
+        response = api(url=self.__url + "/destroy", params=PARAMS, method="POST", verbose=verbose)
         return response
 
-    def export(self, Height=None, options=None, outputFile=None, Resolution=None,\
-        Units=None, Width=None, Zoom=None, view="current", verbose=False):
+    def export(self, Height=None, options=None, outputFile=None, Resolution=None,
+               Units=None, Width=None, Zoom=None, view="current", verbose=False):
         """
         Exports the current view to a graphics file and returns the path to the
             saved file. PNG and JPEG formats have options for scaling, while other
@@ -78,10 +79,10 @@ class view(object):
 
         :returns: path to the saved file
         """
-        PARAMS=set_param(["Height","options","outputFile","Resolution",\
-        "Units","Width","Zoom","view"],\
-        [Height,options,outputFile,Resolution,Units,Width,Zoom,view ])
-        response=api(url=self.__url+"/export", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(["Height", "options", "outputFile", "Resolution",
+                            "Units", "Width", "Zoom", "view"],
+                           [Height, options, outputFile, Resolution, Units, Width, Zoom, view])
+        response = api(url=self.__url + "/export", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def fit_content(self, verbose=False):
@@ -91,9 +92,9 @@ class view(object):
         :param verbose: print more
 
         """
-        PARAMS={}
-        response=api(url=self.__url+"/fit content", PARAMS=PARAMS, method="POST", verbose=verbose)
-        return response 
+        PARAMS = {}
+        response = api(url=self.__url + "/fit content", params=PARAMS, method="POST", verbose=verbose)
+        return response
 
     def fit_selected(self, verbose=False):
         """
@@ -103,10 +104,10 @@ class view(object):
         :param verbose: print more
 
         """
-        PARAMS={}
-        response=api(url=self.__url+"/fit selected", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = {}
+        response = api(url=self.__url + "/fit selected", params=PARAMS, method="POST", verbose=verbose)
         return response
-    
+
     def get_current(self, layout=None, network=None, verbose=False):
         """
         Returns the current view or null if there is none.
@@ -115,8 +116,8 @@ class view(object):
 
         :returns: current view or null if there is none
         """
-        PARAMS={}
-        response=api(url=self.__url+"/get_current", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = {}
+        response = api(url=self.__url + "/get_current", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def list(self, network=None, verbose=False):
@@ -133,9 +134,9 @@ class view(object):
         :returns: a list with the passed network's views or an empty list if there are no views
 
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network"],[network])
-        response=api(url=self.__url+"/list", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network"], [network])
+        response = api(url=self.__url + "/list", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def set_current(self, network=None, verbose=False):
@@ -148,9 +149,9 @@ class view(object):
         :param verbose: print more
 
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network"],[network])
-        response=api(url=self.__url+"/set current", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network"], [network])
+        response = api(url=self.__url + "/set current", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def update(self, network=None, verbose=False):
@@ -163,7 +164,7 @@ class view(object):
         :param verbose: print more
 
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network"],[network])
-        response=api(url=self.__url+"/update", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network"], [network])
+        response = api(url=self.__url + "/update", params=PARAMS, method="POST", verbose=verbose)
         return response

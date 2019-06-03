@@ -1,5 +1,6 @@
 from .base import *
 
+
 class collections(object):
     """
     cytoscape session interface as shown in CyREST's swagger documentation.
@@ -9,8 +10,7 @@ class collections(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/collections'
-        self.___url=url
-
+        self.___url = url
 
     def getCollectionCount(self, verbose=None):
         """
@@ -21,5 +21,5 @@ class collections(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'collections/count', method="H", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'collections/count', method="H", verbose=verbose, parse_params=False)
         return response

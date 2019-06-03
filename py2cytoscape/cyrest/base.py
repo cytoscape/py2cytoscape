@@ -1,4 +1,3 @@
-import sys
 from json import JSONDecodeError
 
 import requests
@@ -38,12 +37,10 @@ def checkresponse(r, verbose=False):
     status = r.status_code
     if 200 <= status < 300:
         if verbose:
-            print("response status " + status)
-            sys.stdout.flush()
+            print("response status " + status, flush=True)
         res = None
     else:
-        print(r, r.status_code)
-        sys.stdout.flush()
+        print(r, r.status_code, flush=True)
         res = "error::" + str(r.status_code)
     return res
 
@@ -74,7 +71,7 @@ def _clean(x):
 
 def api(namespace=None,
         command="",
-        PARAMS={},
+        params=None,
         body=None,
         host=HOST,
         port=str(PORT),
@@ -102,6 +99,9 @@ def api(namespace=None,
     cytoscape("string","pubmed query",{"pubmed":"p53 p21","limit":"50"})
     """
 
+    if params is None:
+        params = {}
+
     if url:
         baseurl = url
     else:
@@ -111,46 +111,40 @@ def api(namespace=None,
         else:
             baseurl = "http://" + str(host) + ":" + str(port) + "/" + str(version) + "/commands"
 
-    if (method == "GET") or (method == "G"):
+    if method in ('G', 'GET'):
         URL = baseurl
         if verbose:
-            print("'" + URL + "'")
-            sys.stdout.flush()
-        r = requests.get(url=URL, params=PARAMS)
+            print("'" + URL + "'", flush=True)
+        r = requests.get(url=URL, params=params)
         verbose_ = checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
-            print("'" + URL + "'")
-            sys.stdout.flush()
+            print("'" + URL + "'", flush=True)
 
         if verbose_:
             res = verbose_
         else:
             res = r
 
-    if (method == "DELETE"):
+    if method == "DELETE":
         URL = baseurl
         if verbose:
-            print("'" + URL + "'")
-            sys.stdout.flush()
+            print("'" + URL + "'", flush=True)
         r = requests.delete(url=URL)
         verbose_ = checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
-            print("'" + URL + "'")
-            sys.stdout.flush()
+            print("'" + URL + "'", flush=True)
         res = r.json()
         if len(res["errors"]) > 0:
             raise ValueError(res["errors"][0])
 
-    elif (method == "POST") or (method == "P"):
+    elif method in ('P', 'POST'):
         if verbose:
-            print("'" + baseurl + "'")
-            sys.stdout.flush()
-        r = requests.post(url=baseurl, json=PARAMS)
+            print("'" + baseurl + "'", flush=True)
+        r = requests.post(url=baseurl, json=params)
         verbose_ = checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
             verbose = True
-            print(r.content)
-            sys.stdout.flush()
+            print(r.content, flush=True)
 
         res = r.json()
         if "errors" in res.keys():
@@ -164,15 +158,13 @@ def api(namespace=None,
 
     elif (method == "PUT"):
         if verbose:
-            print("'" + baseurl + "'")
-            sys.stdout.flush()
+            print("'" + baseurl + "'", flush=True)
         r = requests.put(url=baseurl, json=body)
 
         verbose_ = checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
             verbose = True
-            print(r.content)
-            sys.stdout.flush()
+            print(r.content, flush=True)
 
         try:
             res = r.json()
@@ -185,12 +177,11 @@ def api(namespace=None,
             else:
                 raise
 
-    elif (method == "HTML") or (method == "H") or (method == "HELP"):
+    elif method in ('H', 'HTML', 'HELP'):
         URL = baseurl
         if verbose:
-            print("'" + URL + "'")
-            sys.stdout.flush()
-        response = requests.get(URL, params=PARAMS)
+            print("'" + URL + "'", flush=True)
+        response = requests.get(URL, params=params)
 
         res = response.text.split("\n")
 

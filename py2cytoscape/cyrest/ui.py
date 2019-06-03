@@ -1,5 +1,6 @@
 from .base import *
 
+
 class ui(object):
     """
     cytoscape session interface as shown in CyREST's swagger documentation.
@@ -9,8 +10,7 @@ class ui(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/ui'
-        self.___url=url
-
+        self.___url = url
 
     def updatePanelStatus(self, body, verbose=None):
         """
@@ -22,9 +22,8 @@ class ui(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.___url+'ui/panels', method="PUT", body=body, verbose=verbose)
+        response = api(url=self.___url + 'ui/panels', method="PUT", body=body, verbose=verbose)
         return response
-
 
     def getAllPanelStatus(self, verbose=None):
         """
@@ -35,9 +34,8 @@ class ui(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'ui/panels', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'ui/panels', method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def getDesktop(self, verbose=None):
         """
@@ -48,9 +46,8 @@ class ui(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'ui', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'ui', method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def getPanelStatus(self, panelName, verbose=None):
         """
@@ -62,14 +59,14 @@ class ui(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'ui/panels/'+str(panelName)+'', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'ui/panels/' + str(panelName) + '',
+                       method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def updateLodState(self, verbose=None):
         """
         Switch between full graphics details <---> fast rendering mode.
-        
+
         Returns a success message.
 
         :param verbose: print more
@@ -77,6 +74,5 @@ class ui(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'ui/lod', method="PUT", verbose=verbose)
+        response = api(url=self.___url + 'ui/lod', method="PUT", verbose=verbose)
         return response
-

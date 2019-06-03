@@ -1,5 +1,6 @@
 from .base import *
 
+
 class commands(object):
     """
     cytoscape commands as shown in CyREST's swagger documentation for 'Commands'.
@@ -14,7 +15,7 @@ class commands(object):
         """
         List all available command namespaces.
         """
-        response=api(url=self.__url,method="HTML", verbose=verbose)
+        response = api(url=self.__url, method="HTML", verbose=verbose)
         return response
 
     def namespace(self, namespace, verbose=False):
@@ -24,7 +25,7 @@ class commands(object):
         :param namespace: a namespace as listed in rest.cyclient.commands.list().
         :param verbose: print more
         """
-        response=api(url=self.__url+"/"+namespace,method="HTML",verbose=verbose)
+        response = api(url=self.__url + "/" + namespace, method="HTML", verbose=verbose)
         return response
 
     def command(self, namespace, command, verbose=False):
@@ -35,7 +36,5 @@ class commands(object):
         :param command: a commands as listed in rest.cyclient.commands.namespace(<namespace>).
         :param verbose: print more
         """
-        response=api(url=self.__url+"/"+namespace+"/"+command,method="HTML",verbose=verbose)
+        response = api(url=self.__url + "/" + namespace + "/" + command, method="HTML", verbose=verbose)
         return response
-
-    

@@ -28,7 +28,7 @@ class CyNetworkView(object):
             self.__id = suid
 
         self.__url = BASE_URL_NETWORK + '/' \
-                     + str(self.__network.get_id()) + '/views/' + str(self.__id)
+            + str(self.__network.get_id()) + '/views/' + str(self.__id)
 
     def get_id(self):
         """
@@ -170,7 +170,6 @@ class CyNetworkView(object):
                            headers=HEADERS)
         check_response(res)
 
-
     def __update_views(self, visual_property, values,
                        object_type=None, key_type='suid'):
         if key_type == 'name':
@@ -191,14 +190,13 @@ class CyNetworkView(object):
 
             body.append(new_value)
 
-
         res = requests.put(self.__url + '/' + object_type,
                            json=body,
                            headers=HEADERS)
         check_response(res)
 
     def __create_new_value(self, suid, visual_property, value):
-        if(isinstance( suid, np.int64 )):
+        if(isinstance(suid, np.int64)):
             int_id = np.asscalar(suid)
         else:
             int_id = suid
@@ -229,8 +227,6 @@ class CyNetworkView(object):
 
         check_response(res)
 
-
-
     def __create_new_values_from_row(self, columns, row):
         views = []
         for column in columns:
@@ -240,4 +236,3 @@ class CyNetworkView(object):
             }
             views.append(view)
         return views
-

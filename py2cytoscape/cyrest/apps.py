@@ -1,5 +1,6 @@
 from .base import *
 
+
 class apps(object):
     """
     cytoscape session interface as shown in CyREST's swagger documentation.
@@ -9,7 +10,7 @@ class apps(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/apps'
-        self.___url=url
+        self.___url = url
 
     def getAppList(self, verbose=None):
         """
@@ -20,5 +21,5 @@ class apps(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'apps', method="H", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'apps', method="H", verbose=verbose, parse_params=False)
         return response

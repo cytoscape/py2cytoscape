@@ -1,5 +1,6 @@
 from .base import *
 
+
 class command(object):
     """
     cytoscape command as shown in CyREST's swagger documentation for 'Command'.
@@ -18,8 +19,8 @@ class command(object):
         :param variableName: The name of the variable or '*' to display the value of all variables.
         :param verbose: print more
         """
-        PARAMS={"variableName":variableName}
-        response=api(url=self.__url+"/echo", PARAMS=PARAMS, verbose=verbose)
+        PARAMS = {"variableName": variableName}
+        response = api(url=self.__url + "/echo", params=PARAMS, verbose=verbose)
         return response
 
     def open_dialog(self, verbose=False):
@@ -30,9 +31,8 @@ class command(object):
 
         :param verbose: print more
         """
-        response=api(url=self.__url+"/open dialog", verbose=verbose)
+        response = api(url=self.__url + "/open dialog", verbose=verbose)
         return response
-
 
     def pause(self, message=None, verbose=False):
         """
@@ -43,22 +43,21 @@ class command(object):
         :param verbose: print more
         """
 
-        PARAMS=set_param(["message"],[message])
-        response=api(url=self.__url+"/pause", PARAMS=PARAMS, verbose=verbose)
+        PARAMS = set_param(["message"], [message])
+        response = api(url=self.__url + "/pause", params=PARAMS, verbose=verbose)
         return response
 
-    
-    def quit(self,verbose=False):
+    def quit(self, verbose=False):
         """
         This command causes Cytoscape to exit. It is typically used at the end
         of a script file.
 
         :param verbose: print more
         """
-        response=api(url=self.__url+"/quit", verbose=verbose)
+        response = api(url=self.__url + "/quit", verbose=verbose)
         return response
 
-    def run(self,script_file,args=None,verbose=False):
+    def run(self, script_file, args=None, verbose=False):
         """
         The run command will execute a command script from the file pointed to
         by the file argument, which should contain Cytoscape commands, one per
@@ -70,11 +69,11 @@ class command(object):
         :param verbose: print more
         """
 
-        PARAMS=set_param(["file","args"],[script_file,args])
-        response=api(url=self.__url+"/run", PARAMS=PARAMS, verbose=verbose)
+        PARAMS = set_param(["file", "args"], [script_file, args])
+        response = api(url=self.__url + "/run", params=PARAMS, verbose=verbose)
         return response
 
-    def sleep(self,duration,verbose=False):
+    def sleep(self, duration, verbose=False):
         """
         The sleep command will pause processing for a period of time as specified
         by duration seconds. It is typically used as part of a command script.
@@ -82,8 +81,6 @@ class command(object):
         :param duration: enter the time in seconds to sleep
         :param verbose: print more
         """
-        PARAMS={"duration":str(duration)}
-        response=api(url=self.__url+"/sleep", PARAMS=PARAMS, verbose=verbose)
+        PARAMS = {"duration": str(duration)}
+        response = api(url=self.__url + "/sleep", params=PARAMS, verbose=verbose)
         return response
-
-    
