@@ -1,5 +1,6 @@
 from .base import *
 
+
 class apply(object):
     """
     cytoscape session interface as shown in CyREST's swagger documentation for 'layout'.
@@ -9,8 +10,7 @@ class apply(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/apply'
-        self.___url=url
-
+        self.___url = url
 
     def applyLayout(self, algorithmName, networkId, column, verbose=None):
         """
@@ -24,9 +24,9 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'apply/layouts/'+str(algorithmName)+'/'+str(networkId)+'', PARAMS={'column':column}, method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'apply/layouts/' + str(algorithmName) + '/' + str(networkId) + '',
+                       params={'column': column}, method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def fitContent(self, networkId, verbose=None):
         """
@@ -38,9 +38,9 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'apply/fit/'+str(networkId)+'', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'apply/fit/' + str(networkId) + '',
+                       method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def getStyleNames(self, verbose=None):
         """
@@ -51,9 +51,8 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'apply/styles', method="H", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'apply/styles', method="H", verbose=verbose, parse_params=False)
         return response
-
 
     def copyCurrentLayout(self, sourceViewSUID, targetViewSUID, body, verbose=None):
         """
@@ -67,9 +66,9 @@ class apply(object):
         :returns: 200: successful operation; 404: Network View does not exist
         """
 
-        response=api(url=self.___url+'apply/layouts/copycat/'+str(sourceViewSUID)+'/'+str(targetViewSUID)+'', method="PUT", body=body, verbose=verbose)
+        response = api(url=self.___url + 'apply/layouts/copycat/' + str(sourceViewSUID) + '/' +
+                       str(targetViewSUID) + '', method="PUT", body=body, verbose=verbose)
         return response
-
 
     def bundleEdge(self, networkId, verbose=None):
         """
@@ -81,9 +80,9 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'apply/edgebundling/'+str(networkId)+'', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'apply/edgebundling/' + str(networkId) +
+                       '', method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def applyStyle(self, styleName, networkId, verbose=None):
         """
@@ -96,9 +95,9 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'apply/styles/'+str(styleName)+'/'+str(networkId)+'', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'apply/styles/' + str(styleName) + '/' + str(networkId) +
+                       '', method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def updateLayoutParameters(self, algorithmName, body, verbose=None):
         """
@@ -111,9 +110,9 @@ class apply(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.___url+'apply/layouts/'+str(algorithmName)+'/parameters', method="PUT", body=body, verbose=verbose)
+        response = api(url=self.___url + 'apply/layouts/' + str(algorithmName) +
+                       '/parameters', method="PUT", body=body, verbose=verbose)
         return response
-
 
     def getLayoutParameters(self, algorithmName, verbose=None):
         """
@@ -125,9 +124,9 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'apply/layouts/'+str(algorithmName)+'/parameters', method="H", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'apply/layouts/' + str(algorithmName) +
+                       '/parameters', method="H", verbose=verbose, parse_params=False)
         return response
-        
 
     def getLayout(self, algorithmName, verbose=None):
         """
@@ -139,16 +138,16 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'apply/layouts/'+str(algorithmName)+'', method="H", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'apply/layouts/' + str(algorithmName) +
+                       '', method="H", verbose=verbose, parse_params=False)
         return response
-
 
     def layoutList(self, verbose=None):
         """
         Returns all available layouts as a list of layout names.
-        
+
         <h3>Important Note</h3>
-        
+
         This <strong>does not include yFiles layout algorithms</strong>, due to license issues.
 
         :param verbose: print more
@@ -156,9 +155,8 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'apply/layouts', method="H", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'apply/layouts', method="H", verbose=verbose, parse_params=False)
         return response
-
 
     def getCompatibleColumnDataTypes(self, algorithmName, verbose=None):
         """
@@ -170,6 +168,6 @@ class apply(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'apply/layouts/'+str(algorithmName)+'/columntypes', method="H", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'apply/layouts/' + str(algorithmName) +
+                       '/columntypes', method="H", verbose=verbose, parse_params=False)
         return response
-

@@ -18,7 +18,3 @@ class NodeView(BaseView):
 
     def set_x(self, x):
         self.set_value('NODE_X_LOCATION', x)
-
-
-
-

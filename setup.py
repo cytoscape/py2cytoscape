@@ -22,8 +22,8 @@ setup(
                      'it includes wrapper for cyREST REST API.',
     author='Keiichiro Ono',
     author_email='kono@ucsd.edu',
-	maintainer='Jorge Boucas',
-	maintainer_email='jorge.boucas@age.mpg.de',
+    maintainer='Jorge Boucas',
+    maintainer_email='jorge.boucas@age.mpg.de',
     url='https://github.com/idekerlab/py2cytoscape',
     license='MIT License',
     install_requires=[
@@ -36,16 +36,17 @@ setup(
         'python-igraph',
     ],
     extras_require={
-        'scipy' : (
+        'scipy': (
             'scipy',
         ),
-        'wand' : (
+        'wand': (
             'wand'
         ),
-        'parakimo' : (
+        'parakimo': (
             'parakimo'
         )
     },
+    python_requires='>=3.4',
     keywords=['data visualization', 'visualization', 'cytoscape',
               'bioinformatics', 'graph', 'network'],
     classifiers=[
@@ -53,9 +54,9 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
         'Development Status :: 3 - Alpha',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'License :: OSI Approved :: MIT License',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
         'Topic :: Scientific/Engineering :: Information Analysis',

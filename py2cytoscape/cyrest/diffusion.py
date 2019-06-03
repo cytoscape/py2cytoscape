@@ -1,5 +1,6 @@
 from .base import *
 
+
 class diffusion(object):
     """
     cytoscape session interface as shown in CyREST's swagger documentation for 'diffusion'.
@@ -24,7 +25,7 @@ class diffusion(object):
         :param verbose: print more
 
         """
-        response=api(url=self.__url+"/diffuse", method="POST", verbose=verbose)
+        response = api(url=self.__url + "/diffuse", method="POST", verbose=verbose)
         return response
 
     def diffuse_advanced(self, heatColumnName=None, time=None, verbose=False):
@@ -43,6 +44,6 @@ class diffusion(object):
             This corresponds to t in the diffusion equation.
         :param verbose: print more
         """
-        PARAMS=set_param(["heatColumnName","time"],[heatColumnName,time])
-        response=api(url=self.__url+"/diffuse_advanced", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(["heatColumnName", "time"], [heatColumnName, time])
+        response = api(url=self.__url + "/diffuse_advanced", params=PARAMS, method="POST", verbose=verbose)
         return response

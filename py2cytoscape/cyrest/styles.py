@@ -1,5 +1,6 @@
 from .base import *
 
+
 class styles(object):
     """
     cytoscape session interface as shown in CyREST's swagger documentation.
@@ -9,13 +10,12 @@ class styles(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/styles'
-        self.___url= url
-
+        self.___url = url
 
     def updateDefaults(self, name, body, verbose=None):
         """
         Updates the default values for the Visual Properties in the Visual Style specified by the `name` parameter.
-        
+
         Additional details on common Visual Properties can be found in the [Basic Visual Lexicon JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/presentation/property/BasicVisualLexicon.html)
 
         :param name: Name of the Visual Style
@@ -25,9 +25,8 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'/defaults', method="PUT", body=body, verbose=verbose)
+        response = api(url=self.___url + 'styles/' + str(name) + '/defaults', method="PUT", body=body, verbose=verbose)
         return response
-
 
     def getDefaults(self, name, verbose=None):
         """
@@ -39,14 +38,14 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'/defaults', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'styles/' + str(name) + '/defaults',
+                       method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def getSingleVisualProperty(self, visualProperty, verbose=None):
         """
         Return the Visual Property specified by the `visualProperty` parameter.
-        
+
         Additional details on common Visual Properties can be found in the [Basic Visual Lexicon JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/presentation/property/BasicVisualLexicon.html)
 
         :param visualProperty: ID of the Visual Property
@@ -55,14 +54,14 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles/visualproperties/'+str(visualProperty)+'', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'styles/visualproperties/' + str(visualProperty) +
+                       '', method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def createStyle(self, body, verbose=None):
         """
         Creates a new Visual Style using the message body.
-        
+
         Returns the title of the new Visual Style. If the title of the Visual Style already existed in the session, a new one will be automatically generated and returned.
 
         :param body: The details of the new Visual Style to be created.
@@ -71,10 +70,9 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        PARAMS=set_param(['body'],[body])
-        response=api(url=self.___url+'styles', PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(['body'], [body])
+        response = api(url=self.___url + 'styles', params=PARAMS, method="POST", verbose=verbose)
         return response
-
 
     def deleteAllStyles(self, verbose=None):
         """
@@ -85,9 +83,8 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.___url+'styles', method="DELETE", verbose=verbose)
+        response = api(url=self.___url + 'styles', method="DELETE", verbose=verbose)
         return response
-
 
     def getStyleNames(self, verbose=None):
         """
@@ -98,9 +95,8 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'styles', method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def updateDependencies(self, name, body, verbose=None):
         """
@@ -113,9 +109,15 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'/dependencies', method="PUT", body=body, verbose=verbose)
+        response = api(
+            url=self.___url +
+            'styles/' +
+            str(name) +
+            '/dependencies',
+            method="PUT",
+            body=body,
+            verbose=verbose)
         return response
-
 
     def getAllDependencies(self, name, verbose=None):
         """
@@ -127,9 +129,9 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'/dependencies', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'styles/' + str(name) + '/dependencies',
+                       method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def getStyle(self, name, verbose=None):
         """
@@ -141,9 +143,15 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'.json', method="GET", verbose=verbose, parse_params=False)
+        response = api(
+            url=self.___url +
+            'styles/' +
+            str(name) +
+            '.json',
+            method="GET",
+            verbose=verbose,
+            parse_params=False)
         return response
-
 
     def getStyleCount(self, verbose=None):
         """
@@ -154,9 +162,8 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles/count', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'styles/count', method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def deleteMapping(self, name, vpName, verbose=None):
         """
@@ -169,16 +176,16 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'/mappings/'+str(vpName)+'', method="DELETE", verbose=verbose)
+        response = api(url=self.___url + 'styles/' + str(name) + '/mappings/' +
+                       str(vpName) + '', method="DELETE", verbose=verbose)
         return response
-
 
     def getRangeValues(self, vp, verbose=None):
         """
         Returns a list of all available values for the Visual Property specified by the `vp` parameter.
-        
+
         This method is only for Visual Properties with a Discrete Range, such as NODE_SHAPE or EDGE_LINE_TYPE.
-        
+
         Additional details on common Visual Properties can be found in the [Basic Visual Lexicon JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/presentation/property/BasicVisualLexicon.html)
 
         :param vp: ID of the Visual Property
@@ -187,9 +194,9 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles/visualproperties/'+str(vp)+'/values', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'styles/visualproperties/' + str(vp) +
+                       '/values', method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def updateStyleName(self, name, body, verbose=None):
         """
@@ -202,9 +209,8 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'', method="PUT", body=body, verbose=verbose)
+        response = api(url=self.___url + 'styles/' + str(name) + '', method="PUT", body=body, verbose=verbose)
         return response
-
 
     def deleteStyle(self, name, verbose=None):
         """
@@ -216,9 +222,8 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'', method="DELETE", verbose=verbose)
+        response = api(url=self.___url + 'styles/' + str(name) + '', method="DELETE", verbose=verbose)
         return response
-
 
     def getStyleFull(self, name, verbose=None):
         """
@@ -230,23 +235,22 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'styles/' + str(name) + '', method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def createMappings(self, name, body, verbose=None):
         """
         Create a new Visual Mapping function and add it to the Visual Style specified by the `name` parameter. Existing mappings in the Visual Style will be overidden by the new mappings created.
-        
+
         The types of mapping available in Cytoscape are explained in depth [here](http://manual.cytoscape.org/en/stable/Styles.html#how-mappings-work). An example of the data format for each is included below. For additional details, such as what Visual Properties supported by each Mapping, click on the relevant JavaDoc API link.
-        
+
         #### Discrete Mapping
         [JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/vizmap/mappings/DiscreteMapping.html)
         ```
         { "mappingType": "discrete",
         "mappingColumn": "interaction",
             "mappingColumnType": "String",
-            "visualProperty": "EDGE_WIDTH", 
+            "visualProperty": "EDGE_WIDTH",
             "map": [
             { "key" : "pd",
                 "value" : "20"
@@ -281,9 +285,9 @@ class styles(object):
         { "mappingType": "passthrough",
         "mappingColumn": "name",
         "mappingColumnType": "String",
-        "visualProperty": "EDGE_LABEL" 
+        "visualProperty": "EDGE_LABEL"
         }```
-        
+
         Additional details on common Visual Properties can be found in the [Basic Visual Lexicon JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/presentation/property/BasicVisualLexicon.html)
 
         :param name: Name of the Visual Style
@@ -293,24 +297,30 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        PARAMS=set_param(['name','body'],[name,body])
-        response=api(url=self.___url+'styles/'+str(name)+'/mappings', PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(['name', 'body'], [name, body])
+        response = api(
+            url=self.___url +
+            'styles/' +
+            str(name) +
+            '/mappings',
+            params=PARAMS,
+            method="POST",
+            verbose=verbose)
         return response
-
 
     def getMappings(self, name, verbose=None):
         """
         Returns a list of all Visual Mappings used in the Visual Style specified by the `name` parameter.
-        
+
         The types of mapping available in Cytoscape are explained in depth [here](http://manual.cytoscape.org/en/stable/Styles.html#how-mappings-work). An example of the data format for each is included below. For additional details, such as what Visual Properties supported by each Mapping, click on the relevant JavaDoc API link.
-        
+
         #### Discrete Mapping
         [JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/vizmap/mappings/DiscreteMapping.html)
         ```
         { "mappingType": "discrete",
         "mappingColumn": "interaction",
             "mappingColumnType": "String",
-            "visualProperty": "EDGE_WIDTH", 
+            "visualProperty": "EDGE_WIDTH",
             "map": [
             { "key" : "pd",
                 "value" : "20"
@@ -345,9 +355,9 @@ class styles(object):
         { "mappingType": "passthrough",
         "mappingColumn": "name",
         "mappingColumnType": "String",
-        "visualProperty": "EDGE_LABEL" 
+        "visualProperty": "EDGE_LABEL"
         }```
-        
+
         Additional details on common Visual Properties can be found in the [Basic Visual Lexicon JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/presentation/property/BasicVisualLexicon.html)
 
         :param name: Name of the Visual Style
@@ -356,14 +366,14 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'/mappings', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'styles/' + str(name) + '/mappings',
+                       method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def getVisualProperties(self, verbose=None):
         """
         Get all available Visual Properties.
-        
+
         Additional details on common Visual Properties can be found in the [Basic Visual Lexicon JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/presentation/property/BasicVisualLexicon.html)
 
         :param verbose: print more
@@ -371,23 +381,22 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles/visualproperties', method="H", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'styles/visualproperties', method="H", verbose=verbose, parse_params=False)
         return response
-
 
     def updateMapping(self, name, vp, body, verbose=None):
         """
         Update the visual mapping specified by the `name` and `vp` parameters.
-        
+
         The types of mapping available in Cytoscape are explained in depth [here](http://manual.cytoscape.org/en/stable/Styles.html#how-mappings-work). An example of the data format for each is included below. For additional details, such as what Visual Properties supported by each Mapping, click on the relevant JavaDoc API link.
-        
+
         #### Discrete Mapping
         [JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/vizmap/mappings/DiscreteMapping.html)
         ```
         { "mappingType": "discrete",
         "mappingColumn": "interaction",
             "mappingColumnType": "String",
-            "visualProperty": "EDGE_WIDTH", 
+            "visualProperty": "EDGE_WIDTH",
             "map": [
             { "key" : "pd",
                 "value" : "20"
@@ -422,9 +431,9 @@ class styles(object):
         { "mappingType": "passthrough",
         "mappingColumn": "name",
         "mappingColumnType": "String",
-        "visualProperty": "EDGE_LABEL" 
+        "visualProperty": "EDGE_LABEL"
         }```
-        
+
         Additional details on common Visual Properties can be found in the [Basic Visual Lexicon JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/presentation/property/BasicVisualLexicon.html)
 
         :param name: Name of the Visual Style containing the Visual Mapping
@@ -435,23 +444,23 @@ class styles(object):
         :returns: default: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'/mappings/'+str(vp)+'', method="PUT", body=body, verbose=verbose)
+        response = api(url=self.___url + 'styles/' + str(name) + '/mappings/' +
+                       str(vp) + '', method="PUT", body=body, verbose=verbose)
         return response
-
 
     def getMapping(self, name, vp, verbose=None):
         """
         Returns the Visual Mapping assigned to the Visual Property specified by the `name` and `vp` parameters.
-        
+
         The types of mapping available in Cytoscape are explained in depth [here](http://manual.cytoscape.org/en/stable/Styles.html#how-mappings-work). An example of the data format for each is included below. For additional details, such as what Visual Properties supported by each Mapping, click on the relevant JavaDoc API link.
-        
+
         #### Discrete Mapping
         [JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/vizmap/mappings/DiscreteMapping.html)
         ```
         { "mappingType": "discrete",
         "mappingColumn": "interaction",
             "mappingColumnType": "String",
-            "visualProperty": "EDGE_WIDTH", 
+            "visualProperty": "EDGE_WIDTH",
             "map": [
             { "key" : "pd",
                 "value" : "20"
@@ -486,9 +495,9 @@ class styles(object):
         { "mappingType": "passthrough",
         "mappingColumn": "name",
         "mappingColumnType": "String",
-        "visualProperty": "EDGE_LABEL" 
+        "visualProperty": "EDGE_LABEL"
         }```
-        
+
         Additional details on common Visual Properties can be found in the [Basic Visual Lexicon JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/presentation/property/BasicVisualLexicon.html)
 
         :param name: Name of the Visual Style containing the Visual Property mapping
@@ -498,14 +507,14 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'/mappings/'+str(vp)+'', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'styles/' + str(name) + '/mappings/' + str(vp) +
+                       '', method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def getDefaultValue(self, name, vp, verbose=None):
         """
         Returns the default value for the Visual Property specified by the `name` and `vp` parameters.
-        
+
         Additional details on common Visual Properties can be found in the [Basic Visual Lexicon JavaDoc API](http://chianti.ucsd.edu/cytoscape-3.6.1/API/org/cytoscape/view/presentation/property/BasicVisualLexicon.html)
 
         :param name: Name of the Visual Style containing the Visual Property
@@ -515,8 +524,6 @@ class styles(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'styles/'+str(name)+'/defaults/'+str(vp)+'', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'styles/' + str(name) + '/defaults/' + str(vp) +
+                       '', method="GET", verbose=verbose, parse_params=False)
         return response
-
-
-    

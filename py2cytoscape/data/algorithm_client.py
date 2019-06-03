@@ -38,10 +38,10 @@ class LayoutClient(object):
         views = network.get_views()
         view_id = views[0]
 
-        manual_layout_url = self.__base_url +  'networks/' \
-                            + str(network.get_id()) \
-                            + '/views/' \
-                            + str(view_id) + '/nodes'
+        manual_layout_url = self.__base_url + 'networks/' \
+            + str(network.get_id()) \
+            + '/views/' \
+            + str(view_id) + '/nodes'
         pos = self.__apply_preset(locations=positions)
 
         return requests.put(manual_layout_url, json=pos, headers=HEADERS)

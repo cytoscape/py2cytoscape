@@ -1,5 +1,6 @@
 from .base import *
 
+
 class group(object):
     """
     cytoscape session interface as shown in CyREST's swagger documentation for 'group'.
@@ -36,9 +37,9 @@ class group(object):
         :param verbose: print more
 
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["edgeList","groupName","network","nodeList"],[edgeList,groupName,network,nodeList])
-        response=api(url=self.__url+"/add", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["edgeList", "groupName", "network", "nodeList"], [edgeList, groupName, network, nodeList])
+        response = api(url=self.__url + "/add", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def collapse(self, groupList=None, network=None, verbose=False):
@@ -54,9 +55,9 @@ class group(object):
         :param verbose: print more
 
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["groupList","network"],[groupList,network])
-        response=api(url=self.__url+"/collapse", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["groupList", "network"], [groupList, network])
+        response = api(url=self.__url + "/collapse", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def create(self, groupName=None, network=None, nodeList=None, verbose=False):
@@ -80,9 +81,9 @@ class group(object):
         :return: SUID of created group
 
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["groupName","network","nodeList"],[groupName,network,nodeList])
-        response=api(url=self.__url+"/create", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["groupName", "network", "nodeList"], [groupName, network, nodeList])
+        response = api(url=self.__url + "/create", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def expand(self, groupList=None, network=None, verbose=False):
@@ -98,9 +99,9 @@ class group(object):
         :param verbose: print more
 
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["groupList","network"],[groupList,network])
-        response=api(url=self.__url+"/expand", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["groupList", "network"], [groupList, network])
+        response = api(url=self.__url + "/expand", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def get(self, network=None, node=None, verbose=False):
@@ -114,9 +115,9 @@ class group(object):
             parameter has the prefix suid:, selects a node by SUID.
         :param verbose: print more
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network","node"],[network,node])
-        response=api(url=self.__url+"/get", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network", "node"], [network, node])
+        response = api(url=self.__url + "/get", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def glist(self, network=None, verbose=False):
@@ -130,9 +131,9 @@ class group(object):
 
         :returns: eg. [ 3545 ]
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network"],[network])
-        response=api(url=self.__url+"/list", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network"], [network])
+        response = api(url=self.__url + "/list", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def remove(self, edgeList=None, groupName=None, network=None, nodeList=None, verbose=False):
@@ -160,9 +161,9 @@ class group(object):
             can be used to match multiple values.
         :param verbose: print more
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["edgeList","groupName","network","nodeList"],[edgeList,groupName,network,nodeList])
-        response=api(url=self.__url+"/remove", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["edgeList", "groupName", "network", "nodeList"], [edgeList, groupName, network, nodeList])
+        response = api(url=self.__url + "/remove", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def rename(self, groupName=None, network=None, newName=None, verbose=False):
@@ -178,11 +179,10 @@ class group(object):
             identify the group.
         :param verbose: print more
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network","nodeList","newName"],[network,nodeList,newName])
-        response=api(url=self.__url+"/rename", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network", "nodeList", "newName"], [network, nodeList, newName])
+        response = api(url=self.__url + "/rename", params=PARAMS, method="POST", verbose=verbose)
         return response
-
 
     def ungroup(self, network=None, nodeList=None, verbose=False):
         """
@@ -200,7 +200,7 @@ class group(object):
             can be used to match multiple values.
         :param verbose: print more
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network","nodeList"],[network,nodeList])
-        response=api(url=self.__url+"/ungroup", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network", "nodeList"], [network, nodeList])
+        response = api(url=self.__url + "/ungroup", params=PARAMS, method="POST", verbose=verbose)
         return response

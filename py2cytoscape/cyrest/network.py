@@ -1,5 +1,6 @@
 from .base import *
 
+
 class network(object):
     """
     cytoscape network interface as shown in CyREST's swagger documentation for 'network'.
@@ -36,13 +37,12 @@ class network(object):
             values.
         :param verbose: print more
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["edgeList","network","nodeList"],[edgeList,network,nodeList])
-        response=api(url=self.__url+"/add", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["edgeList", "network", "nodeList"], [edgeList, network, nodeList])
+        response = api(url=self.__url + "/add", params=PARAMS, method="POST", verbose=verbose)
         return response
 
-
-    def add_edge(self, isDirected=None,name=None,network=None,sourceName=None,targetName=None, verbose=False):
+    def add_edge(self, isDirected=None, name=None, network=None, sourceName=None, targetName=None, verbose=False):
         """
         Add a new edge between two existing nodes in a network. The names of the
         nodes must be specified and much match the value in the 'name' column for
@@ -66,15 +66,13 @@ class network(object):
             defined in the 'name' column of the network.
         :param verbose: print more
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["isDirected","name","network","sourceName","targetName"],\
-        [isDirected,name,network,sourceName,targetName])
-        response=api(url=self.__url+"/add edge", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["isDirected", "name", "network", "sourceName", "targetName"],
+                           [isDirected, name, network, sourceName, targetName])
+        response = api(url=self.__url + "/add edge", params=PARAMS, method="POST", verbose=verbose)
         return response
 
-    
-
-    def add_node(self, name=None,network=None, verbose=False):
+    def add_node(self, name=None, network=None, verbose=False):
         """
         Add a new node to an existing network. The name of the node must be provided.
 
@@ -87,9 +85,9 @@ class network(object):
 
         :returns: node SUID
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["name","network"],[name,network])
-        response=api(url=self.__url+"/add node", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["name", "network"], [name, network])
+        response = api(url=self.__url + "/add node", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def clone(self, network=None, verbose=False):
@@ -107,9 +105,9 @@ class network(object):
 
         :returns: { network, view }
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network"], [network])
-        response=api(url=self.__url+"/clone", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network"], [network])
+        response = api(url=self.__url + "/clone", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def connect_nodes(self, network=None, nodes=None, verbose=False):
@@ -129,9 +127,9 @@ class network(object):
 
         :returns: [ list of generated edges ]
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["nodes","network"],[nodes,network])
-        response=api(url=self.__url+"/connect nodes", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["nodes", "network"], [nodes, network])
+        response = api(url=self.__url + "/connect nodes", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def create(self, edgeList=None, excludeEdges=None, networkName=None, nodeList=None, source=None, verbose=False):
@@ -163,10 +161,10 @@ class network(object):
 
         :returns: { netowrk, view }
         """
-        network=check_network(self,source, verbose=verbose)
-        PARAMS=set_param(["edgeList","excludeEdges","networkName","nodeList","source"], \
-        [edgeList,excludeEdges,networkName,nodeList,network])
-        response=api(url=self.__url+"/create", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, source, verbose=verbose)
+        PARAMS = set_param(["edgeList", "excludeEdges", "networkName", "nodeList", "source"],
+                           [edgeList, excludeEdges, networkName, nodeList, network])
+        response = api(url=self.__url + "/create", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def create_attribute(self, column=None, listType=None, namespace=None, network=None, atype=None, verbose=False):
@@ -190,13 +188,11 @@ class network(object):
 
         :returns: { columnName }
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["column","listType","namespace","network","type"], \
-        [column,listType,namespace,network,atype])
-        response=api(url=self.__url+"/create attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["column", "listType", "namespace", "network", "type"],
+                           [column, listType, namespace, network, atype])
+        response = api(url=self.__url + "/create attribute", params=PARAMS, method="POST", verbose=verbose)
         return response
-
-    
 
     def create_empty(self, name=None, renderers=None, RootNetworkList=None, verbose=False):
         """
@@ -213,11 +209,9 @@ class network(object):
             'cy:command_documentation_generation']
         :param verbose: print more
         """
-        PARAMS=set_param(["name","renderers","RootNetworkList"],[name,renderers,RootNetworkList])
-        response=api(url=self.__url+"/create empty", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(["name", "renderers", "RootNetworkList"], [name, renderers, RootNetworkList])
+        response = api(url=self.__url + "/create empty", params=PARAMS, method="POST", verbose=verbose)
         return response
-
-    
 
     def delete(self, edgeList=None, network=None, nodeList=None, verbose=False):
         """
@@ -242,11 +236,10 @@ class network(object):
             used to match multiple values.
         :param verbose: print more
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["edgeList","network","nodeList"],[edgeList,network,nodeList])
-        response=api(url=self.__url+"/delete", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["edgeList", "network", "nodeList"], [edgeList, network, nodeList])
+        response = api(url=self.__url + "/delete", params=PARAMS, method="POST", verbose=verbose)
         return response
-
 
     def deselect(self, edgeList=None, network=None, nodeList=None, verbose=False):
         """
@@ -273,9 +266,9 @@ class network(object):
 
         :retunrs: [ list of deselected nodes and edges ]
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["edgeList","network","nodeList"],[edgeList,network,nodeList])
-        response=api(url=self.__url+"/deselect", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["edgeList", "network", "nodeList"], [edgeList, network, nodeList])
+        response = api(url=self.__url + "/deselect", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def destroy(self, network=None, verbose=False):
@@ -289,9 +282,9 @@ class network(object):
 
         :returns: id of destroyed network
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network"],[network])
-        response=api(url=self.__url+"/destroy", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network"], [network])
+        response = api(url=self.__url + "/destroy", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def export(self, options=None, OutputFile=None, verbose=False):
@@ -306,8 +299,8 @@ class network(object):
 
         :returns: { file }
         """
-        PARAMS=set_param(["options","OutputFile"],[options,OutputFile])
-        response=api(url=self.__url+"/export", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(["options", "OutputFile"], [options, OutputFile])
+        response = api(url=self.__url + "/export", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def get(self, network=None, verbose=False):
@@ -327,9 +320,9 @@ class network(object):
         :returns: { dictionary with values for the respective network }
         """
 
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network"],[network])
-        response=api(url=self.__url+"/get", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network"], [network])
+        response = api(url=self.__url + "/get", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def get_attribute(self, columnList=None, namespace=None, network=None, verbose=False):
@@ -347,9 +340,9 @@ class network(object):
 
         :returns: { attributes for the network passed in column list }
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["columnList","namespace","network"],[columnList,namespace,network])
-        response=api(url=self.__url+"/get attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["columnList", "namespace", "network"], [columnList, namespace, network])
+        response = api(url=self.__url + "/get attribute", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def get_porperties(self, network=None, propertyList=None, verbose=False):
@@ -364,9 +357,9 @@ class network(object):
 
         :returns: visual properties for the network that matches the passed parameters
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network","propertyList"],[network,propertyList])
-        response=api(url=self.__url+"/get properties", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network", "propertyList"], [network, propertyList])
+        response = api(url=self.__url + "/get properties", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def hide(self, edgeList=None, network=None, nodeList=None, verbose=False):
@@ -397,17 +390,27 @@ class network(object):
 
         :returns: [ list of SUIDs of the hidden nodes and/or edges ]
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network","edgeList","nodeList"],[network,edgeList,nodeList])
-        response=api(url=self.__url+"/hide", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network", "edgeList", "nodeList"], [network, edgeList, nodeList])
+        response = api(url=self.__url + "/hide", params=PARAMS, method="POST", verbose=verbose)
         return response
 
-
-    def import_file(self, dataTypeList=None, defaultInteraction=None, delimiters=None, \
-        delimitersForDataList=None, afile=None, firstRowAsColumnNames=None, \
-        indexColumnSourceInteraction=None, indexColumnTargetInteraction=None, indexColumnTypeInteraction=None, \
-        NetworkViewRendererList=None, RootNetworkList=None, startLoadRow=None,\
-        TargetColumnList=None, verbose=False):
+    def import_file(
+            self,
+            dataTypeList=None,
+            defaultInteraction=None,
+            delimiters=None,
+            delimitersForDataList=None,
+            afile=None,
+            firstRowAsColumnNames=None,
+            indexColumnSourceInteraction=None,
+            indexColumnTargetInteraction=None,
+            indexColumnTypeInteraction=None,
+            NetworkViewRendererList=None,
+            RootNetworkList=None,
+            startLoadRow=None,
+            TargetColumnList=None,
+            verbose=False):
         """
         Import a new network from a tabular formatted file type (e.g. csv, tsv,
         Excel, etc.). Use network load file to load network formatted files. This
@@ -425,7 +428,7 @@ class network(object):
             TAB and ',' are used by default = [',', ';', ' ', '\t']
         :param delimitersForDataList (string, optional): Select the delimiters
             to use to separate list entries in a list, from the list '|','\','/',
-            or ','. | is used by default = ['\|', '\', '/', ',']
+            or ','. | is used by default = [r'\|', '\', '/', ',']
         :param afile (string): The path to the file that contains the table or
             network to be imported.
         :param firstRowAsColumnNames (string, optional): If this is true then
@@ -457,20 +460,51 @@ class network(object):
         :returns:  { SUIDs of the new networks and views }
         """
 
-        PARAMS=set_param(["dataTypeList","defaultInteraction","delimiters","delimitersForDataList",\
-        "file","firstRowAsColumnNames","indexColumnSourceInteraction","indexColumnTargetInteraction",\
-        "indexColumnTypeInteraction","NetworkViewRendererList","RootNetworkList","startLoadRow","TargetColumnList"],\
-        [dataTypeList,defaultInteraction,delimiters,delimitersForDataList,\
-        afile,firstRowAsColumnNames,indexColumnSourceInteraction,indexColumnTargetInteraction,\
-        indexColumnTypeInteraction,NetworkViewRendererList,RootNetworkList,startLoadRow,TargetColumnList])
-        response=api(url=self.__url+"/import file", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(["dataTypeList",
+                            "defaultInteraction",
+                            "delimiters",
+                            "delimitersForDataList",
+                            "file",
+                            "firstRowAsColumnNames",
+                            "indexColumnSourceInteraction",
+                            "indexColumnTargetInteraction",
+                            "indexColumnTypeInteraction",
+                            "NetworkViewRendererList",
+                            "RootNetworkList",
+                            "startLoadRow",
+                            "TargetColumnList"],
+                           [dataTypeList,
+                            defaultInteraction,
+                            delimiters,
+                            delimitersForDataList,
+                            afile,
+                            firstRowAsColumnNames,
+                            indexColumnSourceInteraction,
+                            indexColumnTargetInteraction,
+                            indexColumnTypeInteraction,
+                            NetworkViewRendererList,
+                            RootNetworkList,
+                            startLoadRow,
+                            TargetColumnList])
+        response = api(url=self.__url + "/import file", params=PARAMS, method="POST", verbose=verbose)
         return response
 
-    def import_url(self, dataTypeList=None, defaultInteraction=None, delimiters=None, \
-        delimitersForDataList=None, firstRowAsColumnNames=None, \
-        indexColumnSourceInteraction=None, indexColumnTargetInteraction=None, indexColumnTypeInteraction=None, \
-        NetworkViewRendererList=None, RootNetworkList=None, startLoadRow=None,\
-        TargetColumnList=None, url=None, verbose=False):
+    def import_url(
+            self,
+            dataTypeList=None,
+            defaultInteraction=None,
+            delimiters=None,
+            delimitersForDataList=None,
+            firstRowAsColumnNames=None,
+            indexColumnSourceInteraction=None,
+            indexColumnTargetInteraction=None,
+            indexColumnTypeInteraction=None,
+            NetworkViewRendererList=None,
+            RootNetworkList=None,
+            startLoadRow=None,
+            TargetColumnList=None,
+            url=None,
+            verbose=False):
         """
         Import a new network from a tabular formatted file type (e.g. csv, tsv,
         Excel, etc.). Use network load file to load network formatted files. This
@@ -488,7 +522,7 @@ class network(object):
             TAB and ',' are used by default = [',', ';', ' ', '\t']
         :param delimitersForDataList (string, optional): Select the delimiters
             to use to separate list entries in a list, from the list '|','\','/',
-            or ','. | is used by default = ['\|', '\', '/', ',']
+            or ','. | is used by default = [r'\|', '\', '/', ',']
         :param firstRowAsColumnNames (string, optional): If this is true then
             the first row should contain the names of the columns. Note that
             startLoadRow must be set for this to work properly
@@ -520,13 +554,33 @@ class network(object):
         :returns:  { SUIDs of the new networks and views }
         """
 
-        PARAMS=set_param(["dataTypeList","defaultInteraction","delimiters","delimitersForDataList",\
-        "firstRowAsColumnNames","indexColumnSourceInteraction","indexColumnTargetInteraction",\
-        "indexColumnTypeInteraction","NetworkViewRendererList","RootNetworkList","startLoadRow","TargetColumnList","url"],\
-        [dataTypeList,defaultInteraction,delimiters,delimitersForDataList,\
-        firstRowAsColumnNames,indexColumnSourceInteraction,indexColumnTargetInteraction,\
-        indexColumnTypeInteraction,NetworkViewRendererList,RootNetworkList,startLoadRow,TargetColumnList, url])
-        response=api(url=self.__url+"/import url", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(["dataTypeList",
+                            "defaultInteraction",
+                            "delimiters",
+                            "delimitersForDataList",
+                            "firstRowAsColumnNames",
+                            "indexColumnSourceInteraction",
+                            "indexColumnTargetInteraction",
+                            "indexColumnTypeInteraction",
+                            "NetworkViewRendererList",
+                            "RootNetworkList",
+                            "startLoadRow",
+                            "TargetColumnList",
+                            "url"],
+                           [dataTypeList,
+                            defaultInteraction,
+                            delimiters,
+                            delimitersForDataList,
+                            firstRowAsColumnNames,
+                            indexColumnSourceInteraction,
+                            indexColumnTargetInteraction,
+                            indexColumnTypeInteraction,
+                            NetworkViewRendererList,
+                            RootNetworkList,
+                            startLoadRow,
+                            TargetColumnList,
+                            url])
+        response = api(url=self.__url + "/import url", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def list(self, verbose=False):
@@ -538,7 +592,7 @@ class network(object):
         :returns: [ list of network suids ]
         """
 
-        response=api(url=self.__url+"/list", method="POST", verbose=verbose)
+        response = api(url=self.__url + "/list", method="POST", verbose=verbose)
         return response
 
     def list_attributes(self, namespace=None, network=None, verbose=False):
@@ -556,11 +610,10 @@ class network(object):
 
         :returns: [ list of column names assocated with a network ]
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["namespace","network"],[namespace,network])
-        response=api(url=self.__url+"/list attributes", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["namespace", "network"], [namespace, network])
+        response = api(url=self.__url + "/list attributes", params=PARAMS, method="POST", verbose=verbose)
         return response
-
 
     def list_properties(self, network=None, verbose=False):
         """
@@ -573,11 +626,10 @@ class network(object):
 
         :returns: [ List all of the visual properties ]
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network"],[network])
-        response=api(url=self.__url+"/list properties", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network"], [network])
+        response = api(url=self.__url + "/list properties", params=PARAMS, method="POST", verbose=verbose)
         return response
-
 
     def load_file(self, afile=None, verbose=False):
         """
@@ -593,8 +645,8 @@ class network(object):
 
         :returns: { SUIDs of the new networks and views }
         """
-        PARAMS=set_param(["file"],[afile])
-        response=api(url=self.__url+"/load file", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(["file"], [afile])
+        response = api(url=self.__url + "/load file", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def load_url(self, url=None, verbose=False):
@@ -612,8 +664,8 @@ class network(object):
 
         :returns: { SUIDs of the new networks and views }
         """
-        PARAMS=set_param(["url"],[url])
-        response=api(url=self.__url+"/load url", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(["url"], [url])
+        response = api(url=self.__url + "/load url", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def rename(self, name=None, sourceNetwork=None, verbose=False):
@@ -628,13 +680,13 @@ class network(object):
 
         :returns: SUID of the network is returned
         """
-        sourceNetwork=check_network(self,sourceNetwork,verbose=verbose)
-        PARAMS=set_param(["name","sourceNetwork"],[name,sourceNetwork])
-        response=api(url=self.__url+"/rename", PARAMS=PARAMS, method="POST", verbose=verbose)
+        sourceNetwork = check_network(self, sourceNetwork, verbose=verbose)
+        PARAMS = set_param(["name", "sourceNetwork"], [name, sourceNetwork])
+        response = api(url=self.__url + "/rename", params=PARAMS, method="POST", verbose=verbose)
         return response
 
-    def select(self, adjacentEdges=None, edgeList=None, extendEdges=None, firstNeighbors=None, \
-        invert=None, network=None, nodeList=None, verbose=False):
+    def select(self, adjacentEdges=None, edgeList=None, extendEdges=None, firstNeighbors=None,
+               invert=None, network=None, nodeList=None, verbose=False):
         """
         Select nodes and/or edges in a network. This command provides options to
         invert the selection, add first neighbors, add adjacent edges of selected
@@ -677,12 +729,12 @@ class network(object):
 
         :returns: [ list of selected edges and nodes ]
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["adjacentEdges","edgeList","extendEdges","firstNeighbors",\
-        "invert","network","nodeList"], \
-        [adjacentEdges,edgeList,extendEdges,firstNeighbors,\
-        invert,network,nodeList])
-        response=api(url=self.__url+"/select", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["adjacentEdges", "edgeList", "extendEdges", "firstNeighbors",
+                            "invert", "network", "nodeList"],
+                           [adjacentEdges, edgeList, extendEdges, firstNeighbors,
+                            invert, network, nodeList])
+        response = api(url=self.__url + "/select", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def set_attribute(self, columnList=None, namespace=None, network=None, valueList=None, verbose=False):
@@ -701,12 +753,11 @@ class network(object):
             List values can be included using the format [value1,value2].
         :param verbose: print more
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["columnList","namespace","network","valueList"], \
-        [columnList,namespace,network,valueList])
-        response=api(url=self.__url+"/set attribute", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["columnList", "namespace", "network", "valueList"],
+                           [columnList, namespace, network, valueList])
+        response = api(url=self.__url + "/set attribute", params=PARAMS, method="POST", verbose=verbose)
         return response
- 
 
     def set_current(self, network=None, verbose=False):
         """
@@ -719,8 +770,8 @@ class network(object):
             value can also be used to specify the current network.
         :param verbose: print more
         """
-        PARAMS=set_param(["network"], [network])
-        response=api(url=self.__url+"/set current", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(["network"], [network])
+        response = api(url=self.__url + "/set current", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def set_properties(self, network=None, propertyList=None, valueList=None, verbose=False):
@@ -737,10 +788,10 @@ class network(object):
             position in the propertyList
         :param verbose: print more
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["network","propertyList","valueList"], \
-        [network,propertyList,valueList])
-        response=api(url=self.__url+"/set properties", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["network", "propertyList", "valueList"],
+                           [network, propertyList, valueList])
+        response = api(url=self.__url + "/set properties", params=PARAMS, method="POST", verbose=verbose)
         return response
 
     def show(self, edgeList=None, network=None, nodeList=None, verbose=False):
@@ -771,7 +822,7 @@ class network(object):
 
         :returns: [ list of SUIDs of the unhidden nodes and/or edges ]
         """
-        network=check_network(self,network,verbose=verbose)
-        PARAMS=set_param(["edgeList","network","nodeList"],[edgeList,network,nodeList])
-        response=api(url=self.__url+"/show", PARAMS=PARAMS, method="POST", verbose=verbose)
+        network = check_network(self, network, verbose=verbose)
+        PARAMS = set_param(["edgeList", "network", "nodeList"], [edgeList, network, nodeList])
+        response = api(url=self.__url + "/show", params=PARAMS, method="POST", verbose=verbose)
         return response

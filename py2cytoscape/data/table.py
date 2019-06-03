@@ -4,6 +4,7 @@ import json
 
 class Table(object):
     """The Table object provides methods for Cytoscape table manipulation"""
+
     def __init__(self):
         self.df = None
         self.port = None
@@ -16,6 +17,7 @@ class Table(object):
 
     def set_port(self, port):
         self.port = str(port)
+
 
 def read(filepath):
     table = Table()
