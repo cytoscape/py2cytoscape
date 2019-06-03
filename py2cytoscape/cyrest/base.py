@@ -1,81 +1,85 @@
-import sys
-import requests
-import urllib.request as urllib2		
-import json
-
-
 from json import JSONDecodeError
 
+import requests
+
 HOST = 'localhost'
-IP=HOST # temporary
+IP = HOST  # temporary
 PORT = 1234
 VERSION = 'v1'
 BASE_URL = 'http://' + HOST + ':' + str(PORT) + '/' + VERSION + '/'
 HEADERS = {'Content-Type': 'application/json'}
-VERBOSE=False
+VERBOSE = False
 
 
 SUID_LIST = 'suid'
 
 BASE_URL_NETWORK = BASE_URL + 'networks'
 
-def set_param(parameters,values):
-    PARAMS={}
-    for p,v in zip(parameters,values):
-        if v:
-            PARAMS[p]=v
-    return PARAMS
 
-def check_network(cyrest_network,network=None,verbose=False):
+def set_param(parameters, values):
+    return {p: v for p, v in zip(parameters, values) if v}
+
+
+def check_network(cyrest_network, network=None, verbose=False):
     if network is None:
         try:
-            network_name=cyrest_network.network_name
+            network_name = cyrest_network.network_name
         except AttributeError:
-            network_name='CURRENT'
+            network_name = 'CURRENT'
     else:
-        network_name=network
+        network_name = network
     if verbose:
-        print("Working on '%s' network." %str(network_name) )
+        print("Working on '%s' network." % str(network_name))
     return network_name
 
-def checkresponse(r,verbose=False):
-    status=r.status_code
+
+def checkresponse(r, verbose=False):
+    status = r.status_code
     if 200 <= status < 300:
         if verbose:
-            print("response status "+status)
-            sys.stdout.flush()
-        res=None
+            print("response status " + status, flush=True)
+        res = None
     else:
-        print(r, r.status_code)
-        sys.stdout.flush()
-        res="error::"+str(r.status_code)
+        print(r, r.status_code, flush=True)
+        res = "error::" + str(r.status_code)
     return res
 
-def handle_status_codes(x,verbose=False):
-    if type(x) == str:
+
+def handle_status_codes(x, verbose=False):
+    if isinstance(x, str):
         if "error::" in x:
-            res=int(x.lstrip("error::"))
+            res = int(x.lstrip("error::"))
         else:
-            res=None
+            res = None
     else:
-        res=None
+        res = None
 
-    if res or verbose:
-        if res:
-            res=res
-        else:
-            res=x
+    if not res and verbose:
+        res = x
     else:
-        res=None
+        res = None
 
-    if not res:
-        if x:
-            res=x
+    if not res and x:
+        res = x
 
     return res
 
 
-def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PORT), version=VERSION, method="POST", verbose=VERBOSE, url=None, parse_params=True):
+def _clean(x):
+    return x.split("</p>")[0].split(">")[-1]
+
+
+def api(namespace=None,
+        command="",
+        params=None,
+        body=None,
+        host=HOST,
+        port=str(PORT),
+        version=VERSION,
+        method="POST",
+        verbose=VERBOSE,
+        url=None,
+        **kwargs):
     """
     General function for interacting with Cytoscape API.
 
@@ -95,79 +99,75 @@ def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PO
     cytoscape("string","pubmed query",{"pubmed":"p53 p21","limit":"50"})
     """
 
+    if params is None:
+        params = {}
+
     if url:
-        baseurl=url
+        baseurl = url
     else:
         if namespace:
-            baseurl="http://"+str(host)+":"+str(port)+"/"+str(version)+"/commands/"+str(namespace)+"/"+str(command)
+            baseurl = "http://" + str(host) + ":" + str(port) + "/" + str(version) + \
+                "/commands/" + str(namespace) + "/" + str(command)
         else:
-            baseurl="http://"+str(host)+":"+str(port)+"/"+str(version)+"/commands"
+            baseurl = "http://" + str(host) + ":" + str(port) + "/" + str(version) + "/commands"
 
-    if (method == "GET") or (method == "G"):
-        URL=baseurl
+    if method in ('G', 'GET'):
+        URL = baseurl
         if verbose:
-            print("'"+URL+"'")
-            sys.stdout.flush()
-        r = requests.get(url = URL, params=PARAMS)
-        verbose_=checkresponse(r, verbose=verbose)
+            print("'" + URL + "'", flush=True)
+        r = requests.get(url=URL, params=params)
+        verbose_ = checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
-            print("'"+URL+"'")
-            sys.stdout.flush()
+            print("'" + URL + "'", flush=True)
 
         if verbose_:
-            res=verbose_
+            res = verbose_
         else:
-            res=r
+            res = r
 
-    if (method == "DELETE"):
-        URL=baseurl
+    if method == "DELETE":
+        URL = baseurl
         if verbose:
-            print("'"+URL+"'")
-            sys.stdout.flush()
-        r = requests.delete(url = URL)
-        verbose_=checkresponse(r, verbose=verbose)
+            print("'" + URL + "'", flush=True)
+        r = requests.delete(url=URL)
+        verbose_ = checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
-            print("'"+URL+"'")
-            sys.stdout.flush()
-        res=r.json()
+            print("'" + URL + "'", flush=True)
+        res = r.json()
         if len(res["errors"]) > 0:
             raise ValueError(res["errors"][0])
 
-    elif (method == "POST") or (method == "P"):
+    elif method in ('P', 'POST'):
         if verbose:
-            print("'"+baseurl+"'")
-            sys.stdout.flush()
-        r = requests.post(url = baseurl, json = PARAMS)
-        verbose_=checkresponse(r, verbose=verbose)
+            print("'" + baseurl + "'", flush=True)
+        r = requests.post(url=baseurl, json=params)
+        verbose_ = checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
-            verbose=True
-            print(r.content)
-            sys.stdout.flush()
+            verbose = True
+            print(r.content, flush=True)
 
-        res=r.json()
+        res = r.json()
         if "errors" in res.keys():
             if len(res["errors"]) > 0:
                 raise ValueError(res["errors"][0])
         if not verbose:
             if "data" in res.keys():
-                res=res["data"]
+                res = res["data"]
         else:
-            res=verbose_
+            res = verbose_
 
     elif (method == "PUT"):
         if verbose:
-            print("'"+baseurl+"'")
-            sys.stdout.flush()
-        r = requests.put(url = baseurl, json = body)
+            print("'" + baseurl + "'", flush=True)
+        r = requests.put(url=baseurl, json=body)
 
-        verbose_=checkresponse(r, verbose=verbose)
+        verbose_ = checkresponse(r, verbose=verbose)
         if (verbose) or (verbose_):
-            verbose=True
-            print(r.content)
-            sys.stdout.flush()
+            verbose = True
+            print(r.content, flush=True)
 
         try:
-            res=r.json()
+            res = r.json()
             if "errors" in res.keys():
                 if len(res["errors"]) > 0:
                     raise ValueError(res["errors"][0])
@@ -177,19 +177,16 @@ def api(namespace=None, command="", PARAMS={}, body=None, host=HOST, port=str(PO
             else:
                 raise
 
-    elif (method=="HTML") or (method == "H") or (method=="HELP"):
+    elif method in ('H', 'HTML', 'HELP'):
         URL = baseurl
         if verbose:
-            print("'"+URL+"'")
-            sys.stdout.flush()
-        response = requests.get(URL, params=PARAMS)
+            print("'" + URL + "'", flush=True)
+        response = requests.get(URL, params=params)
 
         res = response.text.split("\n")
-        def clean(x):
-            r=x.split("</p>")[0].split(">")[-1]
-            return r
-        res="\n".join([ clean(x) for x in res ])
 
-    res=handle_status_codes(res,verbose=verbose)
+        res = "\n".join(map(_clean, res))
+
+    res = handle_status_codes(res, verbose=verbose)
 
     return res

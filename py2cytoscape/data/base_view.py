@@ -25,8 +25,8 @@ class BaseView(object):
             model_id = network_view.get_model_id()
             view_id = network_view.get_id()
             self.url = BASE_URL_NETWORK + '/' + str(model_id) + \
-                       '/views/' + str(view_id) + \
-                       '/' + obj_type + '/' + str(obj_id)
+                '/views/' + str(view_id) + \
+                '/' + obj_type + '/' + str(obj_id)
             self.__id = obj_id
 
     def get_id(self):

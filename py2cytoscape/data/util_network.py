@@ -12,10 +12,10 @@ class NetworkUtil(object):
         else:
             raise ValueError('No such object type: ' + obj_type)
 
-        subset= table['name']
+        subset = table['name']
         name2suid = {}
         for suid in subset.index:
             name2suid[subset[suid]] = suid
 
-        table.set_index(["SUID"],inplace=True)
+        table.set_index(["SUID"], inplace=True)
         return name2suid

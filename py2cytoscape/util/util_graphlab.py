@@ -32,4 +32,3 @@ def from_sgraph(sgraph):
     new_graph['elements'] = elements
 
     return new_graph
-

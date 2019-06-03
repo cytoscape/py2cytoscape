@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from .cynetwork import CyNetwork, check_response
 import os
 import requests
 import json
@@ -14,8 +15,6 @@ from ..util import util_numpy as np_util
 
 JSON = 'json'
 
-from .cynetwork import CyNetwork, check_response
-
 
 class NetworkClient(object):
     def __init__(self, url, session=None):
@@ -24,35 +23,26 @@ class NetworkClient(object):
         # for every request.
         self.session = session if session is not None else requests.Session()
 
-    def create_from(self, locations=None, collection=None):
-        if locations is None:
-            raise ValueError('Locations parameter is required.')
-
-        input_type = type(locations)
-        if input_type is list or input_type is tuple or input_type is set:
+    def create_from(self, locations, collection='Created from resources'):
+        if isinstance(locations, str):
+            if not locations.startswith('http'):
+                location_list = [self.__to_file_url(locations)]
+            else:
+                location_list = [locations]
+        else:
             location_list = []
             for loc in locations:
                 if not str(loc).startswith('http'):
                     location_list.append(self.__to_file_url(loc))
                 else:
                     location_list.append(loc)
-        else:
-            if not str(locations).startswith('http'):
-                location_list = [self.__to_file_url(locations)]
-            else:
-                location_list = [locations]
-
-        if collection is None:
-            collection_name = 'Created from resources'
-        else:
-            collection_name = collection
 
         parameters = {
-            'collection': collection_name,
+            'collection': collection,
             'source': 'url'
         }
 
-        res = self.session.post(self.__url, data=json.dumps(location_list),
+        res = self.session.post(self.__url, json=location_list,
                                 params=parameters, headers=HEADERS)
         check_response(res)
         res = res.json()
@@ -62,9 +52,8 @@ class NetworkClient(object):
             if len(network_ids) == 1:
                 return CyNetwork(network_ids[0], session=self.session,
                                  url=self.__url)
-            else:
-                return [CyNetwork(suid, session=self.session, url=self.__url)
-                        for suid in network_ids]
+            return [CyNetwork(suid, session=self.session, url=self.__url)
+                    for suid in network_ids]
         else:
             result_dict = {
                 entry['source']: CyNetwork(

@@ -1,5 +1,6 @@
 from .base import *
 
+
 class cybrowser(object):
     """
     cytoscape cybrowser interface as shown in CyREST's swagger documentation for 'cybrowser'.
@@ -22,8 +23,8 @@ class cybrowser(object):
         :param verbose: print more
         """
 
-        PARAMS=set_param(["id","text","title","url","debug"],[wid,text,title,url,debug])
-        response=api(url=self.__url+"/dialog?",PARAMS=PARAMS, method="GET", verbose=verbose)
+        PARAMS = set_param(["id", "text", "title", "url", "debug"], [wid, text, title, url, debug])
+        response = api(url=self.__url + "/dialog?", params=PARAMS, method="GET", verbose=verbose)
         return response
 
     def hide(self, wid, verbose=False):
@@ -34,9 +35,9 @@ class cybrowser(object):
         :param verbose: print more
         """
 
-        PARAMS={"id":wid}
+        PARAMS = {"id": wid}
 
-        response=api(url=self.__url+"/hide?",PARAMS=PARAMS, method="GET", verbose=verbose)
+        response = api(url=self.__url + "/hide?", params=PARAMS, method="GET", verbose=verbose)
         return response
 
     def show(self, wid=None, text=None, title=None, url=None, verbose=False):
@@ -50,21 +51,19 @@ class cybrowser(object):
         :param verbose: print more
         """
 
-        PARAMS={}
-        for p,v in zip(["id","text","title","url"],[wid,text,title,url]):
+        PARAMS = {}
+        for p, v in zip(["id", "text", "title", "url"], [wid, text, title, url]):
             if v:
-                PARAMS[p]=v
+                PARAMS[p] = v
 
-        response=api(url=self.__url+"/show?",PARAMS=PARAMS, method="GET", verbose=verbose)
+        response = api(url=self.__url + "/show?", params=PARAMS, method="GET", verbose=verbose)
         return response
- 
+
     def version(self, verbose=False):
         """
         Display the CyBrowser version.
 
         :param verbose: print more
         """
-        response=api(url=self.__url+"/version",method="HTML", verbose=verbose)
+        response = api(url=self.__url + "/version", method="HTML", verbose=verbose)
         return response
-
-    

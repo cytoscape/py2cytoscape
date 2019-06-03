@@ -289,8 +289,8 @@ class CyNetwork(object):
     def create_network_column(self, name, data_type='String', is_immutable=False, is_list=False):
         self.__create_column('network', name=name, data_type=data_type, immutable=is_immutable, list=is_list)
 
-
     # Utility functions
+
     def get_neighbours(self, node_id):
         url = self.__url + 'nodes/' + str(node_id) + '/neighbors'
         return self.session.get(url).json()
@@ -299,8 +299,8 @@ class CyNetwork(object):
         url = self.__url + 'nodes/' + str(node_id) + '/adjEdges'
         return self.session.get(url).json()
 
-
     # Views
+
     def get_views(self):
         """
         Get views as a list of SUIDs
@@ -357,4 +357,3 @@ class CyNetwork(object):
 
     def __ne__(self, other):
         return not self.__eq__(other)
-

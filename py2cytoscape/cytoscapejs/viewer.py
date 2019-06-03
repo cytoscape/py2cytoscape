@@ -6,13 +6,13 @@ import os
 
 # Define default widget size
 DEF_HEIGHT = 700
-DEF_WIDTH = 1098 # Same as cell width of Jupyter
+DEF_WIDTH = 1098  # Same as cell width of Jupyter
 
 DEF_BACKGROUND_COLOR = '#FFFFFF'
 
 HTML_TEMPLATE_FILE = 'template.html'
 STYLE_FILE = 'default_style.json'
-STYLE_FILE=os.path.abspath(os.path.dirname(__file__)) + '/' + STYLE_FILE
+STYLE_FILE = os.path.abspath(os.path.dirname(__file__)) + '/' + STYLE_FILE
 
 
 # Default network
@@ -42,7 +42,7 @@ PRESET_LAYOUTS = {
 #style_file = open(os.path.abspath(os.path.dirname(__file__)) + '/' + STYLE_FILE, 'r')
 #style_list = json.load(style_file)
 #STYLES = {}
-#for style in style_list:
+# for style in style_list:
 #    STYLES[style['title']] = style['style']
 
 
@@ -53,6 +53,7 @@ def set_styles(style_file=STYLE_FILE):
     for style in style_list:
         STYLES[style['title']] = style['style']
     return STYLES
+
 
 def render(network,
            style=DEF_STYLE,
@@ -88,7 +89,7 @@ def render(network,
     from jinja2 import Template
     from IPython.core.display import display, HTML
 
-    STYLES=set_styles(style_file)
+    STYLES = set_styles(style_file)
 
     # Load style file if none available
     if isinstance(style, str):
@@ -122,12 +123,14 @@ def render(network,
 def get_layouts():
     return PRESET_LAYOUTS
 
+
 def get_style_names(style_file=STYLE_FILE):
-    STYLES=set_styles(style_file)
+    STYLES = set_styles(style_file)
     return list(STYLES.keys())
 
-def get_style(name,style_file=STYLE_FILE):
-    STYLES=set_styles(style_file)
+
+def get_style(name, style_file=STYLE_FILE):
+    STYLES = set_styles(style_file)
     if name in STYLES.keys():
         return STYLES[name]
     else:

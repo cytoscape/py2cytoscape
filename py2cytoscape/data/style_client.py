@@ -23,7 +23,7 @@ class StyleClient(object):
 
         if name in existing_styles:
             return Style(name)
-            
+
         if original_style is None:
             style = {
                 'title': name,
@@ -33,7 +33,7 @@ class StyleClient(object):
         else:
             style = original_style
             style['title'] = name
-            
+
         new_style_name = requests.post(self.__url, data=json.dumps(style), headers=HEADERS).json()['title']
         return Style(name=new_style_name)
 
@@ -112,7 +112,3 @@ class VisualProperties(object):
 
     def get_network_visual_props(self):
         return self.__network_vp
-
-
-
-

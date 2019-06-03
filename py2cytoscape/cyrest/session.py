@@ -1,5 +1,6 @@
 from .base import *
 
+
 class session(object):
     """
     cytoscape session interface as shown in CyREST's swagger documentation for 'session'.
@@ -9,7 +10,7 @@ class session(object):
 
     def __init__(self, url):
         self.__url = url + 'commands/session'
-        self.___url=url
+        self.___url = url
 
     def new(self, verbose=False):
         """
@@ -19,11 +20,10 @@ class session(object):
         :param verbose: print more
         """
 
-        response=api(url=self.__url+"/new", verbose=verbose)
+        response = api(url=self.__url + "/new", verbose=verbose)
         return response
 
-    
-    def open(self, session_file=None,session_url=None, verbose=False):
+    def open(self, session_file=None, session_url=None, verbose=False):
         """
         Opens a session from a local file or URL.
 
@@ -32,11 +32,10 @@ class session(object):
         :param verbose: print more
         """
 
-        PARAMS=set_param(["file", "url"],[session_file, session_url])
-        response=api(url=self.__url+"/open", PARAMS=PARAMS, verbose=verbose)
+        PARAMS = set_param(["file", "url"], [session_file, session_url])
+        response = api(url=self.__url + "/open", params=PARAMS, verbose=verbose)
         return response
 
-    
     def save(self, session_file, verbose=False):
         """
         Saves the current session to an existing file, which will be replaced.
@@ -48,12 +47,11 @@ class session(object):
         :param verbose: print more
         """
 
-        PARAMS={"file":session_file}
+        PARAMS = {"file": session_file}
 
-        response=api(url=self.__url+"/save", PARAMS=PARAMS, verbose=verbose)
+        response = api(url=self.__url + "/save", params=PARAMS, verbose=verbose)
         return response
 
-    
     def save_as(self, session_file, verbose=False):
         """
         Saves the current session as a new file.
@@ -63,9 +61,9 @@ class session(object):
         :param verbose: print more
         """
 
-        PARAMS={"file":session_file}
+        PARAMS = {"file": session_file}
 
-        response=api(url=self.__url+"/save as", PARAMS=PARAMS, verbose=verbose)
+        response = api(url=self.__url + "/save as", params=PARAMS, verbose=verbose)
         return response
 
     def createSessionFile(self, file, verbose=None):
@@ -78,10 +76,9 @@ class session(object):
         :returns: 200: successful operation
         """
 
-        PARAMS=set_param(['file'],[file])
-        response=api(url=self.___url+'session', PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(['file'], [file])
+        response = api(url=self.___url + 'session', params=PARAMS, method="POST", verbose=verbose)
         return response
-
 
     def deleteSession(self, verbose=None):
         """
@@ -92,9 +89,8 @@ class session(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'session', method="DELETE", verbose=verbose)
+        response = api(url=self.___url + 'session', method="DELETE", verbose=verbose)
         return response
-
 
     def getSessionFromFile(self, file, verbose=None):
         """
@@ -106,9 +102,9 @@ class session(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'session', PARAMS={'file':file}, method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'session', params={'file': file},
+                       method="GET", verbose=verbose, parse_params=False)
         return response
-
 
     def getSessionName(self, verbose=None):
         """
@@ -119,7 +115,7 @@ class session(object):
         :returns: 200: successful operation
         """
 
-        response=api(url=self.___url+'session/name', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'session/name', method="GET", verbose=verbose, parse_params=False)
         return response
 
     def runGarbageCollection(self, verbose=None):
@@ -131,5 +127,5 @@ class session(object):
         :returns: 204: Successful Garbage Collection
         """
 
-        response=api(url=self.___url+'gc', method="GET", verbose=verbose, parse_params=False)
+        response = api(url=self.___url + 'gc', method="GET", verbose=verbose, parse_params=False)
         return response

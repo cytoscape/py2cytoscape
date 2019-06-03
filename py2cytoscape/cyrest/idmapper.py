@@ -1,5 +1,6 @@
 from .base import *
 
+
 class idmapper(object):
     """
     cytoscape network interface as shown in CyREST's swagger documentation for 'idmapper'.
@@ -10,7 +11,7 @@ class idmapper(object):
     def __init__(self, url):
         self.__url = url + 'commands/idmapper'
 
-    def map_column(self, only_use_one=None, source_column=None, species=None, target_selection= None, verbose=False):
+    def map_column(self, only_use_one=None, source_column=None, species=None, target_selection=None, verbose=False):
         """
         Uses the BridgeDB service to look up analogous identifiers from a wide
         selection of other databases
@@ -33,7 +34,7 @@ class idmapper(object):
 
         :returns: eg. { "new column": "SGD " }
         """
-        PARAMS=set_param(["only_use_one","source_column","species","target_selection"],[only_use_one,source_column,species,target_selection])
-        response=api(url=self.__url+"/map column", PARAMS=PARAMS, method="POST", verbose=verbose)
+        PARAMS = set_param(["only_use_one", "source_column", "species", "target_selection"],
+                           [only_use_one, source_column, species, target_selection])
+        response = api(url=self.__url + "/map column", params=PARAMS, method="POST", verbose=verbose)
         return response
-
