@@ -57,23 +57,22 @@ def handle_status_codes(x, verbose=False):
     else:
         res = None
 
-    if res or verbose:
-        if res:
-            res = res
-        else:
-            res = x
+    if not res and verbose:
+        res = x
     else:
         res = None
 
-    if not res:
-        if x:
-            res = x
+    if not res and x:
+        res = x
 
     return res
 
 
-def api(
-        namespace=None,
+def _clean(x):
+    return x.split("</p>")[0].split(">")[-1]
+
+
+def api(namespace=None,
         command="",
         PARAMS={},
         body=None,
@@ -83,7 +82,7 @@ def api(
         method="POST",
         verbose=VERBOSE,
         url=None,
-        parse_params=True):
+        **kwargs):
     """
     General function for interacting with Cytoscape API.
 
@@ -195,10 +194,7 @@ def api(
 
         res = response.text.split("\n")
 
-        def clean(x):
-            r = x.split("</p>")[0].split(">")[-1]
-            return r
-        res = "\n".join([clean(x) for x in res])
+        res = "\n".join(map(_clean, res))
 
     res = handle_status_codes(res, verbose=verbose)
 
