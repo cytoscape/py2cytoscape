@@ -857,6 +857,14 @@ class networks(object):
         Returns a PNG image of the first available Network View for the Network specified by the `networkId` parameter.
         
         Default size is 600 px
+        
+        Example usage:
+        
+        from IPython.display import Image
+        fig=cytoscape.networks.getFirstImageAsPng(networkId=cytoscape.network.get()["SUID"],h=None)
+        with open('my_image.png', 'wb') as file:
+            file.write(fig.content)
+        Image(fig.content)
 
         :param networkId: SUID of the Network
         :param h: Height of the image. Width is set automatically -- Not required, can be None
