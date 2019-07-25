@@ -14,7 +14,7 @@ pip3 install py2cytoscape
 pip3 install git+https://github.com/cytoscape/py2cytoscape.git
 ```
 
-### Dependencies: igraph
+### Dependencies (extra): igraph
 
 ```
 git clone https://github.com/igraph/python-igraph/
