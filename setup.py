@@ -33,7 +33,6 @@ setup(
         'pydotplus',
         'requests',
         'pyparsing',
-        'python-igraph',
     ],
     extras_require={
         'scipy' : (
@@ -44,6 +43,9 @@ setup(
         ),
         'parakimo' : (
             'parakimo'
+        ),
+        'python-igraph': (
+            'python-igraph'
         )
     },
     keywords=['data visualization', 'visualization', 'cytoscape',
