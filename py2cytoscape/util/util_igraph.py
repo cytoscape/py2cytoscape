@@ -5,6 +5,10 @@ Conversion utilities for igraph
 
 """
 
+import warnings
+warnings.warn('\n\n\n**** util.util_igraph will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
+
 try:
     import igraph as ig
 except Exception as error:

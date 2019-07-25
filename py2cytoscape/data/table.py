@@ -1,6 +1,8 @@
 import pandas as pd
 import json
 
+import warnings
+warnings.warn('\n\n\n**** data.table will be deprecated in the next py2cytoscape release. ****\n\n\n')
 
 class Table(object):
     """The Table object provides methods for Cytoscape table manipulation"""

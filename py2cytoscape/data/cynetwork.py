@@ -10,6 +10,9 @@ from ..util import util_dataframe as df_util
 from .util_http import check_response
 from . import BASE_URL, HEADERS
 
+import warnings
+warnings.warn('\n\n\n**** data.cynetwork will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
 BASE_URL_NETWORK = BASE_URL + 'networks'
 
 

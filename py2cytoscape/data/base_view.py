@@ -4,6 +4,9 @@ import requests
 
 from . import BASE_URL, HEADERS
 
+import warnings
+warnings.warn('\n\n\n**** data.base_view will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
 BASE_URL_NETWORK = BASE_URL + 'networks'
 
 

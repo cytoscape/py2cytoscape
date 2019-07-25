@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 import copy
 
+import warnings
+warnings.warn('\n\n\n**** util.cytoscapejs will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
+
 EMPTY_NETWORK = {
     'data': {
     },

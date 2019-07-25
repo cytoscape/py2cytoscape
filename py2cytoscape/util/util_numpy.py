@@ -1,5 +1,8 @@
 import numpy as np
 
+import warnings
+warnings.warn('\n\n\n**** util.util_numpy will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
 
 def from_ndarray(data, name=None, labels=None, directed=False, weighted=False):
     mat_dim = data.shape

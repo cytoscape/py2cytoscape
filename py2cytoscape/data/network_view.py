@@ -13,6 +13,8 @@ from py2cytoscape.data.util_http import check_response
 
 BASE_URL_NETWORK = BASE_URL + 'networks'
 
+import warnings
+warnings.warn('\n\n\n**** data.network_view will be deprecated in the next py2cytoscape release. ****\n\n\n')
 
 class CyNetworkView(object):
 

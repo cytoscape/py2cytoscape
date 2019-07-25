@@ -9,6 +9,8 @@ from .session_client import SessionClient
 
 from . import PORT, IP, VERSION
 
+import warnings
+warnings.warn('\n\n\n**** data.cyrest_client will be deprecated in the next py2cytoscape release. ****\n\n\n')
 
 class CyRestClient(object):
 

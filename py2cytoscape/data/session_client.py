@@ -1,5 +1,8 @@
 import requests
 
+import warnings
+warnings.warn('\n\n\n**** data.session_client will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
 
 class SessionClient(object):
 

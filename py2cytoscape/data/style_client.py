@@ -6,6 +6,9 @@ import json
 from . import HEADERS, SUID_LIST
 from .style import Style
 
+import warnings
+warnings.warn('\n\n\n**** data.style_client will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
 
 class StyleClient(object):
 

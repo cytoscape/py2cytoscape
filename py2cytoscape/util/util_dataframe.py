@@ -2,6 +2,9 @@ import pandas as pd
 
 from . import cytoscapejs as cyjs
 
+import warnings
+warnings.warn('\n\n\n**** util.util_dataframe will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
 
 def from_dataframe(df,
                    source_col='source',

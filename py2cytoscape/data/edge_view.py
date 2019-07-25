@@ -4,6 +4,8 @@ from . import BASE_URL
 
 BASE_URL_NETWORK = BASE_URL + 'networks'
 
+import warnings
+warnings.warn('\n\n\n**** data.edge_view will be deprecated in the next py2cytoscape release. ****\n\n\n')
 
 class EdgeView(BaseView):
 

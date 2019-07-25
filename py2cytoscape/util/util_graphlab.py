@@ -1,3 +1,8 @@
+import warnings
+warnings.warn('\n\n\n**** util.util_graphlab will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
+
+
 def from_sgraph(sgraph):
     new_graph = {}
     elements = {}

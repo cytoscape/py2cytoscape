@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import warnings
+warnings.warn('\n\n\n**** data.util_http will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
+
 def check_response(res):
     """ Check HTTP response and raise exception if response is not OK. """
     try:

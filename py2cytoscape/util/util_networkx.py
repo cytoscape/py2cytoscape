@@ -7,6 +7,8 @@ Convert cytoscape.js style graphs from/to NetworkX object.
 https://networkx.github.io/
 
 """
+import warnings
+warnings.warn('\n\n\n**** util.util_networkx will be deprecated in the next py2cytoscape release. ****\n\n\n')
 
 import networkx as nx
 

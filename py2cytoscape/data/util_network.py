@@ -1,5 +1,8 @@
 __author__ = 'kono'
 
+import warnings
+warnings.warn('\n\n\n**** data.util_network will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
 
 class NetworkUtil(object):
 

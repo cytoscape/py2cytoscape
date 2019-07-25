@@ -1,5 +1,10 @@
 import requests
 
+import warnings
+warnings.warn('\n\n\n**** data.algorithm_client will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
+
+
 HEADERS = {'Content-Type': 'application/json'}
 
 

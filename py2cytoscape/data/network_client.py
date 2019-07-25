@@ -16,6 +16,9 @@ JSON = 'json'
 
 from .cynetwork import CyNetwork, check_response
 
+import warnings
+warnings.warn('\n\n\n**** data.network_client will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
 
 class NetworkClient(object):
     def __init__(self, url, session=None):

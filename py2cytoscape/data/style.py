@@ -3,6 +3,9 @@ import requests
 import json
 import pandas as pd
 
+import warnings
+warnings.warn('\n\n\n**** data.style will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
 
 class Style(object):
     def __init__(self, name):

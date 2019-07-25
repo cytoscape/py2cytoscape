@@ -6,6 +6,9 @@ import json
 
 from . import HEADERS
 
+import warnings
+warnings.warn('\n\n\n**** data.node_view will be deprecated in the next py2cytoscape release. ****\n\n\n')
+
 
 class NodeView(BaseView):
 
