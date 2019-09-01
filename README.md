@@ -2,13 +2,24 @@
 
 ## Installation
 
-### Latest stable release
+py2cytoscape can be installed using `conda`, `pip`.
+
+### conda
+
+`conda` installs `igraph` with py2cytoscape.
+You do not need to install `igraph` by yourself.
+
+```shell
+conda install -c conda-forge py2cytoscape
+```
+
+### Latest stable release (pip)
 
 ```shell
 pip3 install py2cytoscape
 ```
 
-### Development version
+### Development version (pip)
 
 ```shell
 pip3 install git+https://github.com/cytoscape/py2cytoscape.git
