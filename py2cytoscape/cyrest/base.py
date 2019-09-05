@@ -42,7 +42,7 @@ def checkresponse(r,verbose=False):
     status=r.status_code
     if 200 <= status < 300:
         if verbose:
-            print("response status "+status)
+            print("response status "+str(status))
             sys.stdout.flush()
         res=None
     else:
