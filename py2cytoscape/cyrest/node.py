@@ -221,7 +221,6 @@ class node(object):
         :param afile (string, optional): Path to file containing list of nodes to select
         :param verbose: print more
         """
-        network=check_network(self,network,verbose=verbose)
         PARAMS=set_param(["file"],[afile])
         response=api(url=self.__url+"/select from file", PARAMS=PARAMS, method="POST", verbose=verbose)
         return response
