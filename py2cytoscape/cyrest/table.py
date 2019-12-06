@@ -555,6 +555,9 @@ class table(object):
         if df_key!="index":
             tmp.index=tmp[df_key].tolist()
             tmp=tmp.drop([df_key],axis=1)
+        if len(tmp.index.tolist()) != len( list( set( tmp.index.tolist() ) ) ):
+            print("There are duplicate values on 'df_key'="+df_key)
+            sys.stdout.flush()
                 
         tablen=networkname+" default node"
 
@@ -567,7 +570,12 @@ class table(object):
                 cell[str(table_key_column)]=str(r) # {"name":"p53"}
                 val=tmpcol.loc[r,c]
                 if type(val) != str:
-                    val=float(val)
+                    try:
+                        val=float(val)
+                    else:
+                        print(val)
+                        sys.stdout.flush()
+                        val=float(val)
                 cell[str(c)]=val
                 data.append(cell)
 
