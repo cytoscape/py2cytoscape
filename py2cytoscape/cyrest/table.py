@@ -572,7 +572,7 @@ class table(object):
                 if type(val) != str:
                     try:
                         val=float(val)
-                    else:
+                    except:
                         print(val)
                         sys.stdout.flush()
                         val=float(val)
