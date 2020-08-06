@@ -11,7 +11,7 @@ python setup.py install
 
 """
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name='py2cytoscape',
@@ -40,8 +40,8 @@ setup(
         'wand' : (
             'wand'
         ),
-        'parakimo' : (
-            'parakimo'
+        'paramiko' : (
+            'paramiko'
         )
     },
     keywords=['data visualization', 'visualization', 'cytoscape',
