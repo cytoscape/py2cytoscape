@@ -1,5 +1,9 @@
 # py2cytoscape [![Build Status](https://travis-ci.org/cytoscape/py2cytoscape.svg?branch=master)](https://travis-ci.org/cytoscape/py2cytoscape) [![PyPI version](https://badge.fury.io/py/py2cytoscape.svg)](https://badge.fury.io/py/py2cytoscape) [![ReadtheDocs](https://readthedocs.org/projects/py2cytoscape/badge/?version=latest)](https://py2cytoscape.readthedocs.io) [![DOI](https://zenodo.org/badge/24250285.svg)](https://zenodo.org/badge/latestdoi/24250285)
 
+## DEPRECATION
+
+Please note that this project has been superceded by the [py4cytoscape project](https://github.com/cytoscape/py4cytoscape). py2cytoscape is not currently maintained.
+
 ## Installation
 
 py2cytoscape can be installed using `conda`, `pip`.
